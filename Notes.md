@@ -13,7 +13,7 @@ Maintenance is about **keeping the code clean** to ensure that future additions 
 
 The expected life of a system is about **7 years**. On average, a programmer spends half his time on maintenance.
 
-> **Software maintenance** : the process of modifying a software system after delivery.
+> **Software maintenance** is the process of modifying a software system after delivery.
 
 We have different types of maintenance :
 * Adaptive : modify the system to adapt a changed environment
@@ -42,7 +42,7 @@ Softwares become less and less efficient because of ageing :
 
 Change is inevitable due to the environment and the (new) use, but that very change induces **technical debt**. Fixing things the wrong way only reports and increase future technical debt.
 
-> **Technical Debt**: the extra develoment work that arises when code that is easy to implement in the short run is used instead of applying the best overall solution.
+> **Technical Debt** is the extra develoment work that arises when code that is easy to implement in the short run is used instead of applying the best overall solution.
 
 Software maintenance is not evolution. The latter implies some major changes in the architecture of the system that are not really covered by the maintenance. Evolution in itself may arise during every step (development, maintenance) or simply when the project becomes too complex to maintain.
 
@@ -52,3 +52,54 @@ There are multiple evolution types :
 * Generation : automatic tools
 * Transformation : transform a code into another (can also use auto tools)
 * Configuration : make the program broad enough that we can modify it with a configuration file
+
+> **Software Evolution** is all the programming activities that intend to generate a new software version from an earlier operational version.
+>* **Static Evolution** are changes applied manually by a human programmer. When part of the software gets adapted or replaced and the product is redeployed.
+>* **Dynamic Evolution** are changes applied *automatically at runtime* to adapt the new needs of the software system. For example, self-adaptive systems, metaprogramming, context-oriented programming, ...
+
+The **eight laws of Software Evolution**, proposed around '74 by an empirical study, states that there is no such thing as a 'finished' program and recognize software evolution. They seem to be generally applicable to large systems but there is no proof whether they apply to other types of software (smaller ones, open-source projects, ...)
+1. **Continuing change** : if it stays alive, it will continue to grow.
+1. **Increasing complexity** : a program that stays alive will become more complex unless work is done against that.
+1. **Self regulation**
+1. **Conservation of organisational stability**
+1. **Conservation of familiarity**
+1. **Continuing growth** : a program must have new functionalities over time to continue to satisfy the user.
+1. **Declining quality** : a program will be percieved as declining in quality over time unless work is done against that.
+1. **Feedback system**
+
+#### Choosing the right paradigm
+
+It is an important step before developping because there are now so many language possibilities that they can offer many improvements to code maintenance.
+* Object-oriented programming (benefits with inheritance to reuse and extend the code)
+* Event-driven programming may be better when we focus on triggers and dynamic events (user inputs, actions)
+* Service-oriented programming promotes software reuse with services as interfaces that can improve modularity.
+* ...
+
+---
+## Domain Modeling
+
+> Trying to model what the domain is about before we start implementing.
+
+*Example of the assembly line that build more product with less input resources. This **Economies of Scale** saves us time and material with the help of technology*
+
+We can apply the product lines principles to software to build for a **family of systems** sharing **common features** in a certain **domain**.
+
+We hereby talk about **economies of scope** that also reduces the overall cost with the use of technology.
+
+#### Domain Analysis
+We will focus our analysis on **features**. We need to find what is **common** and what is **variable** to create a **product family**.
+
+> A **feature** is a user-visible aspect or charasteristic of your application.
+
+#### Feature Modelling
+
+> A **feature model** is a hierarchy-arranged set of features (typically a tree-like diagram) with a defined notation (mandatory, optional, composition, alternative, ...)
+
+* **Common features** are the mandatory (plain 'o') leaves in the tree. They appear in every configuration (see below)
+* **Variabilities** are the optional features (empty 'o'). They appear in some configurations (see below)
+
+> A **configuration** is the selected variables, an instance, of the model. It is deemed **valid** iif it respects the semantics imposed by the relationships and constraints. The model is **inconsistend** if it has no valid configuration. Two models are **equivalent** if they have the same set of configurations.
+
+**Anomalies** in the diagram are things that should not be there :
+* Redundancy if semantic information is modelled in multiple ways
+* Inconsistence if there are contradictions within the model.
