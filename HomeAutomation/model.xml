@@ -51,12 +51,16 @@
                 </and>
                 <and abstract="true" name="Ambiance">
                     <feature name="Heating system"/>
-                    <feature name="Air Quality"/>
+                    <and name="Air Quality">
+                        <feature name="Phone notification"/>
+                    </and>
                 </and>
                 <and abstract="true" name="Everyday Tasks">
                     <and name="Smart Kitchen">
                         <feature name="Cooking Appliance"/>
-                        <feature name="Fridge Stocks"/>
+                        <and name="Fridge Stocks">
+                            <feature name="Product Ordering"/>
+                        </and>
                     </and>
                     <and name="Automatic Cleaning">
                         <feature name="Vacuums"/>
@@ -64,7 +68,7 @@
                         <feature name="Pool Cleaner"/>
                     </and>
                     <and name="Automatic Gardening">
-                        <feature name="Sprinklers"/>
+                        <feature mandatory="true" name="Sprinklers"/>
                     </and>
                     <feature name="Heavy Appliance Control"/>
                     <and name="Baby and Pet care">
