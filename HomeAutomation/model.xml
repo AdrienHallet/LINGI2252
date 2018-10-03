@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+    <properties/>
+    <struct>
+        <and abstract="true" mandatory="true" name="HomeAutomation">
+            <and mandatory="true" name="Sensors">
+                <and name="Spatial">
+                    <feature name="Motion"/>
+                    <feature name="Proximity"/>
+                    <feature name="Badge Detector"/>
+                </and>
+                <feature name="Audio"/>
+                <and name="Video">
+                    <feature name="Camera"/>
+                    <feature name="Infrared Camera"/>
+                </and>
+                <feature name="Consumption"/>
+                <feature name="Temperature"/>
+                <and mandatory="true" name="Gas">
+                    <feature mandatory="true" name="Smoke"/>
+                    <feature name="Carbon Monoxide"/>
+                </and>
+                <feature name="Clock"/>
+            </and>
+            <and name="Features">
+                <and mandatory="true" name="Safety">
+                    <and name="Security">
+                        <and name="Smart Doors">
+                            <feature name="Locks"/>
+                            <feature name="Auto-Opening"/>
+                        </and>
+                        <and name="Anti-Burglar">
+                            <feature name="Detection"/>
+                            <and name="Reaction">
+                                <feature name="Alarm"/>
+                                <feature name="Notification"/>
+                                <feature name="Police Call"/>
+                            </and>
+                        </and>
+                    </and>
+                    <and mandatory="true" name="Fire">
+                        <feature mandatory="true" name="Smoke Detection"/>
+                        <feature name="Fire Sprinklers"/>
+                        <feature name="Firefrighter Call"/>
+                    </and>
+                </and>
+                <and name="Ambiance">
+                    <feature name="Heating system"/>
+                    <and name="Air Quality">
+                        <feature name="Humidity"/>
+                    </and>
+                </and>
+                <and name="Everyday Tasks">
+                    <and name="Smart Kitchen">
+                        <feature name="Cooking Appliance"/>
+                        <feature name="Fridge Stocks"/>
+                    </and>
+                    <and name="Automatic Cleaning">
+                        <feature name="Vacuums"/>
+                        <feature name="Lawnmower"/>
+                        <feature name="Pool Cleaner"/>
+                    </and>
+                    <and name="Automatic Gardening">
+                        <feature name="Sprinklers"/>
+                    </and>
+                    <feature name="Heavy Appliance Control"/>
+                    <and name="Baby and Pet care">
+                        <feature name="Position Tracking"/>
+                        <feature name="Feeding"/>
+                    </and>
+                    <and name="Sound management">
+                        <feature name="Alarms"/>
+                        <feature name="Radios"/>
+                        <feature name="Home Cinema"/>
+                    </and>
+                </and>
+                <feature name="Consumption Control"/>
+            </and>
+        </and>
+    </struct>
+    <constraints/>
+    <calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+    <comments/>
+    <featureOrder userDefined="false"/>
+</featureModel>
