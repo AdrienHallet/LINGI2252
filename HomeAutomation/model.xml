@@ -3,31 +3,36 @@
     <properties/>
     <struct>
         <and abstract="true" mandatory="true" name="HomeAutomation">
-            <and mandatory="true" name="Sensors">
-                <and name="Spatial">
+            <and abstract="true" mandatory="true" name="Sensors">
+                <and abstract="true" name="Spatial">
                     <feature name="Motion"/>
                     <feature name="Proximity"/>
                     <feature name="Badge Detector"/>
                 </and>
                 <feature name="Audio"/>
-                <and name="Video">
+                <and abstract="true" name="Video">
                     <feature name="Camera"/>
                     <feature name="Infrared Camera"/>
                 </and>
                 <feature name="Consumption"/>
                 <feature name="Temperature"/>
-                <and mandatory="true" name="Gas">
-                    <feature mandatory="true" name="Smoke"/>
+                <or abstract="true" mandatory="true" name="Gas">
+                    <feature name="Smoke"/>
                     <feature name="Carbon Monoxide"/>
-                </and>
+                </or>
                 <feature name="Clock"/>
+                <feature name="Humidity"/>
             </and>
-            <and name="Features">
-                <and mandatory="true" name="Safety">
+            <and abstract="true" mandatory="true" name="Features">
+                <and abstract="true" mandatory="true" name="Safety">
                     <and name="Security">
                         <and name="Smart Doors">
                             <feature name="Locks"/>
                             <feature name="Auto-Opening"/>
+                            <and name="Intercom">
+                                <feature name="Audio-Only"/>
+                                <feature name="Video-Audio"/>
+                            </and>
                         </and>
                         <and name="Anti-Burglar">
                             <feature name="Detection"/>
@@ -44,13 +49,11 @@
                         <feature name="Firefrighter Call"/>
                     </and>
                 </and>
-                <and name="Ambiance">
+                <and abstract="true" name="Ambiance">
                     <feature name="Heating system"/>
-                    <and name="Air Quality">
-                        <feature name="Humidity"/>
-                    </and>
+                    <feature name="Air Quality"/>
                 </and>
-                <and name="Everyday Tasks">
+                <and abstract="true" name="Everyday Tasks">
                     <and name="Smart Kitchen">
                         <feature name="Cooking Appliance"/>
                         <feature name="Fridge Stocks"/>
@@ -73,12 +76,125 @@
                         <feature name="Radios"/>
                         <feature name="Home Cinema"/>
                     </and>
+                    <and name="Electronics Management">
+                        <feature name="Small Electronics"/>
+                        <feature name="Internet of Things"/>
+                        <feature name="Phone calls"/>
+                    </and>
                 </and>
-                <feature name="Consumption Control"/>
+                <and name="Consumption Control">
+                    <feature name="Water"/>
+                    <feature name="Power"/>
+                </and>
             </and>
         </and>
     </struct>
-    <constraints/>
+    <constraints>
+        <rule>
+            <imp>
+                <var>Alarm</var>
+                <var>Alarms</var>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Reaction</var>
+                <var>Detection</var>
+            </imp>
+        </rule>
+        <rule>
+            <not>
+                <conj>
+                    <var>Audio-Only</var>
+                    <var>Video-Audio</var>
+                </conj>
+            </not>
+        </rule>
+        <rule>
+            <imp>
+                <var>Heating system</var>
+                <var>Temperature</var>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Detection</var>
+                <disj>
+                    <var>Motion</var>
+                    <disj>
+                        <var>Proximity</var>
+                        <var>Video</var>
+                    </disj>
+                </disj>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Air Quality</var>
+                <disj>
+                    <conj>
+                        <var>Humidity</var>
+                        <var>Temperature</var>
+                    </conj>
+                    <var>Carbon Monoxide</var>
+                </disj>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Consumption Control</var>
+                <var>Consumption</var>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Police Call</var>
+                <var>Phone calls</var>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Automatic Gardening</var>
+                <var>Clock</var>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Automatic Cleaning</var>
+                <var>Clock</var>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Firefrighter Call</var>
+                <var>Phone calls</var>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <disj>
+                    <var>Locks</var>
+                    <var>Auto-Opening</var>
+                </disj>
+                <var>Badge Detector</var>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Heavy Appliance Control</var>
+                <var>Consumption Control</var>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Intercom</var>
+                <disj>
+                    <var>Camera</var>
+                    <var>Infrared Camera</var>
+                </disj>
+            </imp>
+        </rule>
+    </constraints>
     <calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
     <comments/>
     <featureOrder userDefined="false"/>
