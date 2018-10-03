@@ -16,10 +16,10 @@
                 </and>
                 <feature name="Consumption"/>
                 <feature name="Temperature"/>
-                <or abstract="true" mandatory="true" name="Gas">
-                    <feature name="Smoke"/>
+                <and abstract="true" mandatory="true" name="Gas">
+                    <feature mandatory="true" name="Smoke"/>
                     <feature name="Carbon Monoxide"/>
-                </or>
+                </and>
                 <feature name="Clock"/>
                 <feature name="Humidity"/>
             </and>
@@ -130,18 +130,6 @@
         </rule>
         <rule>
             <imp>
-                <var>Air Quality</var>
-                <disj>
-                    <conj>
-                        <var>Humidity</var>
-                        <var>Temperature</var>
-                    </conj>
-                    <var>Carbon Monoxide</var>
-                </disj>
-            </imp>
-        </rule>
-        <rule>
-            <imp>
                 <var>Consumption Control</var>
                 <var>Consumption</var>
             </imp>
@@ -192,6 +180,30 @@
                     <var>Camera</var>
                     <var>Infrared Camera</var>
                 </disj>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Air Quality</var>
+                <disj>
+                    <var>Humidity</var>
+                    <var>Carbon Monoxide</var>
+                </disj>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Position Tracking</var>
+                <disj>
+                    <var>Motion</var>
+                    <var>Proximity</var>
+                </disj>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Feeding</var>
+                <var>Proximity</var>
             </imp>
         </rule>
     </constraints>
