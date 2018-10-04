@@ -25,25 +25,22 @@
             </and>
             <and abstract="true" mandatory="true" name="Features">
                 <and abstract="true" mandatory="true" name="Safety">
-                    <and name="Security">
-                        <and name="Smart Doors">
+                    <and abstract="true" name="Security">
+                        <and abstract="true" name="Smart Doors">
                             <feature name="Locks"/>
                             <feature name="Auto-Opening"/>
-                            <and name="Intercom">
+                            <alt name="Intercom">
                                 <feature name="Audio-Only"/>
                                 <feature name="Video-Audio"/>
-                            </and>
+                            </alt>
                         </and>
-                        <and name="Anti-Burglar">
-                            <feature name="Detection"/>
-                            <and name="Reaction">
-                                <feature name="Alarm"/>
-                                <feature name="Notification"/>
-                                <feature name="Police Call"/>
-                            </and>
+                        <and abstract="true" name="Anti-Burglar">
+                            <feature name="Alarm"/>
+                            <feature name="Notification"/>
+                            <feature name="Police Call"/>
                         </and>
                     </and>
-                    <and mandatory="true" name="Fire">
+                    <and abstract="true" mandatory="true" name="Fire">
                         <feature mandatory="true" name="Smoke Detection"/>
                         <feature name="Fire Sprinklers"/>
                         <feature name="Firefrighter Call"/>
@@ -51,42 +48,49 @@
                 </and>
                 <and abstract="true" name="Ambiance">
                     <feature name="Heating system"/>
-                    <and name="Air Quality">
-                        <feature name="Phone notification"/>
+                    <and abstract="true" name="Air Quality">
+                        <feature name="Information Display"/>
+                        <feature name="Phone Notification"/>
                     </and>
                 </and>
                 <and abstract="true" name="Everyday Tasks">
-                    <and name="Smart Kitchen">
+                    <and abstract="true" name="Smart Kitchen">
                         <feature name="Cooking Appliance"/>
                         <and name="Fridge Stocks">
                             <feature name="Product Ordering"/>
                         </and>
                     </and>
-                    <and name="Automatic Cleaning">
+                    <and abstract="true" name="Automatic Cleaning">
                         <feature name="Vacuums"/>
-                        <feature name="Lawnmower"/>
                         <feature name="Pool Cleaner"/>
                     </and>
-                    <and name="Automatic Gardening">
-                        <feature mandatory="true" name="Sprinklers"/>
+                    <and abstract="true" name="Automatic Gardening">
+                        <feature name="Sprinklers"/>
+                        <feature name="Lawnmower"/>
                     </and>
-                    <feature name="Heavy Appliance Control"/>
-                    <and name="Baby and Pet care">
+                    <and abstract="true" name="Heavy Appliance Control">
+                        <feature name="Remote Control"/>
+                        <feature name="Automatic management"/>
+                    </and>
+                    <and abstract="true" name="Baby and Pet care">
                         <feature name="Position Tracking"/>
                         <feature name="Feeding"/>
+                        <feature name="Babyphone"/>
                     </and>
-                    <and name="Sound management">
+                    <and abstract="true" name="Sound management">
                         <feature name="Alarms"/>
                         <feature name="Radios"/>
                         <feature name="Home Cinema"/>
                     </and>
-                    <and name="Electronics Management">
+                    <and abstract="true" name="Electronics Management">
                         <feature name="Small Electronics"/>
                         <feature name="Internet of Things"/>
-                        <feature name="Phone calls"/>
+                        <and name="Phone Management">
+                            <feature name="Answering Machine"/>
+                        </and>
                     </and>
                 </and>
-                <and name="Consumption Control">
+                <and abstract="true" name="Consumption Control">
                     <feature name="Water"/>
                     <feature name="Power"/>
                 </and>
@@ -102,34 +106,26 @@
         </rule>
         <rule>
             <imp>
-                <var>Reaction</var>
-                <var>Detection</var>
+                <var>Babyphone</var>
+                <var>Audio</var>
             </imp>
         </rule>
         <rule>
-            <not>
-                <conj>
-                    <var>Audio-Only</var>
-                    <var>Video-Audio</var>
-                </conj>
-            </not>
+            <imp>
+                <var>Consumption</var>
+                <var>Clock</var>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Feeding</var>
+                <var>Proximity</var>
+            </imp>
         </rule>
         <rule>
             <imp>
                 <var>Heating system</var>
                 <var>Temperature</var>
-            </imp>
-        </rule>
-        <rule>
-            <imp>
-                <var>Detection</var>
-                <disj>
-                    <var>Motion</var>
-                    <disj>
-                        <var>Proximity</var>
-                        <var>Video</var>
-                    </disj>
-                </disj>
             </imp>
         </rule>
         <rule>
@@ -141,7 +137,7 @@
         <rule>
             <imp>
                 <var>Police Call</var>
-                <var>Phone calls</var>
+                <var>Phone Management</var>
             </imp>
         </rule>
         <rule>
@@ -159,7 +155,7 @@
         <rule>
             <imp>
                 <var>Firefrighter Call</var>
-                <var>Phone calls</var>
+                <var>Phone Management</var>
             </imp>
         </rule>
         <rule>
@@ -173,7 +169,7 @@
         </rule>
         <rule>
             <imp>
-                <var>Heavy Appliance Control</var>
+                <var>Automatic management</var>
                 <var>Consumption Control</var>
             </imp>
         </rule>
@@ -202,12 +198,6 @@
                     <var>Motion</var>
                     <var>Proximity</var>
                 </disj>
-            </imp>
-        </rule>
-        <rule>
-            <imp>
-                <var>Feeding</var>
-                <var>Proximity</var>
             </imp>
         </rule>
     </constraints>

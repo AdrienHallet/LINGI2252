@@ -91,6 +91,13 @@ We will focus our analysis on **features**. We need to find what is **common** a
 
 > A **feature** is a user-visible aspect or charasteristic of your application.
 
+The idea is that we want to model our domain. In a product line, every product variant comes from the same basic architecture (example of the car, we always have a car body, wheels, ...).
+
+There are three main phases :
+1. **Context analysis** : define the boundaries of a domain under analysis. Thinking clearly about the clients, the users, the inputs and outputs of the software.
+2. **Domain modelling** : describe the problem addressed by the software in the domain. What are the must-have and could-have features ? Define a lexicon to clearly state what we mean by using a term or another.
+3. **Architecture modelling** : create the overall architecture to implement a solution to the problems in that domain.
+
 #### Feature Modelling
 
 > A **feature model** is a hierarchy-arranged set of features (typically a tree-like diagram) with a defined notation (mandatory, optional, composition, alternative, ...)
@@ -103,3 +110,30 @@ We will focus our analysis on **features**. We need to find what is **common** a
 **Anomalies** in the diagram are things that should not be there :
 * Redundancy if semantic information is modelled in multiple ways
 * Inconsistence if there are contradictions within the model.
+* Dead features if they can never be selected in any way.
+* False-optional features if the selection of the parent induces the selection of the false-optional child
+
+## Software Reuse
+
+> **Software Reuse** is the reapplication of a variety of kinds of knowledge about one system to another **in order to reduce the effort** of developing or maintaining that other system.
+
+*A library is a good example of software reuse. Someone took the time to make it work correctly and packaging it in a library to ease its usage. A copy/paste is an example of a bad code reuse, but it still is.*
+
+That's why reuse is good :
+* We gain time (thus money)
+* By using a library (part of software) that has been proved, we don't need to prove again that it works.
+* Improves overall quality.
+
+Choosing the right bit of code to reuse (for example, choosing a web framework) is therefore very important. We want it to be still alive. The number of users is a good metric of the quality of a library.
+
+Note that we don't only reuse software code, we can also reuse the tests. Any artifact actually.
+
+#### How Object Oriented Programming promotes software reuse
+
+OOP's **abstraction mechanisms** :
+* Encapsulation
+* Information hiding
+* Polymorphism
+* Code sharing
+
+Are claimed to promote better code because they allow **modularity**, **code sharing**, **design reuse** which minimises maintenance costs.
