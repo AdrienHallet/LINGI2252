@@ -1,91 +1,110 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <layout chosenLayoutAlgorithm="0" horizontalLayout="false">
     <struct>
-        <feature X="408" Y="1154" name="Water"/>
-        <feature X="250" Y="634" name="Ambiance"/>
-        <feature X="587" Y="641" name="Information Display"/>
-        <feature X="408" Y="938" name="Baby and Pet care"/>
-        <feature X="587" Y="560" name="Fire Sprinklers"/>
-        <feature X="408" Y="236" name="Smoke"/>
-        <feature X="587" Y="1019" name="Radios"/>
-        <feature X="250" Y="290" name="Clock"/>
-        <feature X="408" Y="428" name="Security"/>
-        <feature X="587" Y="1127" name="Phone Management"/>
-        <feature X="20" Y="506" name="HomeAutomation"/>
-        <feature X="159" Y="182" name="Sensors"/>
-        <feature X="408" Y="128" name="Camera"/>
-        <feature X="762" Y="411" name="Intercom"/>
-        <feature X="250" Y="1167" name="Consumption Control"/>
-        <feature X="250" Y="182" name="Consumption"/>
-        <feature X="762" Y="722" name="Product Ordering"/>
-        <feature X="587" Y="1073" name="Small Electronics"/>
-        <feature X="912" Y="425" name="Video-Audio"/>
-        <feature X="408" Y="870" name="Heavy Appliance Control"/>
-        <feature X="408" Y="816" name="Automatic Gardening"/>
-        <feature X="762" Y="371" name="Auto-Opening"/>
-        <feature X="587" Y="479" name="Anti-Burglar"/>
-        <feature X="587" Y="533" name="Smoke Detection"/>
-        <feature X="408" Y="654" name="Air Quality"/>
-        <feature X="250" Y="47" name="Spatial"/>
-        <feature X="250" Y="141" name="Video"/>
-        <feature X="587" Y="749" name="Vacuums"/>
-        <feature X="250" Y="249" name="Gas"/>
-        <feature X="408" Y="614" name="Heating system"/>
-        <feature X="587" Y="911" name="Position Tracking"/>
-        <feature X="408" Y="762" name="Automatic Cleaning"/>
-        <feature X="408" Y="155" name="Infrared Camera"/>
-        <feature X="250" Y="209" name="Temperature"/>
-        <feature X="408" Y="263" name="Carbon Monoxide"/>
-        <feature X="587" Y="830" name="Lawnmower"/>
-        <feature X="587" Y="695" name="Cooking Appliance"/>
-        <feature X="587" Y="884" name="Automatic management"/>
-        <feature X="762" Y="479" name="Notification"/>
-        <feature X="587" Y="377" name="Smart Doors"/>
-        <feature X="587" Y="722" name="Fridge Stocks"/>
-        <feature X="587" Y="965" name="Babyphone"/>
-        <feature X="250" Y="317" name="Humidity"/>
-        <feature X="250" Y="904" name="Everyday Tasks"/>
-        <feature X="159" Y="830" name="Features"/>
-        <feature X="912" Y="398" name="Audio-Only"/>
-        <feature X="250" Y="494" name="Safety"/>
-        <feature X="587" Y="668" name="Phone Notification"/>
-        <feature X="408" Y="1019" name="Sound management"/>
-        <feature X="408" Y="708" name="Smart Kitchen"/>
-        <feature X="408" Y="20" name="Motion"/>
-        <feature X="587" Y="776" name="Pool Cleaner"/>
-        <feature X="408" Y="47" name="Proximity"/>
-        <feature X="587" Y="857" name="Remote Control"/>
-        <feature X="587" Y="992" name="Alarms"/>
-        <feature X="587" Y="1046" name="Home Cinema"/>
-        <feature X="408" Y="1100" name="Electronics Management"/>
-        <feature X="762" Y="344" name="Locks"/>
-        <feature X="587" Y="803" name="Sprinklers"/>
-        <feature X="587" Y="1100" name="Internet of Things"/>
-        <feature X="762" Y="506" name="Police Call"/>
-        <feature X="587" Y="938" name="Feeding"/>
-        <feature X="762" Y="1127" name="Answering Machine"/>
-        <feature X="762" Y="452" name="Alarm"/>
-        <feature X="408" Y="560" name="Fire"/>
-        <feature X="587" Y="587" name="Firefrighter Call"/>
-        <feature X="408" Y="74" name="Badge Detector"/>
-        <feature X="250" Y="101" name="Audio"/>
-        <feature X="408" Y="1181" name="Power"/>
+        <feature X="463" Y="1343" name="Water"/>
+        <feature X="305" Y="816" name="Ambiance"/>
+        <feature X="305" Y="425" name="Actuators"/>
+        <feature X="463" Y="209" name="Thermometer"/>
+        <feature X="642" Y="803" name="Information Display"/>
+        <feature X="463" Y="1127" name="Baby and Pet care"/>
+        <feature X="642" Y="722" name="Fire Sprinklers"/>
+        <feature X="642" Y="236" name="Smoke"/>
+        <feature X="642" Y="1208" name="Radios"/>
+        <feature X="463" Y="290" name="Clock"/>
+        <feature X="463" Y="590" name="Security"/>
+        <feature X="642" Y="1316" name="Phone Management"/>
+        <feature X="20" Y="873" name="HomeAutomation"/>
+        <feature X="463" Y="344" name="Light"/>
+        <feature X="305" Y="195" name="Sensors"/>
+        <feature X="642" Y="128" name="Camera"/>
+        <feature X="817" Y="573" name="Intercom"/>
+        <feature X="305" Y="1356" name="Consumption Control"/>
+        <feature X="463" Y="182" name="Consumption"/>
+        <feature X="817" Y="911" name="Product Ordering"/>
+        <feature X="642" Y="1262" name="Small Electronics"/>
+        <feature X="463" Y="398" name="Motor"/>
+        <feature X="463" Y="857" name="Light Control"/>
+        <feature X="463" Y="425" name="Lightbulb"/>
+        <feature X="967" Y="587" name="Video-Audio"/>
+        <feature X="463" Y="1059" name="Heavy Appliance Control"/>
+        <feature X="463" Y="371" name="Audio Alarm"/>
+        <feature X="463" Y="1005" name="Automatic Gardening"/>
+        <feature X="159" Y="1437" name="House"/>
+        <feature X="817" Y="533" name="Auto-Opening"/>
+        <feature X="642" Y="641" name="Anti-Burglar"/>
+        <feature X="642" Y="695" name="Smoke Detection"/>
+        <feature X="463" Y="816" name="Air Quality"/>
+        <feature X="463" Y="47" name="Spatial"/>
+        <feature X="463" Y="1397" name="Kitchen"/>
+        <feature X="463" Y="141" name="Video"/>
+        <feature X="642" Y="938" name="Vacuums"/>
+        <feature X="463" Y="249" name="Gas"/>
+        <feature X="463" Y="776" name="Heating system"/>
+        <feature X="642" Y="1100" name="Position Tracking"/>
+        <feature X="463" Y="951" name="Automatic Cleaning"/>
+        <feature X="642" Y="155" name="Infrared Camera"/>
+        <feature X="642" Y="263" name="Carbon Monoxide"/>
+        <feature X="463" Y="1478" name="Swimming Pool"/>
+        <feature X="642" Y="1019" name="Lawnmower"/>
+        <feature X="463" Y="1424" name="Bathroom/WaterCloset"/>
+        <feature X="642" Y="884" name="Cooking Appliance"/>
+        <feature X="642" Y="1073" name="Automatic management"/>
+        <feature X="817" Y="641" name="Notification"/>
+        <feature X="642" Y="539" name="Smart Doors"/>
+        <feature X="642" Y="911" name="Fridge Stocks"/>
+        <feature X="642" Y="1154" name="Babyphone"/>
+        <feature X="463" Y="317" name="Humidity"/>
+        <feature X="305" Y="1093" name="Everyday Tasks"/>
+        <feature X="463" Y="1451" name="Portal"/>
+        <feature X="159" Y="310" name="System Controllers"/>
+        <feature X="159" Y="1006" name="Features"/>
+        <feature X="967" Y="560" name="Audio-Only"/>
+        <feature X="305" Y="656" name="Safety"/>
+        <feature X="642" Y="830" name="Phone Notification"/>
+        <feature X="463" Y="1208" name="Sound management"/>
+        <feature X="463" Y="897" name="Smart Kitchen"/>
+        <feature X="642" Y="20" name="Motion"/>
+        <feature X="642" Y="965" name="Pool Cleaner"/>
+        <feature X="305" Y="1464" name="Garden"/>
+        <feature X="463" Y="452" name="Thermostat"/>
+        <feature X="642" Y="47" name="Proximity"/>
+        <feature X="642" Y="1046" name="Remote Control"/>
+        <feature X="463" Y="479" name="Locking Mechanism"/>
+        <feature X="642" Y="1181" name="Alarms"/>
+        <feature X="642" Y="1235" name="Home Cinema"/>
+        <feature X="463" Y="1289" name="Electronics Management"/>
+        <feature X="817" Y="506" name="Locks"/>
+        <feature X="642" Y="992" name="Sprinklers"/>
+        <feature X="642" Y="1289" name="Internet of Things"/>
+        <feature X="817" Y="668" name="Police Call"/>
+        <feature X="642" Y="1127" name="Feeding"/>
+        <feature X="305" Y="1410" name="Rooms"/>
+        <feature X="817" Y="1316" name="Answering Machine"/>
+        <feature X="817" Y="614" name="Alarm"/>
+        <feature X="463" Y="722" name="Fire"/>
+        <feature X="642" Y="749" name="Firefrighter Call"/>
+        <feature X="642" Y="74" name="Badge Detector"/>
+        <feature X="463" Y="101" name="Audio"/>
+        <feature X="463" Y="1370" name="Power"/>
     </struct>
     <constraints>
-        <rule X="10" Y="1231"/>
-        <rule X="10" Y="1248"/>
-        <rule X="10" Y="1265"/>
-        <rule X="10" Y="1282"/>
-        <rule X="10" Y="1299"/>
-        <rule X="10" Y="1316"/>
-        <rule X="10" Y="1333"/>
-        <rule X="10" Y="1350"/>
-        <rule X="10" Y="1367"/>
-        <rule X="10" Y="1384"/>
-        <rule X="10" Y="1401"/>
-        <rule X="10" Y="1418"/>
-        <rule X="10" Y="1435"/>
-        <rule X="10" Y="1452"/>
-        <rule X="10" Y="1469"/>
+        <rule X="10" Y="1528"/>
+        <rule X="10" Y="1545"/>
+        <rule X="10" Y="1562"/>
+        <rule X="10" Y="1579"/>
+        <rule X="10" Y="1596"/>
+        <rule X="10" Y="1613"/>
+        <rule X="10" Y="1630"/>
+        <rule X="10" Y="1647"/>
+        <rule X="10" Y="1664"/>
+        <rule X="10" Y="1681"/>
+        <rule X="10" Y="1698"/>
+        <rule X="10" Y="1715"/>
+        <rule X="10" Y="1732"/>
+        <rule X="10" Y="1749"/>
+        <rule X="10" Y="1766"/>
+        <rule X="10" Y="1783"/>
+        <rule X="10" Y="1800"/>
+        <rule X="10" Y="1817"/>
     </constraints>
 </layout>

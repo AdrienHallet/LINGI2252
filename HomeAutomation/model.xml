@@ -3,25 +3,35 @@
     <properties/>
     <struct>
         <and abstract="true" mandatory="true" name="HomeAutomation">
-            <and abstract="true" mandatory="true" name="Sensors">
-                <and abstract="true" name="Spatial">
-                    <feature name="Motion"/>
-                    <feature name="Proximity"/>
-                    <feature name="Badge Detector"/>
+            <and abstract="true" name="System Controllers">
+                <and abstract="true" mandatory="true" name="Sensors">
+                    <and abstract="true" name="Spatial">
+                        <feature name="Motion"/>
+                        <feature name="Proximity"/>
+                        <feature name="Badge Detector"/>
+                    </and>
+                    <feature name="Audio"/>
+                    <and abstract="true" name="Video">
+                        <feature name="Camera"/>
+                        <feature name="Infrared Camera"/>
+                    </and>
+                    <feature name="Consumption"/>
+                    <feature name="Thermometer"/>
+                    <and abstract="true" mandatory="true" name="Gas">
+                        <feature mandatory="true" name="Smoke"/>
+                        <feature name="Carbon Monoxide"/>
+                    </and>
+                    <feature name="Clock"/>
+                    <feature name="Humidity"/>
+                    <feature name="Light"/>
                 </and>
-                <feature name="Audio"/>
-                <and abstract="true" name="Video">
-                    <feature name="Camera"/>
-                    <feature name="Infrared Camera"/>
+                <and abstract="true" mandatory="true" name="Actuators">
+                    <feature mandatory="true" name="Audio Alarm"/>
+                    <feature name="Motor"/>
+                    <feature name="Lightbulb"/>
+                    <feature name="Thermostat"/>
+                    <feature name="Locking Mechanism"/>
                 </and>
-                <feature name="Consumption"/>
-                <feature name="Temperature"/>
-                <and abstract="true" mandatory="true" name="Gas">
-                    <feature mandatory="true" name="Smoke"/>
-                    <feature name="Carbon Monoxide"/>
-                </and>
-                <feature name="Clock"/>
-                <feature name="Humidity"/>
             </and>
             <and abstract="true" mandatory="true" name="Features">
                 <and abstract="true" mandatory="true" name="Safety">
@@ -52,6 +62,7 @@
                         <feature name="Information Display"/>
                         <feature name="Phone Notification"/>
                     </and>
+                    <feature name="Light Control"/>
                 </and>
                 <and abstract="true" name="Everyday Tasks">
                     <and abstract="true" name="Smart Kitchen">
@@ -95,6 +106,16 @@
                     <feature name="Power"/>
                 </and>
             </and>
+            <and abstract="true" mandatory="true" name="House">
+                <and mandatory="true" name="Rooms">
+                    <feature name="Kitchen"/>
+                    <feature name="Bathroom/WaterCloset"/>
+                </and>
+                <and name="Garden">
+                    <feature name="Portal"/>
+                    <feature name="Swimming Pool"/>
+                </and>
+            </and>
         </and>
     </struct>
     <constraints>
@@ -125,7 +146,10 @@
         <rule>
             <imp>
                 <var>Heating system</var>
-                <var>Temperature</var>
+                <conj>
+                    <var>Thermometer</var>
+                    <var>Thermostat</var>
+                </conj>
             </imp>
         </rule>
         <rule>
@@ -198,6 +222,27 @@
                     <var>Motion</var>
                     <var>Proximity</var>
                 </disj>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Locks</var>
+                <var>Locking Mechanism</var>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Auto-Opening</var>
+                <var>Motor</var>
+            </imp>
+        </rule>
+        <rule>
+            <imp>
+                <var>Light Control</var>
+                <conj>
+                    <var>Lightbulb</var>
+                    <var>Light</var>
+                </conj>
             </imp>
         </rule>
     </constraints>
