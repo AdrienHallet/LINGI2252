@@ -136,4 +136,32 @@ OOP's **abstraction mechanisms** :
 * Polymorphism
 * Code sharing
 
-Are claimed to promote better code because they allow **modularity**, **code sharing**, **design reuse** which minimises maintenance costs.
+Are claimed to promote better code because they allow **modularity**, **code sharing**, **design reuse** which minimises maintenance costs. Obviously, having a complete **hierarchy of classes** helps you reuse the classes across different projects and recycle methods/attributes with the help of *self, this* keywords.
+
+The **super** keyword is statically bounded. Were it dynamic (like *self*) that it would create a kind of infinite loop in the recursive calls when looking up for the context.
+
+*Now we overview other useful OOP features like the **abstract classes**, **abstract methods** and some other.*
+
+Multiple inheritance, while allowing for more modularity, reduces the readability of the code. You don't really know where your code is executed. What if the same method is defined in both superclasses ? What about conflicts ? In java, interfaces solve the problem by allowing multiple inheritance without any code.
+
+## Code Refactoring
+
+> **Refactoring** is a software transformation that preserves the external behavior of the program but improves the internal structure of the program, typically with the purpose of making the software easier to understand and modify.
+
+There are many advantages to refactoring.
+* Improve design
+* Counter code decay
+* Increase comprehensibility
+* Find bugs
+* Create robust code
+* Increase productivity
+
+And the overall satisfaction to work on a clean code. You **should refactor whenever its possible**. Do not postpone refactor, although it can be impossible due to deadlines. Postponing refactoring adds to the technical debt.
+
+#### Refactor Methods
+1. **Extract method:** When a fragment of code can be grouped (e.g.: a big conditional statement), turn it into a method.
+2. **Inline method:** When a method body is as clear as its signature, remove the method and use the body instead. (e.g.: a one-liner that is understandable)
+3. **Inline temp:** Instead of using a temporary variable, it may sometimes be useful to just use it as a one-liner. But it depends on who will read the code and how easy the code is to read in general.
+4. **Temp to Query:** A temporary variable (e.g.: a dispatch of prices) can be replaced with a method call to ease readabilit and remove redundancy in a method.
+5. **Explaining variables:** When you have a complex code, it can be useful to add temporary variables with meaningful names to help understand the code.
+6. **Method to Method Object:** It's like extract method but with a variable. So you create an object that can use a method call replacing the method extraction.
