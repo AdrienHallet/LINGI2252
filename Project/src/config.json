@@ -1,0 +1,71 @@
+{
+    "house": {
+        "rooms":[
+            {
+                "name": "Entrance Hall",
+                "sensors": ["motion","light","smoke"],
+                "actuators": ["audio-alarm"],
+                "accessible-rooms": ["Kitchen", "Bedroom"],
+                "elements": [
+                    {
+                        "type": "door",
+                        "sensors": ["proximity"],
+                        "actuators": ["motor"]
+                    }
+                ]
+            },
+            {
+                "name": "Kitchen",
+                "accessible-rooms": ["Entrance Hall"],
+                "sensors": ["motion","light"],
+                "actuators": ["audio-alarm"]
+            },
+            {
+                "name": "Bedroom",
+                "accessible-rooms": ["Entrance Hall"]
+            }
+        ]
+    },
+    "features": [
+        {
+            "safety":[
+                {
+                    "security":[
+                    {
+                        "smart-doors":[
+                        {
+                            "feature": "locks",
+                            "enabled": true
+                        },
+                        {
+                            "feature": "auto-opening",
+                            "enabled": true
+                        },
+                        {
+                            "feature": "intercom",
+                            "enabled": false,
+                            "type": "audio-only"
+                        }
+                    ]
+                    },
+                    {
+                        "anti-burglar":[
+                        {
+                            "feature": "alarm",
+                            "enabled": true
+                        },
+                        {
+                            "feature": "notification",
+                            "enabled": false
+                        },
+                        {
+                            "feature": "police-call",
+                            "enabled": false
+                        }
+                    ]}
+                ]
+                }
+            ]
+        }
+    ]
+}
