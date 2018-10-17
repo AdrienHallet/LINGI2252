@@ -17,9 +17,13 @@
                     {
                         "type": "thermometer",
                         "actions": ["thermostat"]
+                    },
+                    {
+                        "type": "light",
+                        "actions": ["lightbulb"]
                     }
                 ],
-                "actuators": ["audio-alarm", "thermostat"]
+                "actuators": ["audio-alarm", "thermostat", "lightbulb"]
             },
             {
                 "name": "Kitchen",
@@ -40,9 +44,13 @@
                     {
                         "type": "thermometer",
                         "actions": ["thermostat"]
+                    },
+                    {
+                        "type": "light",
+                        "actions": ["lightbulb"]
                     }
                 ],
-                "actuators": ["thermostat"]
+                "actuators": ["thermostat", "lightbulb"]
             },
             {
                 "name": "Bathroom",

@@ -40,9 +40,8 @@ public class HomeController {
                 // Start a fire in the current room
                 FakeEvent.startFire(currentRoom);
                 break;
-            case "room.cold":
-                // Set the current room as cold
-                FakeEvent.setTemperature(currentRoom, 15.0);
+            case "room.dark":
+                FakeEvent.setLight(currentRoom, 100.0); //ToDo change the light sensor to work on light amount (no inversion)
                 break;
             case "system.reset":
                 // Reset all the sensors to 0

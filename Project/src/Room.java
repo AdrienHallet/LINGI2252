@@ -1,6 +1,4 @@
-import controllers.actuators.Actuator;
-import controllers.actuators.ActuatorAudioAlarm;
-import controllers.actuators.ActuatorThermostat;
+import controllers.actuators.*;
 import controllers.sensors.*;
 import org.json.*;
 
@@ -59,6 +57,15 @@ public class Room {
                         case "audio-alarm":
                             cActuator = new ActuatorAudioAlarm();
                             break;
+                        case "lightbulb":
+                            cActuator = new ActuatorLightbulb();
+                            break;
+                        case "lock":
+                            cActuator = new ActuatorLock();
+                            break;
+                        case "motor":
+                            cActuator = new ActuatorMotor();
+                            break;
                         case "thermostat":
                             cActuator = new ActuatorThermostat();
                             break;
@@ -111,6 +118,15 @@ public class Room {
                         newActuator = new ActuatorAudioAlarm();
                         list[i] = newActuator;
                         break;
+                    case "lightbulb":
+                        newActuator = new ActuatorLightbulb();
+                        list[i] = newActuator;
+                    case "lock":
+                        newActuator = new ActuatorLock();
+                        list[i] = newActuator;
+                    case "motor":
+                        newActuator = new ActuatorMotor();
+                        list[i] = newActuator;
                     case "thermostat":
                         newActuator = new ActuatorThermostat();
                         list[i] = newActuator;
