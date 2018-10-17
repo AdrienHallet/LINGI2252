@@ -2,8 +2,9 @@ package controllers.sensors;
 
 public class SensorSmokeDetector extends Sensor {
 
-    public SensorSmokeDetector(){
-        this.type = "smoke-detector";
+    public SensorSmokeDetector(boolean broadcast){
+        super(broadcast);
+        this.type = "smoke";
     }
 
     public String getStateAsString(){

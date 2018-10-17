@@ -3,69 +3,48 @@
         "rooms":[
             {
                 "name": "Entrance Hall",
-                "sensors": ["motion","light","smoke"],
-                "actuators": ["audio-alarm"],
                 "accessible-rooms": ["Kitchen", "Bedroom"],
-                "elements": [
+                "sensors": [
                     {
-                        "type": "door",
-                        "sensors": ["proximity"],
-                        "actuators": ["motor"]
+                        "type": "motion",
+                        "actions": ["audio-alarm"]
+                    },
+                    {
+                        "type": "smoke",
+                        "broadcast": true,
+                        "actions": ["audio-alarm"]
                     }
-                ]
+                ],
+                "actuators": ["audio-alarm"]
             },
             {
                 "name": "Kitchen",
                 "accessible-rooms": ["Entrance Hall"],
-                "sensors": ["motion","light"],
+                "sensors": [
+                    {
+                        "type": "smoke",
+                        "broadcast": true,
+                        "actions": ["audio-alarm"]
+                    }
+                ],
                 "actuators": ["audio-alarm"]
             },
             {
                 "name": "Bedroom",
                 "accessible-rooms": ["Entrance Hall"]
+            },
+            {
+                "name": "Bathroom",
+                "accessible-rooms": ["Bedroom"],
+                "sensors": [
+                    {
+                        "type": "smoke",
+                        "broadcast": true,
+                        "actions": ["audio-alarm"]
+                    }
+                ],
+                "actuators": ["audio-alarm"]
             }
         ]
-    },
-    "features": [
-        {
-            "safety":[
-                {
-                    "security":[
-                    {
-                        "smart-doors":[
-                        {
-                            "feature": "locks",
-                            "enabled": true
-                        },
-                        {
-                            "feature": "auto-opening",
-                            "enabled": true
-                        },
-                        {
-                            "feature": "intercom",
-                            "enabled": false,
-                            "type": "audio-only"
-                        }
-                    ]
-                    },
-                    {
-                        "anti-burglar":[
-                        {
-                            "feature": "alarm",
-                            "enabled": true
-                        },
-                        {
-                            "feature": "notification",
-                            "enabled": false
-                        },
-                        {
-                            "feature": "police-call",
-                            "enabled": false
-                        }
-                    ]}
-                ]
-                }
-            ]
-        }
-    ]
+    }
 }

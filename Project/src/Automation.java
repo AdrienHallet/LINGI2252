@@ -56,14 +56,7 @@ public class Automation {
             if(cRoom.sensors != null) {
                 for (Sensor cSensor : cRoom.sensors) {
                     if (cSensor.isTriggered()) {
-                        switch (cSensor.type) {
-                            case "motion":
-                                detectMotion(cRoom);
-                                break;
-                            case "smoke-detector":
-                                triggerAudioAlarm(cRoom);
-                                break;
-                        }
+                        triggerActions(cSensor);
                     }
                 }
             }
@@ -75,9 +68,11 @@ public class Automation {
         /* Display the events happening to the user via terminal */
         for (Room cRoom : myHouse.roomList){
             if (cRoom.actuators != null) {
-                for (Actuator cActuator : cRoom.actuators) {
-                    if (cActuator.isTriggered()) {
-                        System.out.printf("[%s]: %s\n", cRoom.name, cActuator.getStateAsString());
+                for (Sensor sensor : cRoom.sensors) {
+                    for (Actuator actuator : sensor.getActuatorList()) {
+                        if (actuator.isTriggered()) {
+                            System.out.printf("[%s:%s]: %s\n", cRoom.name, actuator.type, actuator.getStateAsString());
+                        }
                     }
                 }
             }
@@ -85,16 +80,11 @@ public class Automation {
         action_loop();
     }
 
-    static void triggerAudioAlarm(Room room){
-        for (Actuator cActuator : room.actuators){
-            if (cActuator.type.equals("audio-alarm")) {
-                cActuator.update(100.0);
-            }
-
+    static void triggerActions(Sensor sensor){
+        // Trigger all actions linked to a sensor
+        Actuator[] aList = sensor.getActuatorList();
+        for(Actuator cActuator : aList){
+            cActuator.trigger();
         }
-    }
-
-    static void detectMotion(Room room){
-        //ToDo
     }
 }

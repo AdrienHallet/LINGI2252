@@ -6,6 +6,8 @@ import controllers.sensors.SensorMotion;
 import controllers.sensors.SensorSmokeDetector;
 import org.json.*;
 
+import java.util.ArrayList;
+
 public class Room {
 
     public String name;
@@ -29,8 +31,8 @@ public class Room {
     public void startFire(){
         /* As the fire starts, trigger a smoke detector (if any, too bad if not) */
         for (Sensor cSensor : sensors){
-            if (cSensor.type.equals("smoke-detector"))
-                cSensor.value = 100.0;
+            if (cSensor.type.equals("smoke"))
+                cSensor.trigger();
         }
     }
 
@@ -46,25 +48,54 @@ public class Room {
         Sensor[] list = new Sensor[sList.length()];
         for (int i = 0; i < sList.length(); i++){
             try {
-                String type = sList.get(i).toString();
-                Sensor newSensor;
+                // Create a sensor
+                JSONObject sensor = (JSONObject) sList.get(i);
+                String type = sensor.getString("type");
+                Boolean broadcast = false;
+                if(sensor.has("broadcast")) {
+                    broadcast = sensor.getBoolean("broadcast");
+                }
+
+                //Create the actuators and link them to the sensors
+                JSONArray actions = sensor.getJSONArray("actions");
+                Actuator[] aList = new Actuator[actions.length()];
+
+                //Loop over each actuator and add it to the sensor's list
+                for(int cAction = 0; cAction < actions.length(); cAction++){
+                    String cType = actions.get(cAction).toString();
+                    Actuator cActuator;
+                    switch(cType) {
+                        case "audio-alarm":
+                            cActuator = new ActuatorAudioAlarm();
+                            break;
+                        default:
+                            cActuator = null; //ToDo custom exception
+                            System.err.println("Error: unsupported actuator type");
+                            break;
+                    }
+                    aList[cAction] = cActuator;
+                }
+
+                Sensor newSensor = null;
                 switch(type) {
                     case "motion":
-                        newSensor = new SensorMotion();
+                        newSensor = new SensorMotion(broadcast);
                         list[i] = newSensor;
                         break;
                     case "smoke":
-                        newSensor = new SensorSmokeDetector();
+                        newSensor = new SensorSmokeDetector(broadcast);
                         list[i] = newSensor;
                         break;
                     case "light":
-                        newSensor = new SensorLight();
+                        newSensor = new SensorLight(broadcast);
                         list[i] = newSensor;
                         break;
                     default:
                         System.err.println("Wrong sensor type");
                         break;
                 }
+                assert newSensor != null;
+                newSensor.setActuatorList(aList);
             }catch (Exception ignored){}
         }
         return list;
@@ -81,6 +112,9 @@ public class Room {
                     case "audio-alarm":
                         newActuator = new ActuatorAudioAlarm();
                         list[i] = newActuator;
+                        break;
+                    default:
+                        System.err.println("Error: Unsupported actuator type"); //ToDo custom exception
                         break;
                 }
             }catch (Exception ignored){}
