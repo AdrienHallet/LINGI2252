@@ -55,7 +55,7 @@ public class Automation {
         for (Room cRoom : myHouse.roomList){
             if(cRoom.sensors != null) {
                 for (Sensor cSensor : cRoom.sensors) {
-                    if (cSensor.value > 0.0) {
+                    if (cSensor.isTriggered()) {
                         triggerActions(cSensor);
                     }
                 }
@@ -70,7 +70,7 @@ public class Automation {
             if (cRoom.actuators != null) {
                 for (Sensor sensor : cRoom.sensors) {
                     for (Actuator actuator : sensor.getActuatorList()) {
-                        if (actuator.value > 0.0) {
+                        if (actuator.isTriggered()) {
                             System.out.printf("[%s:%s]: %s\n", cRoom.name, actuator.type, actuator.getStateAsString());
                         }
                     }
