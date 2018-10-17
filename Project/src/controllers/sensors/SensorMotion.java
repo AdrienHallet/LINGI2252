@@ -2,7 +2,8 @@ package controllers.sensors;
 
 public class SensorMotion extends Sensor {
 
-    public SensorMotion(){
+    public SensorMotion(boolean broadcast){
+        super(broadcast);
         this.type = "motion";
     }
 

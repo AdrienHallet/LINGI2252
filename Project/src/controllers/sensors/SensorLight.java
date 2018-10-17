@@ -2,7 +2,8 @@ package controllers.sensors;
 
 public class SensorLight extends Sensor {
 
-    public SensorLight(){
+    public SensorLight(boolean broadcast){
+        super(broadcast);
         this.type = "light";
     }
 
