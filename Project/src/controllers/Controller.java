@@ -14,6 +14,14 @@ public abstract class Controller {
     }
 
     /*
+     * Sets the value to the default functioning (non-alert) value,
+     * override if default value is not 0
+     */
+    public void reset() {
+        this.value = 0.0;
+    }
+
+    /*
      * Returns a string that can be displayed to the user to show the state of
      * the actuator.
      */

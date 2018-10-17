@@ -13,9 +13,13 @@
                         "type": "smoke",
                         "broadcast": true,
                         "actions": ["audio-alarm"]
+                    },
+                    {
+                        "type": "thermometer",
+                        "actions": ["thermostat"]
                     }
                 ],
-                "actuators": ["audio-alarm"]
+                "actuators": ["audio-alarm", "thermostat"]
             },
             {
                 "name": "Kitchen",
@@ -31,7 +35,14 @@
             },
             {
                 "name": "Bedroom",
-                "accessible-rooms": ["Entrance Hall"]
+                "accessible-rooms": ["Entrance Hall"],
+                "sensors": [
+                    {
+                        "type": "thermometer",
+                        "actions": ["thermostat"]
+                    }
+                ],
+                "actuators": ["thermostat"]
             },
             {
                 "name": "Bathroom",
@@ -46,5 +57,6 @@
                 "actuators": ["audio-alarm"]
             }
         ]
-    }
+    },
+    "preferred-temperature": 22.0
 }

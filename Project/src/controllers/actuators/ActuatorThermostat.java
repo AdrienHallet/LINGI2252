@@ -6,7 +6,7 @@ public class ActuatorThermostat extends Actuator {
     }
     public String getStateAsString() {
         if (this.isTriggered())
-            return "*Thermostat has launched the heating system*";
-        return "*Thermostat has stopped the heating system*";
+            return "*Heating system is on*";
+        return "*Heating system is off*";
     }
 }

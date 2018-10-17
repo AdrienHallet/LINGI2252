@@ -1,9 +1,7 @@
 import controllers.actuators.Actuator;
 import controllers.actuators.ActuatorAudioAlarm;
-import controllers.sensors.Sensor;
-import controllers.sensors.SensorLight;
-import controllers.sensors.SensorMotion;
-import controllers.sensors.SensorSmokeDetector;
+import controllers.actuators.ActuatorThermostat;
+import controllers.sensors.*;
 import org.json.*;
 
 import java.util.ArrayList;
@@ -14,6 +12,7 @@ public class Room {
     public String[] accessibleRooms;
     public Sensor[] sensors;
     public Actuator[] actuators;
+    public double minTemperature = 22.0; //ToDo add K,V in JSON to set custom temperature per room
 
     Room(JSONObject room){
         try{
@@ -25,14 +24,6 @@ public class Room {
                 this.actuators = parseActuators(room.getJSONArray("actuators"));
         }catch (Exception e){
             System.err.println(e.toString());
-        }
-    }
-
-    public void startFire(){
-        /* As the fire starts, trigger a smoke detector (if any, too bad if not) */
-        for (Sensor cSensor : sensors){
-            if (cSensor.type.equals("smoke"))
-                cSensor.trigger();
         }
     }
 
@@ -68,9 +59,12 @@ public class Room {
                         case "audio-alarm":
                             cActuator = new ActuatorAudioAlarm();
                             break;
+                        case "thermostat":
+                            cActuator = new ActuatorThermostat();
+                            break;
                         default:
                             cActuator = null; //ToDo custom exception
-                            System.err.println("Error: unsupported actuator type");
+                            System.err.println("Error: unsupported actuator type: " + type);
                             break;
                     }
                     aList[cAction] = cActuator;
@@ -90,8 +84,12 @@ public class Room {
                         newSensor = new SensorLight(broadcast);
                         list[i] = newSensor;
                         break;
+                    case "thermometer":
+                        newSensor = new SensorThermometer(broadcast, minTemperature);
+                        list[i] = newSensor;
+                        break;
                     default:
-                        System.err.println("Wrong sensor type");
+                        System.err.println("Wrong sensor type: " + type);
                         break;
                 }
                 assert newSensor != null;
@@ -113,8 +111,12 @@ public class Room {
                         newActuator = new ActuatorAudioAlarm();
                         list[i] = newActuator;
                         break;
+                    case "thermostat":
+                        newActuator = new ActuatorThermostat();
+                        list[i] = newActuator;
+                        break;
                     default:
-                        System.err.println("Error: Unsupported actuator type"); //ToDo custom exception
+                        System.err.println("Error: Unsupported actuator type in parser 2: " + type); //ToDo custom exception
                         break;
                 }
             }catch (Exception ignored){}
