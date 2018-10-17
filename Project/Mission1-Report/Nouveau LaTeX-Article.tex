@@ -1,0 +1,55 @@
+\documentclass[english]{article}
+
+\usepackage[utf8]{inputenc} % .tex file encoding
+\usepackage[T1]{fontenc} % font encoding
+
+\usepackage{amsmath} % To write math in a better way
+\usepackage{amssymb, textcomp, siunitx} % For special characters
+\usepackage{enumitem} % To change labels in itemize
+\usepackage{graphicx} % To be able to insert images
+\usepackage{caption, subcaption} % To be able to put captions to images
+\usepackage[notmath]{sansmathfonts} % To have sans serif capital letters
+\usepackage{bm} % Bold math symbols
+\usepackage{array, makecell, booktabs, boldline, multirow, tabularx} % To have better tables
+\usepackage{hyperref, etoolbox} % To insert hyperlinks
+\appto\UrlBreaks{\do\-} % To break hyperlinks on several lines
+
+\usepackage{minted} % For source code
+
+\usepackage[hscale=0.78,vscale=0.82]{geometry} % Margin sizes
+\renewcommand*{\familydefault}{\sfdefault} % Change default font to sans serif
+
+%========== Macros =================
+% command that adds urls of href in footnote
+\newcommand\fnhref[2]{%
+  \href{#1}{#2}\footnote{\url{#1}}%
+}
+%===================================
+
+\title{\textit{LINGI2252 -- Software Maintenance and Evolution}\\Mission 1: First prototype}
+\author{Simon~\textsc{Gustin} -- Adrien~\textsc{Hallet}}
+\date{October 2018}
+
+\begin{document}
+  \maketitle
+
+	% TODO we have to make a cover page
+	\section{Introduction}
+	
+	\section{Lexicon}
+	
+	\section{Scenarios}
+		\subsection{First scenario}
+		
+		\subsection{Second scenario}
+		
+	\section{Feature model}
+	
+	\section{Class diagram}
+		This class diagram is highly conceptual (which means some internal methods and attributes, or even classes, may be missing).
+		
+	\section{Potential variability points}
+	
+	\section{Conclusion}
+
+\end{document}
