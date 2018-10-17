@@ -27,7 +27,7 @@ class House{
             try {
                 JSONObject room = rooms.getJSONObject(i);
                 roomList.add(new Room(room));
-            }catch(Exception ignored){}
+            } catch(Exception ignored) {}
         }
     }
 
