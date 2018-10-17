@@ -80,15 +80,6 @@ public class Automation {
         action_loop();
     }
 
-    static void triggerAudioAlarm(Room room){
-        for (Actuator cActuator : room.actuators){
-            if (cActuator.type.equals("audio-alarm")) {
-                cActuator.update(100.0);
-            }
-
-        }
-    }
-
     static void triggerActions(Sensor sensor){
         // Trigger all actions linked to a sensor
         Actuator[] aList = sensor.getActuatorList();
