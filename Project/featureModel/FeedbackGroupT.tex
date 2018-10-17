@@ -1,0 +1,143 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University Assignment Title Page
+% LaTeX Template
+% Version 1.0 (27/12/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% WikiBooks (http://en.wikibooks.org/wiki/LaTeX/Title_Creation)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% Instructions for using this template:
+% This title page is capable of being compiled as is. This is not useful for
+% including it in another document. To do this, you have two options:
+%
+% 1) Copy/paste everything between \begin{document} and \end{document}
+% starting at \begin{titlepage} and paste this into another LaTeX file where you
+% want your title page.
+% OR
+% 2) Remove everything outside the \begin{titlepage} and \end{titlepage} and
+% move this file to the same directory as the LaTeX file you wish to add it to.
+% Then add \input{./title_page_1.tex} to your LaTeX file where you want your
+% title page.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\title{Title page with logo}
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage[table]{xcolor}
+\usepackage{booktabs}% http://ctan.org/pkg/booktabs
+
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\begin{document}
+    \begin{titlepage}
+        \center % Center everything on the page
+
+        %----------------------------------------------------------------------------------------
+        %	HEADING SECTIONS
+        %----------------------------------------------------------------------------------------
+
+        \textsc{\LARGE Université catholique de Louvain }\\[1.5cm] % Name of your university/college
+        \includegraphics[scale=0.45]{epl.jpg}
+         \\[0.5cm]
+        \textsc{\Large LINGI2252}\\[0.5cm] % Major heading such as course name
+        \textsc{\large Software Maintenance and Evolution}\\[0.5cm] % Minor heading such as course title
+
+        %----------------------------------------------------------------------------------------
+        %	TITLE SECTION
+        %----------------------------------------------------------------------------------------
+
+        \HRule \\[0.4cm]
+        { \huge \bfseries Home Automation System -- Lab 1 Review Group T}\\[0.4cm] % Title of your document
+        \HRule \\[1.5cm]
+
+        %----------------------------------------------------------------------------------------
+        %	AUTHOR SECTION
+        %----------------------------------------------------------------------------------------
+
+        \begin{minipage}{0.4\textwidth}
+        \begin{flushleft} \large
+        \emph{Authors:}\\
+        \textsc{Gustin} Simon \\
+        1171-14-00\\
+        \textsc{Hallet} Adrien \\
+        3276-13-00\\
+        \end{flushleft}
+        \end{minipage}
+        ~
+        \begin{minipage}{0.4\textwidth}
+        \begin{flushright} \large
+        \emph{Professor:} \\
+         \textsc{Mens} Kim \\% Supervisor's Name
+         \emph{Assistant:}\\
+         \textsc{Duhoux} Benoît
+        \end{flushright}
+        \end{minipage}\\[1cm]
+
+        % If you don't want a supervisor, uncomment the two lines below and remove the section above
+        %\Large \emph{Author:}\\
+        %John \textsc{Smith}\\[3cm] % Your name
+
+        %----------------------------------------------------------------------------------------
+        %	DATE SECTION
+        %----------------------------------------------------------------------------------------
+
+        {\large \today}\\[2cm] % Date, change the \today to a set date if you want to be precise
+
+        %----------------------------------------------------------------------------------------
+        %	LOGO SECTION
+        %----------------------------------------------------------------------------------------
+
+        % Include a department/university logo - this will require the graphicx package
+
+        %----------------------------------------------------------------------------------------
+
+        \vfill % Fill the rest of the page with whitespace
+    \end{titlepage}
+
+    \title{Feedback Group T's FeatureModel}
+    \newpage
+
+    \section{Overall presentation}
+        \emph{This is not really pertinent regarding to content, but we still reviewed the visuals of the document.}
+        \begin{enumerate}
+            \item The lexicon should contain useful definitions. Explaining where the lights are does not fit that requirement.
+            \item The lexicon should not explain how an element behaves. You could put it in the scenario or in a legend.
+            \item You could rotate (and center) the FeatureModel. We can rotate it manually but I guess not everyone will want/know how to do that.
+            \item You forgot the capital letter in \emph{Movementsensor}.
+
+        \end{enumerate}
+
+    \section{Contents}
+        \begin{enumerate}
+          \item You did not include the required scenario.
+          \item The lexicon lacks a proper defintion of the actuator.
+          \item If the actuator is something that reacts to ... Then the smoke detector (mandatory) should imply the alarm.
+          \item How is the feature "bed" in the bedroom a relevant feature ? Your model/scenario does not explain this.
+          \item The \emph{locking mechanism} does not require any lock (although the shutter contol does imply shutters).
+          \item The model allows a configuration to select \emph{actuators} by itself but without anything in it. Maybe use an "OR" condition or a mandatory feature inside?
+          \item \emph{Camera} is a sensor that is not used anywhere in the model.
+          \item The model does not imply that a \emph{ShutterControl} requires a \emph{clock} although you said it in the lexicon. You can use a constraint to state that requirement.
+          \item You have \emph{Lights} and \emph{GardenLights}. Do you not consider that \emph{Lights} could include them all?
+          \item Your model's biggest subtree is \emph{Home}, but only the \emph{Lights} are in the constraints.
+          \item Why are the rooms at the same level as the appliance (lights, shutters, air conditioner) in them? Use subtrees, it makes the model easier to read.
+        \end{enumerate}
+
+\end{document}
