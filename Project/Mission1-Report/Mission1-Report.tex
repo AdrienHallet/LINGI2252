@@ -31,7 +31,7 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
@@ -50,8 +50,8 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{\textit{LINGI2252}}
-\lhead{Group G -- Mission 1}
+\rhead{Mission 1 -- Group G}
+\lhead{\textit{LINGI2252}}
 \cfoot{\thepage}
 
 \begin{document}
@@ -128,14 +128,14 @@
 	\section{Introduction}
 		For the course \textit{LINGI2252 -- Software Maintenance and Evolution}, we were asked to conceptualize and implement a (simulated) system for home automation and domotics.
 		We already delivered a feature model, along with a lexicon and an example of usage scenario, provided here as well.
-		
+
 		In this document, we provide a new scenario, a (conceptual) class diagram of the code we implemented and a discussion of variablility points.
-		
+
 		The source code we implemented will be demonstrated later on in the year.
-	
+
 	\section{Lexicon}
 		The following lexicon defines the meaning of words you can find in our feature model, class diagram and (to some extent) in our code.
-		
+
 		\begin{description}
             \item[Sensor] Physical device that measures the magnitude of real-life variables.
             \item[Light sensor] Sensor that measures the quantity of light in a room (lights being off or on).
@@ -147,40 +147,54 @@
             \item[Hub] Physical and/or digital system to centralize a group of systems.
             \item[Connected device] Physical device that is (remotely) connected to the home automation system and that can thus be used as a sensor (for instance to measure how much energy the device consumes) or as an actuator (for example to turn it on or off).
         \end{description}
-	
+
 	\section{Scenarios}
 		\subsection{First scenario}
 			\textit{Note: this scenario is the one we provided with the first deliverable (for the previous lab).}
-			
+
 			It is time to fetch the kids at school and nobody else is available to bring them back. Your baby is in his bed and you have no choice but to leave him for a moment. You know it is a bad idea but hopefully you can rely on your \emph{Home Automation System}.
 
       		You leave home and set up the system via your smartphone.
       		Your \emph{smart door} locks itself up and redirects its \emph{intercom} feed to your smartphone since your door has a \emph{video sensor}. Because you also opted for a \emph{motion sensor} in the entrance, the \emph{anti-burglar} turns on and is ready to set the \emph{alarm} off, just in case.
       		On your smartphone, the \emph{audio sensor} in the baby's room calibrates itself to pick any irregularity up and acts as a \emph{babyphone}. The temperature in the baby's room will be kept constant thanks to the automatic heating system, so the baby is not too hot or too cold.
-		
+
 		\subsection{Second scenario}
 			You come back late from work. You have had a rough day, you're stressed out and tired. You decide to relax, using your \emph{Home Automation System}.
-			
+
 			Once you are in your bedroom, you use your \emph{vocal command} and ask your house to close the \emph{curtains} and to turn on a dim \emph{light}. To get you in a better mood, you tell it to play some jazzy music (which it can do thanks to your \emph{connected radio}). You ask it as well to manage the \emph{temperature} in the room so that you feel more comfortable.
-			
+
 			After a while, you decide to take a bath. In order to not spend to much time in there, you ask your house to warn you once an hour has passed (which it can do thanks to a \emph{clock} and an \emph{alarm}).
 			You can relax peacefully, knowing that your \emph{Home Automation System} will warn you if there is any danger such as a starting fire or a burglar entering in your house. You will not even have to get out of your bath to let your cat in the house.
-			
+
 			Isn't this great?
-		
-	\section{Feature model}		
+
+	\section{Feature model}
         \begin{figure}[H]
             \includegraphics[width=0.9\textwidth]{FeatureModel_3.png}
         \end{figure}
-	
+
 	\section{Class diagram}
 		This class diagram is highly conceptual (which means some internal methods and attributes, or even classes, may be missing). Nonetheless, it describes the general architecture of our code.
-		
-		% TODO insert class diagram
-		
+
+		\begin{figure}[H]
+            \includegraphics[width=0.9\textwidth]{class_diagram.png}
+        \end{figure}
+
 	\section{Potential variability points}
-		% TODO
-	
+		As shown on the feature model, the only commonality we use is the smoke detector (along with an alarm) as it is the only one that is legally mandatory.
+
+		In the current version of our code, we implemented several of the variability points shown on the same feature model. We chose them in order to be able to run several scenarios.
+		Here is a list of the features that we already have implemented and that can be used by our system:
+		\begin{itemize}
+			\item Modular house configuration, with multiple possible levels of detail (entire house, floor-by-floor, room-by-room, ...).
+      \item Modular sensor and actuators configuration with the same level of detail as the house.
+      \item Linking (static) of a sensor to an actuator in the same room or every sensor (of a given type) in the configuration. The list of our sensors is in the feature model.
+      \item Control (dynamic) of the sensors and actuators by automated or programmed behavior:
+      \item Features using the sensors and the actuators to react to scenarii or needs (\emph{e.g.: a fire, home invasion, ...})
+		\end{itemize}
+
+		In our code, we store the configuration of a house using a \textit{JSON} file. Sensors and actuators have a high variability due to inheritance of the controller, actuator and sensor abstract classes. The house and features configuration thus inherits from the house configuration and all the sensors to allow as much variability as we thought of. The next step would be to automate the configuration file and perform auto-checks, then add a GUI.
+
 	\section{Conclusion}
 		In this document, we showed several documents that describe a home automation system.
 		As we said, we implemented this system (which will be demonstrated later on during the semester).
