@@ -10,6 +10,9 @@ class House{
     ArrayList<Room> roomList;
 
 
+    /**
+     * Instantiate a house from the config file
+     */
     public House() {
         try {
             config = new JSONObject(readFile("src/config.json"));
@@ -21,6 +24,10 @@ class House{
     }
 
 
+    /**
+     * Parse the rooms in the config file into usable objects
+     * @param rooms the house's rooms
+     */
     void parseRooms(JSONArray rooms){
         roomList = new ArrayList<>();
         for (int i = 0; i < rooms.length(); i++){
@@ -31,6 +38,11 @@ class House{
         }
     }
 
+    /**
+     * Simple helper method to read from file.
+     * @param filename the file to read from
+     * @return the file as a String (no need for lines, it's JSON)
+     */
     private String readFile(String filename) {
         String result = "";
         try {

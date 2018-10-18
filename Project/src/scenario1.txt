@@ -1,0 +1,4 @@
+room.fire
+walk kitchen
+room.fire
+walk entrance hall

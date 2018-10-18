@@ -10,13 +10,27 @@ public class HomeController {
     static Scenario scenario;
     static boolean userInputScenario = true;
 
+    /**
+     * Launch the system
+     * @param args the optional file to read the scenario from
+     */
     public static void main (String[] args){
         myHouse = new House(); // Initialize the house from configuration
-        scenario = new Scenario(myHouse);
-        scenario.userInput();
+
+        if (args.length == 0) {
+            scenario = new Scenario(myHouse);
+            scenario.userInput();
+        }
+        else if (args.length == 1) {
+            userInputScenario = false;
+            scenario = new Scenario(myHouse, args[0]);
+            scenario.fileInput();
+        }
     }
 
-    /* Send the events to the controllers around the house */
+    /**
+     * Tell the sensors to dispatch their triggers to the assigned actuators
+     */
     static void controller_loop(){
         for (Room cRoom : myHouse.roomList){
             if(cRoom.sensors != null) {
@@ -58,9 +72,14 @@ public class HomeController {
         }
         if (userInputScenario)
             scenario.userInput();
+        else
+            scenario.fileInput();
     }
 
-    /* Trigger all actions linked to a sensor */
+    /**
+     * Trigger all the actuators linked to a sensor
+     * @param sensor the sensor to launch the event from
+     */
     static void triggerActions(Sensor sensor){
         Actuator[] aList = sensor.getActuatorList();
         for(Actuator cActuator : aList){
@@ -68,18 +87,19 @@ public class HomeController {
         }
     }
 
+    /**
+     * Turn a connected object on
+     * @param room the room in which the object is supposed to be
+     * @param type the type of the object to turn on
+     */
     static void turnObjectOn(Room room, String type){
-        for (ConnectedObject object : room.connectedObjects){
-            if(object.type.equals(type)){
-                object.enable();
-                return;
+        if (room.connectedObjects != null)
+            for (ConnectedObject object : room.connectedObjects){
+                if(object.type.equals(type)){
+                    object.enable();
+                    return;
+                }
             }
-        }
-        System.err.format("No %s in %s", type, room);
-    }
-
-    /* Display commands to user */
-    static void printHelp(){
-        System.out.println("ToDo"); //todo
+        System.err.format("No %s in %s\n", type, room.name);
     }
 }

@@ -1,5 +1,11 @@
 import controllers.sensors.Sensor;
 
+/**
+ * Allow the system to simulate fake events. In reality, all those events would
+ * exist in the environment and the sensors would pick up the changes.
+ *
+ * This is therefore just a basic world simulation
+ */
 public class FakeEvent {
 
     /**
