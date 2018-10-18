@@ -1,12 +1,11 @@
 package controllers.sensors;
 
-public class SensorMotion extends Sensor {
+public class SensorBadgeDetector extends Sensor {
 
-    public SensorMotion(boolean broadcast){
+    public SensorBadgeDetector(Boolean broadcast){
         super(broadcast);
-        this.type = "motion";
+        this.type = "badge";
     }
-
     public String getStateAsString(){
         if (value > 0.0)
             return "SOMETHING IS MOVING";

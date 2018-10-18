@@ -15,6 +15,13 @@ public class Room {
     public ConnectedObject[] connectedObjects;
     public double minTemperature = 22.0; //ToDo add K,V in JSON to set custom temperature per room
 
+    /**
+     * Create a room object from the config.json relevant part.
+     * Note that a room is not *required* to be a real room.
+     * You can decide that a room is split in two rooms to change the
+     * system's granularity
+     * @param room the room configuration
+     */
     Room(JSONObject room){
         try{
             this.name = room.getString("name");
@@ -46,6 +53,7 @@ public class Room {
      * Parse the sensors in a room and which actuators they are linked to
      * @param sList the sensors
      * @return the parsed list of sensors
+     * Todo Extract Switch
      */
     Sensor[] parseSensors(JSONArray sList){
         /* Parse the sensors in the room into usable objects */
@@ -110,6 +118,38 @@ public class Room {
                         newSensor = new SensorThermometer(broadcast, minTemperature);
                         list[i] = newSensor;
                         break;
+                    case "audio":
+                        newSensor = new SensorAudio(broadcast);
+                        list[i] = newSensor;
+                        break;
+                    case "badge":
+                        newSensor = new SensorBadgeDetector(broadcast);
+                        list[i] = newSensor;
+                        break;
+                    case "camera":
+                        newSensor = new SensorCamera(broadcast);
+                        list[i] = newSensor;
+                        break;
+                    case "carbonMonoxide":
+                        newSensor = new SensorCarbonMonoxide(broadcast);
+                        list[i] = newSensor;
+                        break;
+                    case "clock":
+                        newSensor = new SensorClock(broadcast);
+                        list[i] = newSensor;
+                        break;
+                    case "consumption":
+                        newSensor = new SensorConsumption(broadcast);
+                        list[i] = newSensor;
+                        break;
+                    case "humidity":
+                        newSensor = new SensorHumidity(broadcast);
+                        list[i] = newSensor;
+                        break;
+                    case "proximity":
+                        newSensor = new SensorProximity(broadcast);
+                        list[i] = newSensor;
+                        break;
                     default:
                         System.err.println("Wrong sensor type: " + type);
                         break;
@@ -125,6 +165,7 @@ public class Room {
      * Parse the actuators in a room
      * @param aList the actuators
      * @return the parsed list of actuators
+     * ToDo extract switch
      */
     Actuator[] parseActuators(JSONArray aList){
         /* Parse the actuators in the room into usable objects */

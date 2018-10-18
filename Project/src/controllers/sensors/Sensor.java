@@ -18,6 +18,10 @@ public abstract class Sensor extends Controller {
         }
     }
 
+    public Sensor(){
+        this.broadcast = false;
+    }
+
     public Sensor(Boolean broadcast){
         this.broadcast = broadcast;
     }
