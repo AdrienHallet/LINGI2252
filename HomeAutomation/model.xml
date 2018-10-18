@@ -31,8 +31,8 @@
                     <feature name="Lightbulb"/>
                     <feature name="Thermostat"/>
                     <feature name="Locking Mechanism"/>
-                    <feature name="Connected Device"/>
                 </and>
+                <feature name="Connected Device"/>
             </and>
             <and abstract="true" mandatory="true" name="Features">
                 <and abstract="true" mandatory="true" name="Safety">
