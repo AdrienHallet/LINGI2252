@@ -1,4 +1,6 @@
 import controllers.actuators.*;
+import controllers.connectedObjects.ConnectedObject;
+import controllers.connectedObjects.ConnectedRadio;
 import controllers.sensors.*;
 import org.json.*;
 
@@ -10,6 +12,7 @@ public class Room {
     public String[] accessibleRooms;
     public Sensor[] sensors;
     public Actuator[] actuators;
+    public ConnectedObject[] connectedObjects;
     public double minTemperature = 22.0; //ToDo add K,V in JSON to set custom temperature per room
 
     Room(JSONObject room){
@@ -20,11 +23,18 @@ public class Room {
                 this.sensors = parseSensors(room.getJSONArray("sensors"));
             if (room.has("actuators"))
                 this.actuators = parseActuators(room.getJSONArray("actuators"));
+            if (room.has("objects"))
+                this.connectedObjects = parseConnectedObjects(room.getJSONArray("objects"));
         }catch (Exception e){
             System.err.println(e.toString());
         }
     }
 
+    /**
+     * Helper method to format a JSONArray
+     * @param array the JSONArray
+     * @return the extracted elements
+     */
     String[] stripArray(String array){
         /* Parse the rooms in the JSON into usable objects */
         String stripped = array.replaceAll("\\[","").replaceAll("]","");
@@ -32,6 +42,11 @@ public class Room {
         return stripped.split(",");
     }
 
+    /**
+     * Parse the sensors in a room and which actuators they are linked to
+     * @param sList the sensors
+     * @return the parsed list of sensors
+     */
     Sensor[] parseSensors(JSONArray sList){
         /* Parse the sensors in the room into usable objects */
         Sensor[] list = new Sensor[sList.length()];
@@ -106,6 +121,11 @@ public class Room {
         return list;
     }
 
+    /**
+     * Parse the actuators in a room
+     * @param aList the actuators
+     * @return the parsed list of actuators
+     */
     Actuator[] parseActuators(JSONArray aList){
         /* Parse the actuators in the room into usable objects */
         Actuator[] list = new Actuator[aList.length()];
@@ -134,6 +154,30 @@ public class Room {
                     default:
                         System.err.println("Error: Unsupported actuator type in parser 2: " + type); //ToDo custom exception
                         break;
+                }
+            }catch (Exception ignored){}
+        }
+        return list;
+    }
+
+    /**
+     * Parse the connected objects in the room
+     * @param coList the objects
+     * @return the parsed list of objects
+     */
+    ConnectedObject[] parseConnectedObjects(JSONArray coList){
+        ConnectedObject[] list = new ConnectedObject[coList.length()];
+        for (int i = 0; i < coList.length(); i++){
+            try{
+                String type = coList.get(i).toString();
+                ConnectedObject newConnectedObject;
+                switch(type) {
+                    case "radio":
+                        newConnectedObject = new ConnectedRadio();
+                        list[i] = newConnectedObject;
+                        break;
+                    default:
+                        System.err.println("Error: Unsupported connected object type");
                 }
             }catch (Exception ignored){}
         }

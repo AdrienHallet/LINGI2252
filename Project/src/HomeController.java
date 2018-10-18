@@ -1,4 +1,5 @@
 import controllers.actuators.Actuator;
+import controllers.connectedObjects.ConnectedObject;
 import controllers.sensors.Sensor;
 
 import java.util.Scanner;
@@ -6,67 +7,17 @@ import java.util.Scanner;
 public class HomeController {
 
     static House myHouse;
-    static Scanner userInput;
-    static Room currentRoom;
+    static Scenario scenario;
+    static boolean userInputScenario = true;
 
     public static void main (String[] args){
         myHouse = new House(); // Initialize the house from configuration
-        userInput = new Scanner(System.in); // Get ready to receive inputs
-        currentRoom = myHouse.roomList.get(0); // Start in the first configured room
-        action_loop();
+        scenario = new Scenario(myHouse);
+        scenario.userInput();
     }
 
-    static void action_loop(){
-        System.out.println("> What will you do now?");
-        String action = userInput.nextLine();
-        switch (action.toLowerCase()) {
-            /* Commands */
-            case "exit":
-                // Exit the program
-                return;
-            case "help":
-                // Request for help
-                printHelp();
-                break;
-            case "position":
-                // Get current position
-                System.out.println(currentRoom);
-                break;
-            case "walk":
-                // Walk to next room
-                walk();
-                break;
-            case "room.fire":
-                // Start a fire in the current room
-                FakeEvent.startFire(currentRoom);
-                break;
-            case "room.dark":
-                FakeEvent.setLight(currentRoom, 100.0); //ToDo change the light sensor to work on light amount (no inversion)
-                break;
-            case "system.reset":
-                // Reset all the sensors to 0
-                for(Room room : myHouse.roomList){
-                    if(room.sensors != null) {
-                        for (Sensor sensor : room.sensors) {
-                            sensor.reset(); // Resetting a sensor will cascade the reset to the linked actuators
-                        }
-                    }
-                }
-                break;
-            default:
-                if(action.toLowerCase().startsWith("room.temperature")){
-                    double temperature = Double.parseDouble(action.replace("room.temperature ",""));
-                    FakeEvent.setTemperature(currentRoom, temperature);
-                }else {
-                    System.out.println("I did not get that ...");
-                }
-                break;
-        }
-        controller_loop();
-    }
     /* Send the events to the controllers around the house */
     static void controller_loop(){
-
         for (Room cRoom : myHouse.roomList){
             if(cRoom.sensors != null) {
                 for (Sensor cSensor : cRoom.sensors) {
@@ -79,10 +30,15 @@ public class HomeController {
         state_loop();
     }
 
-    /* Display the events happening to the user via terminal */
+    /**
+     * Loop through the house, looking for controllers that do things
+     * and display those actions to the user
+     * ToDo : move the string creation elsewhere
+     */
     static void state_loop(){
         for (Room cRoom : myHouse.roomList){
             if (cRoom.actuators != null) {
+                // Display the states of the actuators, per sensor, per room
                 for (Sensor sensor : cRoom.sensors) {
                     for (Actuator actuator : sensor.getActuatorList()) {
                         if (actuator.isTriggered()) {
@@ -90,33 +46,36 @@ public class HomeController {
                         }
                     }
                 }
+                // Display the states of the connected objects, per room
+            }
+            if (cRoom.connectedObjects != null){
+                for (ConnectedObject connectedObject : cRoom.connectedObjects){
+                    if (connectedObject.isTriggered()){
+                        System.out.printf("[%s:%s]: %s\n", cRoom.name, connectedObject.type, connectedObject.getStateAsString());
+                    }
+                }
             }
         }
-        action_loop();
+        if (userInputScenario)
+            scenario.userInput();
     }
 
     /* Trigger all actions linked to a sensor */
     static void triggerActions(Sensor sensor){
-
         Actuator[] aList = sensor.getActuatorList();
         for(Actuator cActuator : aList){
             cActuator.trigger();
         }
     }
 
-    /* Allow the user to walk from a room to another */
-    static void walk() {
-        System.out.println("From " + currentRoom.name + " you can reach:");
-        for (String room : currentRoom.accessibleRooms) {
-            System.out.println(room);
-        }
-        String newRoom = userInput.nextLine();
-        for (Room cRoom : myHouse.roomList) {
-            if (cRoom.name.equalsIgnoreCase(newRoom)) {
-                currentRoom = cRoom;
-                System.out.println("Waling into " + currentRoom.name);
+    static void turnObjectOn(Room room, String type){
+        for (ConnectedObject object : room.connectedObjects){
+            if(object.type.equals(type)){
+                object.enable();
+                return;
             }
         }
+        System.err.format("No %s in %s", type, room);
     }
 
     /* Display commands to user */

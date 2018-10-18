@@ -23,7 +23,8 @@
                         "actions": ["lightbulb"]
                     }
                 ],
-                "actuators": ["audio-alarm", "thermostat", "lightbulb"]
+                "actuators": ["audio-alarm", "thermostat", "lightbulb"],
+                "objects": ["radio"]
             },
             {
                 "name": "Kitchen",
