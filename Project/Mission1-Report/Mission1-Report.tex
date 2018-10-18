@@ -50,8 +50,8 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{\textit{LINGI2252}}
-\lhead{Group G -- Mission 1}
+\rhead{Mission 1 -- Group G}
+\lhead{\textit{LINGI2252}}
 \cfoot{\thepage}
 
 \begin{document}
@@ -179,7 +179,15 @@
 		% TODO insert class diagram
 		
 	\section{Potential variability points}
-		% TODO
+		As shown on the feature model, the only commonality we use is the smoke detector (along with an alarm) as it is the only one that is legally mandatory.
+		
+		In the current version of our code, we implemented several of the variability points shown on the same feature model. We chose them in order to be able to run several scenarios.
+		Here is an exhaustive list of the features that we implemented and that can be used (or not) within different home configurations:
+		\begin{itemize}
+			\item TODO
+		\end{itemize}
+		
+		In our code, we store the configuration of a house using a \textit{JSON} file.
 	
 	\section{Conclusion}
 		In this document, we showed several documents that describe a home automation system.
