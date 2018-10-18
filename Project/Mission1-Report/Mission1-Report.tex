@@ -64,7 +64,7 @@
 
         \textsc{\LARGE Université Catholique de Louvain }\\[0.8cm] % Name of your university/college
         \includegraphics[scale=0.45]{epl.jpg}
-         \\[1.5cm]
+        \\[1.5cm]
         \textsc{\Large LINGI2252}\\[0.5cm] % Major heading such as course name
         \textsc{\large Software Maintenance and Evolution}\\[0.8cm] % Minor heading such as course title
 
@@ -127,11 +127,9 @@
 
 	\section{Introduction}
 		For the course \textit{LINGI2252 -- Software Maintenance and Evolution}, we were asked to conceptualize and implement a (simulated) system for home automation and domotics.
-		We already delivered a feature model, along with a lexicon and an example of usage scenario, provided here as well.
-
-		In this document, we provide a new scenario, a (conceptual) class diagram of the code we implemented and a discussion of variablility points.
-
-		The source code we implemented will be demonstrated later on in the year.
+		
+		We already delivered a feature model, along with a lexicon and an example of usage scenario, provided here as well. The lexicon precises the meaning of some of the words we used in other included documents.
+		In addition to this, we provide in this paper a new scenario, a (conceptual) class diagram of the code we implemented and a discussion of variablility points.
 
 	\section{Lexicon}
 		The following lexicon defines the meaning of words you can find in our feature model, class diagram and (to some extent) in our code.
@@ -149,6 +147,8 @@
         \end{description}
 
 	\section{Scenarios}
+		We show here two examples of scenarios in which our home automation system could be used.
+		
 		\subsection{First scenario}
 			\textit{Note: this scenario is the one we provided with the first deliverable (for the previous lab).}
 
@@ -161,7 +161,7 @@
 		\subsection{Second scenario}
 			You come back late from work. You have had a rough day, you're stressed out and tired. You decide to relax, using your \emph{Home Automation System}.
 
-			Once you are in your bedroom, you use your \emph{vocal command} and ask your house to close the \emph{curtains} and to turn on a dim \emph{light}. To get you in a better mood, you tell it to play some jazzy music (which it can do thanks to your \emph{connected radio}). You ask it as well to manage the \emph{temperature} in the room so that you feel more comfortable.
+			Once you are in your bedroom, you use your \emph{vocal command} and ask your house to close the \emph{curtains} and to turn on a dim \emph{light}. To get in a better mood, you tell it to play some jazzy music (which it can do thanks to your \emph{connected radio}). You ask it as well to manage the \emph{temperature} in the room so that you feel more comfortable.
 
 			After a while, you decide to take a bath. In order to not spend to much time in there, you ask your house to warn you once an hour has passed (which it can do thanks to a \emph{clock} and an \emph{alarm}).
 			You can relax peacefully, knowing that your \emph{Home Automation System} will warn you if there is any danger such as a starting fire or a burglar entering in your house. You will not even have to get out of your bath to let your cat in the house.
@@ -169,6 +169,8 @@
 			Isn't this great?
 
 	\section{Feature model}
+		In this section, we provide our (corrected) feature model.	
+	
         \begin{figure}[H]
             \includegraphics[width=0.9\textwidth]{FeatureModel_3.png}
         \end{figure}
@@ -181,22 +183,25 @@
         \end{figure}
 
 	\section{Potential variability points}
-		As shown on the feature model, the only commonality we use is the smoke detector (along with an alarm) as it is the only one that is legally mandatory.
+		As shown on the feature model, the only commonality we use is the smoke detector (along with an alarm) as it is the only one that is legally mandatory. However, it is currently possible in our code to make a configuration that doesn't include a smoke detector (and the audio alarm that goes along with it).
 
 		In the current version of our code, we implemented several of the variability points shown on the same feature model. We chose them in order to be able to run several scenarios.
-		Here is a list of the features that we already have implemented and that can be used by our system:
+		Here is a list of the features that we already implemented and that can be used in our system:
 		\begin{itemize}
 			\item Modular house configuration, with multiple possible levels of detail (entire house, floor-by-floor, room-by-room, ...).
       \item Modular sensor and actuators configuration with the same level of detail as the house.
-      \item Linking (static) of a sensor to an actuator in the same room or every sensor (of a given type) in the configuration. The list of our sensors is in the feature model.
-      \item Control (dynamic) of the sensors and actuators by automated or programmed behavior:
-      \item Features using the sensors and the actuators to react to scenarii or needs (\emph{e.g.: a fire, home invasion, ...})
+      \item (Static) Linking of a sensor to an actuator in the same room or every sensor (of a given type) in the configuration. The list of our sensors and actuators is in the feature model.
+      \item (Dynamic) control of the sensors and actuators by automated or programmed behavior (notably thanks to the possibility to enable and disable them on the fly).
+      \item Features using the sensors and the actuators to react to scenarios or needs (\emph{e.g. a fire, home invasion, ...})
 		\end{itemize}
 
-		In our code, we store the configuration of a house using a \textit{JSON} file. Sensors and actuators have a high variability due to inheritance of the controller, actuator and sensor abstract classes. The house and features configuration thus inherits from the house configuration and all the sensors to allow as much variability as we thought of. The next step would be to automate the configuration file and perform auto-checks, then add a GUI.
+		In our code, we store the configuration of a house using a \textit{JSON} file.
+		Sensors and actuators have a high variability due to inheritance of the \texttt{Controller}, \texttt{Actuator} and \texttt{Sensor} abstract classes. The features configuration inherits from the house configuration and all the sensors to allow as much variability as possible.
+		
+		The next step would be to automate the configuration file and perform auto-checks, then add a GUI.
 
 	\section{Conclusion}
-		In this document, we showed several documents that describe a home automation system.
-		As we said, we implemented this system (which will be demonstrated later on during the semester).
+		In this document, we showed several documents that describe our home automation system.
+		As we said, we have a working implementation of such a system. This system will be demonstrated next week.
 
 \end{document}
