@@ -193,7 +193,7 @@
       \item Features using the sensors and the actuators to react to scenarii or needs (\emph{e.g.: a fire, home invasion, ...})
 		\end{itemize}
 
-		In our code, we store the configuration of a house using a \textit{JSON} file.
+		In our code, we store the configuration of a house using a \textit{JSON} file. Sensors and actuators have a high variability due to inheritance of the controller, actuator and sensor abstract classes. The house and features configuration thus inherits from the house configuration and all the sensors to allow as much variability as we thought of. The next step would be to automate the configuration file and perform auto-checks, then add a GUI.
 
 	\section{Conclusion}
 		In this document, we showed several documents that describe a home automation system.
