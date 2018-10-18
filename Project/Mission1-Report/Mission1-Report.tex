@@ -43,8 +43,16 @@
 \usepackage[table]{xcolor}
 \usepackage{booktabs}% http://ctan.org/pkg/booktabs
 
+\usepackage{fancyhdr}
+
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textit{LINGI2252}}
+\lhead{Group G -- Mission 1}
+\cfoot{\thepage}
 
 \begin{document}
     \begin{titlepage}
@@ -116,8 +124,6 @@
 
     \title{AAAAAA}
     \newpage
-    
-    % TODO Add group number and make a header saying it on each page
 
 	\section{Introduction}
 		For the course \textit{LINGI2252 -- Software Maintenance and Evolution}, we were asked to conceptualize and implement a (simulated) system for home automation and domotics.
@@ -139,6 +145,7 @@
             \item[Heavy appliance] Home systems that use lots of electricity (washing machine, dishwasher, oven, etc).
             \item[IoT] Internet of Things, the use of the internet for appliances like watches, clothes, ...
             \item[Hub] Physical and/or digital system to centralize a group of systems.
+            \item[Connected device] Physical device that is (remotely) connected to the home automation system and that can thus be used as a sensor (for instance to measure how much energy the device consumes) or as an actuator (for example to turn it on or off).
         \end{description}
 	
 	\section{Scenarios}
@@ -154,17 +161,14 @@
 		\subsection{Second scenario}
 			You come back late from work. You have had a rough day, you're stressed out and tired. You decide to relax, using your \emph{Home Automation System}.
 			
-			Once you are in your bedroom, you use your \emph{vocal command} and ask your house to close the \emph{curtains} and to turn on a dim \emph{light}. You ask it as well to manage the \emph{temperature} in the room so that you feel more comfortable.
+			Once you are in your bedroom, you use your \emph{vocal command} and ask your house to close the \emph{curtains} and to turn on a dim \emph{light}. To get you in a better mood, you tell it to play some jazzy music (which it can do thanks to your \emph{connected radio}). You ask it as well to manage the \emph{temperature} in the room so that you feel more comfortable.
 			
 			After a while, you decide to take a bath. In order to not spend to much time in there, you ask your house to warn you once an hour has passed (which it can do thanks to a \emph{clock} and an \emph{alarm}).
 			You can relax peacefully, knowing that your \emph{Home Automation System} will warn you if there is any danger such as a starting fire or a burglar entering in your house. You will not even have to get out of your bath to let your cat in the house.
 			
 			Isn't this great?
 		
-	\section{Feature model}
-		\textit{Note: this feature model is the same we provided for the first deliverable.}
-		% TODO missing sound system actuator?
-		
+	\section{Feature model}		
         \begin{figure}[H]
             \includegraphics[width=0.9\textwidth]{FeatureModel_2.png}
         \end{figure}
