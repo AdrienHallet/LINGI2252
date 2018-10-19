@@ -49,9 +49,15 @@
                     {
                         "type": "light",
                         "actions": ["lightbulb"]
+                    },
+                    {
+                        "type": "smoke",
+                        "broadcast": true,
+                        "actions": ["audio-alarm"]
                     }
                 ],
-                "actuators": ["thermostat", "lightbulb"]
+                "actuators": ["thermostat", "lightbulb", "motorCurtains", "audio-alarm"],
+                "objects": ["radio"]
             },
             {
                 "name": "Bathroom",

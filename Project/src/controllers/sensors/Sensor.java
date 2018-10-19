@@ -7,8 +7,15 @@ public abstract class Sensor extends Controller {
     boolean broadcast = false;
     Actuator[] actuatorList;
 
-    @Override
-    /*
+    public Sensor(){
+        this.broadcast = false;
+    }
+
+    public Sensor(Boolean broadcast){
+        this.broadcast = broadcast;
+    }
+
+    /**
      * When a sensor is reset, reset the linked actuators
      */
     public void reset(){
@@ -18,14 +25,9 @@ public abstract class Sensor extends Controller {
         }
     }
 
-    public Sensor(){
-        this.broadcast = false;
+    public boolean shouldBroadcast(){
+        return this.broadcast;
     }
-
-    public Sensor(Boolean broadcast){
-        this.broadcast = broadcast;
-    }
-
     public void setActuatorList(Actuator[] list){
         this.actuatorList = list;
     }

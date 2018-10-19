@@ -88,6 +88,9 @@ public class Scenario {
                 // Get current position
                 System.out.println(currentRoom.name);
                 break;
+            case "observe":
+                currentRoom.printState();
+                break;
             case "walk":
                 // Walk to next room
                 walk();
@@ -99,10 +102,6 @@ public class Scenario {
             case "room.dark":
                 // Set the current room to darkness
                 FakeEvent.setLight(currentRoom, 100.0); //ToDo change the light sensor to work on light amount (no inversion)
-                break;
-            case "room.music":
-                // Turn the radio on in the room
-                HomeController.turnObjectOn(currentRoom, "radio");
                 break;
             case "system.reset":
                 // Reset all the sensors to 0
@@ -121,6 +120,12 @@ public class Scenario {
                 } else if (action.toLowerCase().startsWith("walk ")){
                     String room = action.replace("walk ", "");
                     walk(room);
+                } else if (action.toLowerCase().startsWith("set ")){
+                    String[] params = action.replace("set ", "").split(" ");
+                    currentRoom.setActuatorTypeToValue(params[0], Double.parseDouble(params[1]));
+                } else if (action.toLowerCase().startsWith(("toggle "))){
+                    String object = action.replace("toggle ", "");
+                    HomeController.turnObjectOn(currentRoom, object);
                 }
 
                 else {

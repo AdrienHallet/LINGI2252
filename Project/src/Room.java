@@ -38,6 +38,29 @@ public class Room {
     }
 
     /**
+     * Print the state of the room, consisting of all the actuators' states
+     */
+    public void printState(){
+        if (actuators != null)
+            for (Actuator cActuator : actuators)
+                System.out.format("[%s:%s]: %s\n", name, cActuator.type, cActuator.getStateAsString());
+    }
+
+
+    /**
+     * Set the value of all actuators of given type
+     * @param type the actuator type
+     */
+    public void setActuatorTypeToValue(String type, double value){
+        if (actuators != null){
+            for (Actuator cActuator : actuators){
+                if (cActuator.type.equals(type)){
+                    cActuator.value = value;
+                }
+            }
+        }
+    }
+    /**
      * Helper method to format a JSONArray
      * @param array the JSONArray
      * @return the extracted elements
@@ -88,6 +111,12 @@ public class Room {
                             break;
                         case "motor":
                             cActuator = new ActuatorMotor();
+                            break;
+                        case "motorCurtains":
+                            cActuator = new ActuatorMotorCurtains();
+                            break;
+                        case "motorDoor":
+                            cActuator = new ActuatorMotorDoor();
                             break;
                         case "thermostat":
                             cActuator = new ActuatorThermostat();
@@ -182,12 +211,23 @@ public class Room {
                     case "lightbulb":
                         newActuator = new ActuatorLightbulb();
                         list[i] = newActuator;
+                        break;
                     case "lock":
                         newActuator = new ActuatorLock();
                         list[i] = newActuator;
+                        break;
                     case "motor":
                         newActuator = new ActuatorMotor();
                         list[i] = newActuator;
+                        break;
+                    case "motorDoor":
+                        newActuator = new ActuatorMotorDoor();
+                        list[i] = newActuator;
+                        break;
+                    case "motorCurtains":
+                        newActuator = new ActuatorMotorCurtains();
+                        list[i] = newActuator;
+                        break;
                     case "thermostat":
                         newActuator = new ActuatorThermostat();
                         list[i] = newActuator;

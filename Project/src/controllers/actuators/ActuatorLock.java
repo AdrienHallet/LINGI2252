@@ -6,7 +6,7 @@ public class ActuatorLock extends Actuator {
     }
     public String getStateAsString() {
         if (this.isTriggered())
-            return "*Locks are unlocked*";
-        return "*Locks are locked*";
+            return "Locks are unlocked";
+        return "Locks are locked";
     }
 }

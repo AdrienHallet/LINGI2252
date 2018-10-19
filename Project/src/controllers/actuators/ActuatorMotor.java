@@ -7,7 +7,7 @@ public class ActuatorMotor extends Actuator {
 
     public String getStateAsString() {
         if (this.isTriggered())
-            return "*Motor is activating*";
-        return "*Motor is idle*";
+            return "Motor is activating";
+        return "Motor is idle";
     }
 }

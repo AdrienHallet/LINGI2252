@@ -83,8 +83,15 @@ public class HomeController {
     static void triggerActions(Sensor sensor){
         Actuator[] aList = sensor.getActuatorList();
         for(Actuator cActuator : aList){
-            cActuator.trigger();
+            if (sensor.shouldBroadcast())
+                for (Room cRoom : myHouse.roomList)
+                    for(Actuator cSubActuator : cRoom.actuators)
+                        if (cSubActuator.type.equals(cActuator.type))
+                            cSubActuator.trigger();
+            else
+                cActuator.trigger();
         }
+
     }
 
     /**
