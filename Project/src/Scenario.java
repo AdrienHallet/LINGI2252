@@ -95,10 +95,6 @@ public class Scenario {
                 // Walk to next room
                 walk();
                 break;
-            case "room.fire":
-                // Start a fire in the current room
-                FakeEvent.startFire(currentRoom);
-                break;
             case "room.dark":
                 // Set the current room to darkness
                 FakeEvent.setLight(currentRoom, 100.0); //ToDo change the light sensor to work on light amount (no inversion)
@@ -126,6 +122,9 @@ public class Scenario {
                 } else if (action.toLowerCase().startsWith(("toggle "))){
                     String object = action.replace("toggle ", "");
                     HomeController.turnObjectOn(currentRoom, object);
+                } else if (action.toLowerCase().startsWith("fire ")){
+                    String room = action.replace("fire ", "");
+                    FakeEvent.startFire(house.getRoomByName(room));
                 }
 
                 else {
@@ -154,7 +153,7 @@ public class Scenario {
         for (Room cRoom : house.roomList) {
             if (cRoom.name.equalsIgnoreCase(newRoom)) {
                 currentRoom = cRoom;
-                System.out.println("Waling into " + currentRoom.name);
+                System.out.println("Walking into " + currentRoom.name);
             }
         }
     }
@@ -167,7 +166,7 @@ public class Scenario {
         for (Room cRoom : house.roomList) {
             if (cRoom.name.equalsIgnoreCase(room)) {
                 currentRoom = cRoom;
-                System.out.println("Waling into " + currentRoom.name);
+                System.out.println("Walking into " + currentRoom.name);
             }
         }
     }

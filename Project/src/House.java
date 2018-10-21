@@ -23,6 +23,18 @@ class House{
         }
     }
 
+    /**
+     * Returns the room with given name, null if not found
+     * @param roomName the room name to search for
+     * @return the room or null if not found
+     */
+    public Room getRoomByName(String roomName){
+        for (Room cRoom : roomList)
+            if (cRoom.name.equalsIgnoreCase(roomName))
+                return cRoom;
+        return null;
+    }
+
 
     /**
      * Parse the rooms in the config file into usable objects
