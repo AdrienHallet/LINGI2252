@@ -129,62 +129,8 @@ public class Room {
                     aList[cAction] = cActuator;
                 }
 
-                Sensor newSensor = null;
-                switch(type) {
-                    case "motion":
-                        newSensor = new SensorMotion(broadcast);
-                        list[i] = newSensor;
-                        break;
-                    case "smoke":
-                        newSensor = new SensorSmokeDetector(broadcast);
-                        list[i] = newSensor;
-                        break;
-                    case "light":
-                        newSensor = new SensorLight(broadcast);
-                        list[i] = newSensor;
-                        break;
-                    case "thermometer":
-                        newSensor = new SensorThermometer(broadcast, minTemperature);
-                        list[i] = newSensor;
-                        break;
-                    case "audio":
-                        newSensor = new SensorAudio(broadcast);
-                        list[i] = newSensor;
-                        break;
-                    case "badge":
-                        newSensor = new SensorBadgeDetector(broadcast);
-                        list[i] = newSensor;
-                        break;
-                    case "camera":
-                        newSensor = new SensorCamera(broadcast);
-                        list[i] = newSensor;
-                        break;
-                    case "carbonMonoxide":
-                        newSensor = new SensorCarbonMonoxide(broadcast);
-                        list[i] = newSensor;
-                        break;
-                    case "clock":
-                        newSensor = new SensorClock(broadcast);
-                        list[i] = newSensor;
-                        break;
-                    case "consumption":
-                        newSensor = new SensorConsumption(broadcast);
-                        list[i] = newSensor;
-                        break;
-                    case "humidity":
-                        newSensor = new SensorHumidity(broadcast);
-                        list[i] = newSensor;
-                        break;
-                    case "proximity":
-                        newSensor = new SensorProximity(broadcast);
-                        list[i] = newSensor;
-                        break;
-                    default:
-                        System.err.println("Wrong sensor type: " + type);
-                        break;
-                }
-                assert newSensor != null;
-                newSensor.setActuatorList(aList);
+                list[i] = SensorFactory.create(type, broadcast);
+                list[i].setActuatorList(aList);
             }catch (Exception ignored){}
         }
         return list;

@@ -5,4 +5,4 @@ set lightbulb 10.0
 set motorCurtains 0.0
 toggle radio
 observe
-room.fire
+fire kitchen
