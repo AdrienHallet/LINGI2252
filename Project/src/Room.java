@@ -98,35 +98,7 @@ public class Room {
                 //Loop over each actuator and add it to the sensor's list
                 for(int cAction = 0; cAction < actions.length(); cAction++){
                     String cType = actions.get(cAction).toString();
-                    Actuator cActuator;
-                    switch(cType) {
-                        case "audio-alarm":
-                            cActuator = new ActuatorAudioAlarm();
-                            break;
-                        case "lightbulb":
-                            cActuator = new ActuatorLightbulb();
-                            break;
-                        case "lock":
-                            cActuator = new ActuatorLock();
-                            break;
-                        case "motor":
-                            cActuator = new ActuatorMotor();
-                            break;
-                        case "motorCurtains":
-                            cActuator = new ActuatorMotorCurtains();
-                            break;
-                        case "motorDoor":
-                            cActuator = new ActuatorMotorDoor();
-                            break;
-                        case "thermostat":
-                            cActuator = new ActuatorThermostat();
-                            break;
-                        default:
-                            cActuator = null; //ToDo custom exception
-                            System.err.println("Error: unsupported actuator type: " + type);
-                            break;
-                    }
-                    aList[cAction] = cActuator;
+                    aList[cAction] = ActuatorFactory.create(cType);
                 }
 
                 list[i] = SensorFactory.create(type, broadcast);
@@ -148,40 +120,7 @@ public class Room {
         for (int i = 0; i < aList.length(); i++){
             try {
                 String type = aList.get(i).toString();
-                Actuator newActuator;
-                switch(type) {
-                    case "audio-alarm":
-                        newActuator = new ActuatorAudioAlarm();
-                        list[i] = newActuator;
-                        break;
-                    case "lightbulb":
-                        newActuator = new ActuatorLightbulb();
-                        list[i] = newActuator;
-                        break;
-                    case "lock":
-                        newActuator = new ActuatorLock();
-                        list[i] = newActuator;
-                        break;
-                    case "motor":
-                        newActuator = new ActuatorMotor();
-                        list[i] = newActuator;
-                        break;
-                    case "motorDoor":
-                        newActuator = new ActuatorMotorDoor();
-                        list[i] = newActuator;
-                        break;
-                    case "motorCurtains":
-                        newActuator = new ActuatorMotorCurtains();
-                        list[i] = newActuator;
-                        break;
-                    case "thermostat":
-                        newActuator = new ActuatorThermostat();
-                        list[i] = newActuator;
-                        break;
-                    default:
-                        System.err.println("Error: Unsupported actuator type in parser 2: " + type); //ToDo custom exception
-                        break;
-                }
+                list[i] = ActuatorFactory.create(type);
             }catch (Exception ignored){}
         }
         return list;

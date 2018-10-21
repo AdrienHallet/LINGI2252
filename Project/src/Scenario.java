@@ -126,7 +126,6 @@ public class Scenario {
                     String room = action.replace("fire ", "");
                     FakeEvent.startFire(house.getRoomByName(room));
                 }
-
                 else {
                     System.out.println("I did not get that ...");
                 }
