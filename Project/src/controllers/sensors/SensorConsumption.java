@@ -5,7 +5,7 @@ public class SensorConsumption extends Sensor {
 
     public SensorConsumption(Boolean broadcast){
         super(broadcast);
-        this.type = "consumption";
+        this.type = CONSUMPTION;
     }
 
     /**

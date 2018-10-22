@@ -4,6 +4,6 @@ public class SensorProximity extends SensorMotion {
 
     public SensorProximity(Boolean broadcast){
         super(broadcast);
-        this.type = "proxitimity";
+        this.type = PROXIMITY;
     }
 }

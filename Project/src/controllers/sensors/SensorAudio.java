@@ -4,7 +4,7 @@ public class SensorAudio extends Sensor{
 
     public SensorAudio(Boolean broadcast){
         super();
-        this.type = "audio";
+        this.type = AUDIO;
     }
 
     public String getStateAsString() {

@@ -13,7 +13,7 @@ public class FakeEvent {
      */
     public static void startFire(Room room){
         for (Sensor cSensor : room.sensors){
-            if (cSensor.type.equals("smoke"))
+            if (cSensor.type.equals(Sensor.SMOKE))
                 cSensor.trigger();
         }
     }
@@ -25,7 +25,7 @@ public class FakeEvent {
      */
     public static void setTemperature(Room room, double temperature) {
         for (Sensor cSensor : room.sensors){
-            if (cSensor.type.equals("thermometer")){
+            if (cSensor.type.equals(Sensor.THERMOMETER)){
                 cSensor.value = temperature;
             }
         }
@@ -38,7 +38,7 @@ public class FakeEvent {
      */
     public static void setLight(Room room, double light) {
         for (Sensor cSensor : room.sensors){
-            if (cSensor.type.equals("light")){
+            if (cSensor.type.equals(Sensor.LIGHT)){
                 cSensor.value = light;
             }
         }

@@ -13,7 +13,6 @@ public class Room {
     public Sensor[] sensors;
     public Actuator[] actuators;
     public ConnectedObject[] connectedObjects;
-    public double minTemperature = 22.0; //ToDo add K,V in JSON to set custom temperature per room
 
     /**
      * Create a room object from the config.json relevant part.

@@ -3,7 +3,7 @@ package controllers.actuators;
 public class ActuatorMotorCurtains extends ActuatorMotor {
 
     public ActuatorMotorCurtains(){
-        this.type = "motorCurtains";
+        this.type = MOTOR_CURTAINS;
     }
 
     public String getStateAsString(){

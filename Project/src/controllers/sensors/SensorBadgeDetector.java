@@ -4,7 +4,7 @@ public class SensorBadgeDetector extends Sensor {
 
     public SensorBadgeDetector(Boolean broadcast){
         super(broadcast);
-        this.type = "badge";
+        this.type = BADGE;
     }
     public String getStateAsString(){
         if (value > 0.0)

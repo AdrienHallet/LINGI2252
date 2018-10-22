@@ -2,7 +2,7 @@ package controllers.actuators;
 
 public class ActuatorLightbulb extends Actuator {
     public ActuatorLightbulb() {
-        this.type = "lightbulb";
+        this.type = LIGHT;
     }
 
     public String getStateAsString() {

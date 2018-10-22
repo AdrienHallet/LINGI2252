@@ -2,7 +2,7 @@ package controllers.actuators;
 
 public class ActuatorMotor extends Actuator {
     public ActuatorMotor() {
-        this.type = "motor";
+        this.type = MOTOR;
     }
 
     public String getStateAsString() {

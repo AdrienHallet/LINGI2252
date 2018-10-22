@@ -4,5 +4,6 @@ walk bedroom
 set lightbulb 10.0
 set motorCurtains 0.0
 toggle radio
+room.temperature 18.0
 observe
 fire kitchen

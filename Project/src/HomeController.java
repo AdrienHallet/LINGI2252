@@ -83,11 +83,12 @@ public class HomeController {
     static void triggerActions(Sensor sensor){
         Actuator[] aList = sensor.getActuatorList();
         for(Actuator cActuator : aList){
-            if (sensor.shouldBroadcast())
+            if (sensor.shouldBroadcast()) {
                 for (Room cRoom : myHouse.roomList)
-                    for(Actuator cSubActuator : cRoom.actuators)
+                    for (Actuator cSubActuator : cRoom.actuators)
                         if (cSubActuator.type.equals(cActuator.type))
                             cSubActuator.trigger();
+            }
             else
                 cActuator.trigger();
         }
@@ -99,11 +100,11 @@ public class HomeController {
      * @param room the room in which the object is supposed to be
      * @param type the type of the object to turn on
      */
-    static void turnObjectOn(Room room, String type){
+    static void toggleObject(Room room, String type){
         if (room.connectedObjects != null)
             for (ConnectedObject object : room.connectedObjects){
                 if(object.type.equals(type)){
-                    object.enable();
+                    object.toggle();
                     return;
                 }
             }

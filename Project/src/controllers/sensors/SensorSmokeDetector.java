@@ -4,7 +4,7 @@ public class SensorSmokeDetector extends Sensor {
 
     public SensorSmokeDetector(boolean broadcast){
         super(broadcast);
-        this.type = "smoke";
+        this.type = SMOKE;
     }
 
     public String getStateAsString(){

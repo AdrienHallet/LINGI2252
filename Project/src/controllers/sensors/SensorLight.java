@@ -4,7 +4,7 @@ public class SensorLight extends Sensor {
 
     public SensorLight(boolean broadcast){
         super(broadcast);
-        this.type = "light";
+        this.type = LIGHT;
     }
 
     public String getStateAsString() {

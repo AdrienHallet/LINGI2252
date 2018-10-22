@@ -4,7 +4,7 @@ public class SensorCarbonMonoxide extends Sensor {
 
     public SensorCarbonMonoxide(Boolean broadcast){
         super(broadcast);
-        this.type = "carbonMonoxide";
+        this.type = CARBON_MONOXIDE;
     }
 
     public String getStateAsString() {

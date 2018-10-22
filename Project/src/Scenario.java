@@ -111,8 +111,8 @@ public class Scenario {
                 break;
             default:
                 if(action.toLowerCase().startsWith("room.temperature")){
-                    double temperature = Double.parseDouble(action.replace("room.temperature ",""));
-                    FakeEvent.setTemperature(currentRoom, temperature);
+                    Double temperature = Double.parseDouble(action.replace("room.temperature ",""));
+                    FakeEvent.setTemperature(house.getRoomByName(currentRoom.name), temperature);
                 } else if (action.toLowerCase().startsWith("walk ")){
                     String room = action.replace("walk ", "");
                     walk(room);
@@ -121,7 +121,7 @@ public class Scenario {
                     currentRoom.setActuatorTypeToValue(params[0], Double.parseDouble(params[1]));
                 } else if (action.toLowerCase().startsWith(("toggle "))){
                     String object = action.replace("toggle ", "");
-                    HomeController.turnObjectOn(currentRoom, object);
+                    HomeController.toggleObject(currentRoom, object);
                 } else if (action.toLowerCase().startsWith("fire ")){
                     String room = action.replace("fire ", "");
                     FakeEvent.startFire(house.getRoomByName(room));

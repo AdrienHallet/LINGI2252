@@ -4,7 +4,7 @@ public class SensorClock extends Sensor {
 
     public SensorClock(Boolean broadcast){
         super(broadcast);
-        this.type = "clock";
+        this.type = CLOCK;
     }
 
     long value;

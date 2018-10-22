@@ -5,7 +5,7 @@ public class ActuatorAudioAlarm extends Actuator {
     String sound = "BEEP BEEP BEEP BEEP";
 
     public ActuatorAudioAlarm() {
-        this.type = "audio-alarm";
+        this.type = AUDIO;
     }
 
     public String getStateAsString(){

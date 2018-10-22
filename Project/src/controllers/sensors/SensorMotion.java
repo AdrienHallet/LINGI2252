@@ -4,7 +4,7 @@ public class SensorMotion extends Sensor {
 
     public SensorMotion(boolean broadcast){
         super(broadcast);
-        this.type = "motion";
+        this.type = MOTION;
     }
 
     public String getStateAsString(){

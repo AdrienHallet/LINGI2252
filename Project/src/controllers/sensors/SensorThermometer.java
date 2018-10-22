@@ -2,11 +2,11 @@ package controllers.sensors;
 
 public class SensorThermometer extends Sensor {
 
-    public double triggerTemperature = 22.0; // Default value when a thermometer triggers the signal to the thermostat
+    public double triggerTemperature; // Default value when a thermometer triggers the signal to the thermostat
 
     public SensorThermometer(boolean broadcast, double triggerTemperature){
         super(broadcast);
-        this.type = "thermometer";
+        this.type = THERMOMETER;
         this.triggerTemperature = triggerTemperature;
         this.value = triggerTemperature;
     }

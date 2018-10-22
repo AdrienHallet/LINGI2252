@@ -2,7 +2,7 @@ package controllers.actuators;
 
 public class ActuatorThermostat extends Actuator {
     public ActuatorThermostat() {
-        this.type = "thermostat";
+        this.type = THERMOSTAT;
     }
     public String getStateAsString() {
         if (this.isTriggered())
