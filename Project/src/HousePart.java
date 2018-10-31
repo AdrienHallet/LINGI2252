@@ -25,10 +25,16 @@ public class HousePart {
             this.accessibleHouseParts = stripArray(room.getJSONArray("accessible-houseParts").toString());
             if (room.has("sensors"))
                 this.sensors = parseSensors(room.getJSONArray("sensors"));
+            else
+                this.sensors = new Sensor[0];
             if (room.has("actuators"))
                 this.actuators = parseActuators(room.getJSONArray("actuators"));
+            else
+                this.actuators = new Actuator[0];
             if (room.has("objects"))
                 this.connectedObjects = parseConnectedObjects(room.getJSONArray("objects"));
+            else
+                this.connectedObjects = new ConnectedObject[0];
         }catch (Exception e){
             System.err.println(e.toString());
         }
