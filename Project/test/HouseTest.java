@@ -9,7 +9,7 @@ class HouseTest {
     void testEmptyHouse() {
         House house = new House("test/jsons/config0.json");
 
-        assertNull(house.getRoomByName("Entrance Hall"));
+        assertNull(house.getHousePartByName("Entrance Hall"));
     }
 
     @org.junit.jupiter.api.Test
@@ -18,21 +18,21 @@ class HouseTest {
 
         String hallName = "Entrance Hall", bedroomName = "Bedroom";
 
-        Room hall = house.getRoomByName(hallName);
+        HousePart hall = house.getHousePartByName(hallName);
         assertNotNull(hall, "'Entrance hall' wasn't correctly parsed.");
-        Room bedroom = house.getRoomByName(bedroomName);
+        HousePart bedroom = house.getHousePartByName(bedroomName);
         assertNotNull(bedroom, "'Bedroom' wasn't correctly parsed.");
 
         assertEquals(hall.name, hallName);
-        assertEquals(hall.accessibleRooms.length, 1);
-        assertEquals(hall.accessibleRooms[0], bedroomName);
+        assertEquals(hall.accessibleHouseParts.length, 1);
+        assertEquals(hall.accessibleHouseParts[0], bedroomName);
         assertEquals(hall.sensors.length, 0);
         assertEquals(hall.actuators.length, 0);
         assertEquals(hall.connectedObjects.length, 0);
 
         assertEquals(bedroom.name, bedroomName);
-        assertEquals(bedroom.accessibleRooms.length, 1);
-        assertEquals(bedroom.accessibleRooms[0], hallName);
+        assertEquals(bedroom.accessibleHouseParts.length, 1);
+        assertEquals(bedroom.accessibleHouseParts[0], hallName);
         assertEquals(bedroom.sensors.length, 0);
         assertEquals(bedroom.actuators.length, 0);
         assertEquals(bedroom.connectedObjects.length, 0);
@@ -44,10 +44,10 @@ class HouseTest {
 
         String hallName = "Entrance Hall";
 
-        Room hall = house.getRoomByName(hallName);
+        HousePart hall = house.getHousePartByName(hallName);
         assertNotNull(hall, "'Entrance hall' wasn't correctly parsed.");
 
-        assertEquals(hall.accessibleRooms.length, 0);
+        assertEquals(hall.accessibleHouseParts.length, 0);
         assertEquals(hall.sensors.length, 1);
         assertTrue(hall.sensors[0] instanceof SensorMotion);
 

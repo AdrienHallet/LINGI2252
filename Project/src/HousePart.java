@@ -4,12 +4,10 @@ import controllers.connectedObjects.ConnectedRadio;
 import controllers.sensors.*;
 import org.json.*;
 
-import java.util.ArrayList;
-
-public class Room {
+public class HousePart {
 
     public String name;
-    public String[] accessibleRooms;
+    public String[] accessibleHouseParts;
     public Sensor[] sensors;
     public Actuator[] actuators;
     public ConnectedObject[] connectedObjects;
@@ -21,10 +19,10 @@ public class Room {
      * system's granularity
      * @param room the room configuration
      */
-    Room(JSONObject room){
+    HousePart(JSONObject room){
         try{
             this.name = room.getString("name");
-            this.accessibleRooms = stripArray(room.getJSONArray("accessible-rooms").toString());
+            this.accessibleHouseParts = stripArray(room.getJSONArray("accessible-houseParts").toString());
             if (room.has("sensors"))
                 this.sensors = parseSensors(room.getJSONArray("sensors"));
             if (room.has("actuators"))
@@ -44,7 +42,6 @@ public class Room {
             for (Actuator cActuator : actuators)
                 System.out.format("[%s:%s]: %s\n", name, cActuator.type, cActuator.getStateAsString());
     }
-
 
     /**
      * Set the value of all actuators of given type
@@ -96,8 +93,11 @@ public class Room {
 
                 //Loop over each actuator and add it to the sensor's list
                 for(int cAction = 0; cAction < actions.length(); cAction++){
-                    String cType = actions.get(cAction).toString();
-                    aList[cAction] = ActuatorFactory.create(cType);
+                    JSONObject cActuator = (JSONObject) actions.get(cAction);
+                    String cType = cActuator.getString("actuator");
+                    Actuator newActuator = ActuatorFactory.create(cType);
+                    newActuator.linkHousePartName = cActuator.getString("housePart");
+                    aList[cAction] = newActuator;
                 }
 
                 list[i] = SensorFactory.create(type, broadcast);

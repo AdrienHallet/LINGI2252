@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class House{
 
     JSONObject config;
-    ArrayList<Room> roomList;
+    ArrayList<HousePart> housePartList;
 
 
     /**
@@ -16,36 +16,36 @@ public class House{
     public House(String configFilename) {
         try {
             config = new JSONObject(readFile(configFilename));
-            JSONArray rooms = config.getJSONObject("house").getJSONArray("rooms");
-            parseRooms(rooms);
+            JSONArray houseParts = config.getJSONObject("house").getJSONArray("houseParts");
+            parseHouseParts(houseParts);
         } catch (Exception e) {
             System.err.println(e.toString());
         }
     }
 
     /**
-     * Returns the room with given name, null if not found
-     * @param roomName the room name to search for
-     * @return the room or null if not found
+     * Returns the housePart with given name, null if not found
+     * @param housePartName the housePart name to search for
+     * @return the housePart or null if not found
      */
-    public Room getRoomByName(String roomName){
-        for (Room cRoom : roomList)
-            if (cRoom.name.equalsIgnoreCase(roomName))
-                return cRoom;
+    public HousePart getHousePartByName(String housePartName){
+        for (HousePart cHousePart : housePartList)
+            if (cHousePart.name.equalsIgnoreCase(housePartName))
+                return cHousePart;
         return null;
     }
 
 
     /**
-     * Parse the rooms in the config file into usable objects
-     * @param rooms the house's rooms
+     * Parse the houseParts in the config file into usable objects
+     * @param houseParts the house's houseParts
      */
-    void parseRooms(JSONArray rooms){
-        roomList = new ArrayList<>();
-        for (int i = 0; i < rooms.length(); i++){
+    void parseHouseParts(JSONArray houseParts){
+        housePartList = new ArrayList<>();
+        for (int i = 0; i < houseParts.length(); i++){
             try {
-                JSONObject room = rooms.getJSONObject(i);
-                roomList.add(new Room(room));
+                JSONObject housePart = houseParts.getJSONObject(i);
+                housePartList.add(new HousePart(housePart));
             } catch(Exception ignored) {}
         }
     }
@@ -72,7 +72,7 @@ public class House{
         return result;
     }
 
-    public ArrayList<Room> getRoomList() {
-        return roomList;
+    public ArrayList<HousePart> getRoomList() {
+        return housePartList;
     }
 }

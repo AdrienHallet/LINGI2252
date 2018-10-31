@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Scenario {
 
     private House house;
-    private Room currentRoom;
+    private HousePart currentHousePart;
     private Scanner userInput = new Scanner(System.in); // Get ready to receive inputs
     private BufferedReader reader;
 
@@ -21,7 +21,7 @@ public class Scenario {
      */
     public Scenario(House house){
         this.house = house;
-        currentRoom = house.roomList.get(0); // Start in the first configured room
+        currentHousePart = house.housePartList.get(0); // Start in the first configured housePart
     }
 
     /**
@@ -31,7 +31,7 @@ public class Scenario {
      */
     public Scenario(House house, String filePath){
         this.house = house;
-        currentRoom = house.roomList.get(0);
+        currentHousePart = house.housePartList.get(0);
         try {
             reader = new BufferedReader(new FileReader(filePath));
         } catch(Exception e){
@@ -86,45 +86,48 @@ public class Scenario {
                 break;
             case "position":
                 // Get current position
-                System.out.println(currentRoom.name);
+                System.out.println(currentHousePart.name);
                 break;
             case "observe":
-                currentRoom.printState();
+                currentHousePart.printState();
                 break;
             case "walk":
-                // Walk to next room
+                // Walk to next housePart
                 walk();
                 break;
-            case "room.dark":
-                // Set the current room to darkness
-                FakeEvent.setLight(currentRoom, 100.0); //ToDo change the light sensor to work on light amount (no inversion)
+            case "housePart.dark":
+                // Set the current housePart to darkness
+                FakeEvent.setLight(currentHousePart, 100.0); //ToDo change the light sensor to work on light amount (no inversion)
                 break;
             case "system.reset":
                 // Reset all the sensors to 0
-                for(Room cRoom : house.roomList){
-                    if(cRoom.sensors != null) {
-                        for (Sensor sensor : cRoom.sensors) {
+                for(HousePart cHousePart : house.housePartList){
+                    if(cHousePart.sensors != null) {
+                        for (Sensor sensor : cHousePart.sensors) {
                             sensor.reset(); // Resetting a sensor will cascade the reset to the linked actuators
                         }
                     }
                 }
                 break;
             default:
-                if(action.toLowerCase().startsWith("room.temperature")){
-                    Double temperature = Double.parseDouble(action.replace("room.temperature ",""));
-                    FakeEvent.setTemperature(house.getRoomByName(currentRoom.name), temperature);
+                if(action.toLowerCase().startsWith("housePart.temperature")){
+                    Double temperature = Double.parseDouble(action.replace("housePart.temperature ",""));
+                    FakeEvent.setTemperature(house.getHousePartByName(currentHousePart.name), temperature);
                 } else if (action.toLowerCase().startsWith("walk ")){
-                    String room = action.replace("walk ", "");
-                    walk(room);
+                    String housePart = action.replace("walk ", "");
+                    walk(housePart);
                 } else if (action.toLowerCase().startsWith("set ")){
                     String[] params = action.replace("set ", "").split(" ");
-                    currentRoom.setActuatorTypeToValue(params[0], Double.parseDouble(params[1]));
+                    currentHousePart.setActuatorTypeToValue(params[0], Double.parseDouble(params[1]));
                 } else if (action.toLowerCase().startsWith(("toggle "))){
                     String object = action.replace("toggle ", "");
-                    HomeController.toggleObject(currentRoom, object);
+                    HomeController.toggleObject(currentHousePart, object);
                 } else if (action.toLowerCase().startsWith("fire ")){
-                    String room = action.replace("fire ", "");
-                    FakeEvent.startFire(house.getRoomByName(room));
+                    String housePart = action.replace("fire ", "");
+                    FakeEvent.startFire(house.getHousePartByName(housePart));
+                } else if (action.toLowerCase().startsWith("observe ")){
+                    String housePart = action.replace("observe ", "");
+                    house.getHousePartByName(housePart).printState();
                 }
                 else {
                     System.out.println("I did not get that ...");
@@ -141,31 +144,33 @@ public class Scenario {
     }
 
     /**
-     * Let user choose a room from available rooms
+     * Let user choose a housePart from available houseParts
      */
     void walk() {
-        System.out.println("From " + currentRoom.name + " you can reach:");
-        for (String room : currentRoom.accessibleRooms) {
-            System.out.println(room);
+        System.out.println("From " + currentHousePart.name + " you can reach:");
+        for (String housePart : currentHousePart.accessibleHouseParts) {
+            System.out.println(housePart);
         }
-        String newRoom = userInput.nextLine();
-        for (Room cRoom : house.roomList) {
-            if (cRoom.name.equalsIgnoreCase(newRoom)) {
-                currentRoom = cRoom;
-                System.out.println("Walking into " + currentRoom.name);
+        String newHousePart = userInput.nextLine();
+        for (HousePart cHousePart : house.housePartList) {
+            if (cHousePart.name.equalsIgnoreCase(newHousePart)) {
+                currentHousePart = cHousePart;
+                System.out.println("Walking into " + currentHousePart.name);
             }
         }
     }
 
     /**
      * Walk straight into
-     * @param room the room
+     * @param housePart the housePart
      */
-    void walk(String room){
-        for (Room cRoom : house.roomList) {
-            if (cRoom.name.equalsIgnoreCase(room)) {
-                currentRoom = cRoom;
-                System.out.println("Walking into " + currentRoom.name);
+    void walk(String housePart){
+        for (HousePart cHousePart : house.housePartList) {
+            if (cHousePart.name.equalsIgnoreCase(housePart)) {
+                FakeEvent.resetMotion(currentHousePart);
+                currentHousePart = cHousePart;
+                FakeEvent.detectMotion(currentHousePart);
+                System.out.println("Walking into " + currentHousePart.name);
             }
         }
     }
