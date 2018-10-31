@@ -7,7 +7,7 @@
                 "sensors": [
                     {
                         "type": "motion",
-                        "actions": ["audio-alarm"]
+                        "actions": ["motorDoors"]
                     },
                     {
                         "type": "smoke",
@@ -23,7 +23,7 @@
                         "actions": ["lightbulb"]
                     }
                 ],
-                "actuators": ["audio-alarm", "thermostat", "lightbulb"],
+                "actuators": ["audio-alarm", "thermostat", "lightbulb", "motorDoors"],
                 "objects": ["radio"]
             },
             {

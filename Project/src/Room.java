@@ -45,7 +45,6 @@ public class Room {
                 System.out.format("[%s:%s]: %s\n", name, cActuator.type, cActuator.getStateAsString());
     }
 
-
     /**
      * Set the value of all actuators of given type
      * @param type the actuator type

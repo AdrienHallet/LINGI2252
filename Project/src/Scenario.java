@@ -125,6 +125,9 @@ public class Scenario {
                 } else if (action.toLowerCase().startsWith("fire ")){
                     String room = action.replace("fire ", "");
                     FakeEvent.startFire(house.getRoomByName(room));
+                } else if (action.toLowerCase().startsWith("observe ")){
+                    String room = action.replace("observe ", "");
+                    house.getRoomByName(room).printState();
                 }
                 else {
                     System.out.println("I did not get that ...");
@@ -164,7 +167,9 @@ public class Scenario {
     void walk(String room){
         for (Room cRoom : house.roomList) {
             if (cRoom.name.equalsIgnoreCase(room)) {
+                FakeEvent.resetMotion(currentRoom);
                 currentRoom = cRoom;
+                FakeEvent.detectMotion(currentRoom);
                 System.out.println("Walking into " + currentRoom.name);
             }
         }

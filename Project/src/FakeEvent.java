@@ -43,4 +43,20 @@ public class FakeEvent {
             }
         }
     }
+
+    public static void detectMotion(Room room){
+        for (Sensor cSensor : room.sensors){
+            if (cSensor.type.equals(Sensor.MOTION)){
+                cSensor.trigger();
+            }
+        }
+    }
+
+    public static void resetMotion(Room room){
+        for (Sensor cSensor : room.sensors){
+            if (cSensor.type.equals(Sensor.MOTION)){
+                cSensor.reset();
+            }
+        }
+    }
 }
