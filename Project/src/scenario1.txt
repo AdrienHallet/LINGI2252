@@ -1,6 +1,6 @@
 walk kitchen
 walk entrance hall
-walk bedroom
+observe kitchen
 observe entrance hall
 room.temperature 18.0
 observe

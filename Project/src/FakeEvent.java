@@ -9,10 +9,10 @@ import controllers.sensors.Sensor;
 public class FakeEvent {
 
     /**
-     * @param room where to start a fire
+     * @param housePart where to start a fire
      */
-    public static void startFire(Room room){
-        for (Sensor cSensor : room.sensors){
+    public static void startFire(HousePart housePart){
+        for (Sensor cSensor : housePart.sensors){
             if (cSensor.type.equals(Sensor.SMOKE))
                 cSensor.trigger();
         }
@@ -20,11 +20,11 @@ public class FakeEvent {
 
     /**
      *
-     * @param room the room you want to set the T
+     * @param housePart the housePart you want to set the T
      * @param temperature the temperature in Celsius degrees
      */
-    public static void setTemperature(Room room, double temperature) {
-        for (Sensor cSensor : room.sensors){
+    public static void setTemperature(HousePart housePart, double temperature) {
+        for (Sensor cSensor : housePart.sensors){
             if (cSensor.type.equals(Sensor.THERMOMETER)){
                 cSensor.value = temperature;
             }
@@ -33,27 +33,27 @@ public class FakeEvent {
 
     /**
      *
-     * @param room the room you want to set to a certain amount of light
+     * @param housePart the housePart you want to set to a certain amount of light
      * @param light the light amount (0=dark, 100.0=sun's surface)
      */
-    public static void setLight(Room room, double light) {
-        for (Sensor cSensor : room.sensors){
+    public static void setLight(HousePart housePart, double light) {
+        for (Sensor cSensor : housePart.sensors){
             if (cSensor.type.equals(Sensor.LIGHT)){
                 cSensor.value = light;
             }
         }
     }
 
-    public static void detectMotion(Room room){
-        for (Sensor cSensor : room.sensors){
+    public static void detectMotion(HousePart housePart){
+        for (Sensor cSensor : housePart.sensors){
             if (cSensor.type.equals(Sensor.MOTION)){
                 cSensor.trigger();
             }
         }
     }
 
-    public static void resetMotion(Room room){
-        for (Sensor cSensor : room.sensors){
+    public static void resetMotion(HousePart housePart){
+        for (Sensor cSensor : housePart.sensors){
             if (cSensor.type.equals(Sensor.MOTION)){
                 cSensor.reset();
             }

@@ -1,26 +1,26 @@
 {
     "house": {
-        "rooms":[
+        "houseParts":[
             {
                 "name": "Entrance Hall",
-                "accessible-rooms": ["Kitchen", "Bedroom"],
+                "accessible-houseParts": ["Kitchen", "BedhousePart"],
                 "sensors": [
                     {
                         "type": "motion",
-                        "actions": ["motorDoors"]
+                        "actions": [{"housePart":"Kitchen", "actuator":"audio-alarm"}]
                     },
                     {
                         "type": "smoke",
                         "broadcast": true,
-                        "actions": ["audio-alarm"]
+                        "actions": [{"housePart":"Entrance Hall", "actuator":"audio-alarm"}]
                     },
                     {
                         "type": "thermometer",
-                        "actions": ["thermostat"]
+                        "actions": [{"housePart":"Entrance Hall", "actuator":"thermostat"}]
                     },
                     {
                         "type": "light",
-                        "actions": ["lightbulb"]
+                        "actions": [{"housePart":"Entrance Hall", "actuator":"lightbulb"}]
                     }
                 ],
                 "actuators": ["audio-alarm", "thermostat", "lightbulb", "motorDoors"],
@@ -28,45 +28,12 @@
             },
             {
                 "name": "Kitchen",
-                "accessible-rooms": ["Entrance Hall"],
+                "accessible-houseParts": ["Entrance Hall"],
                 "sensors": [
                     {
                         "type": "smoke",
                         "broadcast": true,
-                        "actions": ["audio-alarm"]
-                    }
-                ],
-                "actuators": ["audio-alarm"]
-            },
-            {
-                "name": "Bedroom",
-                "accessible-rooms": ["Entrance Hall"],
-                "sensors": [
-                    {
-                        "type": "thermometer",
-                        "actions": ["thermostat"]
-                    },
-                    {
-                        "type": "light",
-                        "actions": ["lightbulb"]
-                    },
-                    {
-                        "type": "smoke",
-                        "broadcast": true,
-                        "actions": ["audio-alarm"]
-                    }
-                ],
-                "actuators": ["thermostat", "lightbulb", "motorCurtains", "audio-alarm"],
-                "objects": ["radio"]
-            },
-            {
-                "name": "Bathroom",
-                "accessible-rooms": ["Bedroom"],
-                "sensors": [
-                    {
-                        "type": "smoke",
-                        "broadcast": true,
-                        "actions": ["audio-alarm"]
+                        "actions": [{"housePart":"Kitchen", "actuator":"audio-alarm"}]
                     }
                 ],
                 "actuators": ["audio-alarm"]
