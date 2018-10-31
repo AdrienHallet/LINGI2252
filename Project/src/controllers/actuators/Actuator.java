@@ -11,5 +11,6 @@ public abstract class Actuator extends Controller {
     public static final String MOTOR_CURTAINS = "motorCurtains";
     public static final String MOTOR_DOOR = "motorDoors";
     public static final String THERMOSTAT = "thermostat";
-    
+
+    public String linkHousePartName = null;
 }
