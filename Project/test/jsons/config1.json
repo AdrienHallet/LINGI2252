@@ -1,0 +1,15 @@
+{
+    "house": {
+        "rooms":[
+            {
+                "name": "Entrance Hall",
+                "accessible-rooms": ["Bedroom"],
+            },
+            {
+                "name": "Bedroom",
+                "accessible-rooms": ["Entrance Hall"],
+            },
+        ]
+    }
+}
+
