@@ -165,3 +165,16 @@ And the overall satisfaction to work on a clean code. You **should refactor when
 4. **Temp to Query:** A temporary variable (e.g.: a dispatch of prices) can be replaced with a method call to ease readabilit and remove redundancy in a method.
 5. **Explaining variables:** When you have a complex code, it can be useful to add temporary variables with meaningful names to help understand the code.
 6. **Method to Method Object:** It's like extract method but with a variable. So you create an object that can use a method call replacing the method extraction.
+
+## Bad code smells
+A bad smell in your code indicates that it is time to refacor it (it's about **when** to modify it, not **how**). Those smells allows us to identify what needs to be changed, and are kind of a recipe book to help us (indication, not order !) choose the right refactoring pattern.
+
+The goal is to get a more *habitable* code, which is a code in which you feel at home even when you haven't written it yourself. It is easy to read and to change, which is why software needs to be habitable (it always changes).
+
+### Classifications of bad smells
+1. **Code duplication** is the top crime, the worst problem. It should be eliminated using various techniques when possible.
+2. **Large Piece of code** : class, methode, parameter list,... Should be extracted and arranged toegether in logical ways. For long parameters lists, it is normal with functional programming, but should be avoided by creating objects in POO.
+3. **Lack of loose coupling or cohesion**. Coupling is the degree to which the component depend on each other, and cohésion is the degree to which the element is a module belong together. Tight coupling and low cohesions are bad smells. Pair of classes that know too much about each other's private details should be separated and *data clumps* (data items in lots of places) should be made into their own objects.
+4. **Too much or too little delegation**. If a client asks for something, and the "chain of asking" goes trough lots of other entities, we might want to move the object closer. Also, if some delegation is only about calling something else, it should be removed (secretary example).
+5. **Non Object-Oriented control or data structures**. Switch statements often cause duplication and can be avoided using *polymorphism*. Also, a reluctance to use classes instead of primitive types is bad, since the difference is hard to defined in OO.
+6. **Other : comments**. Comments are a good thing to have, but a bad smell when a long comment tries to explain bad code (they are used as a deodorant). When removing the bad smell in the code, the comment often become superfluous : the name of a method usually is enough "comment" on it. Good comments often explains **why** something was done a particular way, or when you don't know exactly what to do.
