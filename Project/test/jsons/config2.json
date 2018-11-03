@@ -1,9 +1,9 @@
 {
     "house": {
-        "rooms":[
+        "houseParts":[
             {
                 "name": "Entrance Hall",
-                "accessible-rooms": [],
+                "accessible-houseParts": [],
                 "sensors": [
                     {
                         "type": "motion",
