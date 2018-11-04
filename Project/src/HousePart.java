@@ -79,7 +79,10 @@ public class HousePart {
         /* Parse the houseParts in the JSON into usable objects */
         String stripped = array.replaceAll("\\[","").replaceAll("]","");
         stripped = stripped.replaceAll("\"","");
-        return stripped.split(",");
+        String[] result = stripped.split(",");
+        if (result.length == 1 && result[0].equals(""))
+            return new String[0];
+        return result;
     }
 
     /**
@@ -96,7 +99,7 @@ public class HousePart {
                 // Create a sensor
                 JSONObject sensor = (JSONObject) sList.get(i);
                 String type = sensor.getString("type");
-                Boolean broadcast = false;
+                boolean broadcast = false;
                 if(sensor.has("broadcast")) {
                     broadcast = sensor.getBoolean("broadcast");
                 }
@@ -106,7 +109,7 @@ public class HousePart {
                 Actuator[] aList = new Actuator[actions.length()];
 
                 //Loop over each actuator and add it to the sensor's list
-                for(int cAction = 0; cAction < actions.length(); cAction++){
+                for(int cAction = 0; cAction < actions.length(); cAction++) {
                     JSONObject cActuator = (JSONObject) actions.get(cAction);
                     String cType = cActuator.getString("actuator");
                     Actuator newActuator = ActuatorFactory.create(cType);
@@ -116,7 +119,10 @@ public class HousePart {
 
                 list[i] = SensorFactory.create(type, broadcast);
                 list[i].setActuatorList(aList);
-            }catch (Exception ignored){}
+            }catch (Exception e){
+                // This may be a problem for incorrectly encoded configurations (displaying it may be a good idea)
+                System.err.println("Exception ignored in 'parseSensors': " + e.getMessage());
+            }
         }
         return list;
     }
@@ -134,7 +140,10 @@ public class HousePart {
             try {
                 String type = aList.get(i).toString();
                 list[i] = ActuatorFactory.create(type);
-            }catch (Exception ignored){}
+            }catch (Exception e){
+                // This may be a problem for incorrectly encoded configurations (displaying it may be a good idea)
+                System.err.println("Exception ignored in 'parseActuators': " + e.getMessage());
+            }
         }
         return list;
     }
@@ -158,7 +167,10 @@ public class HousePart {
                     default:
                         System.err.println("Error: Unsupported connected object type");
                 }
-            }catch (Exception ignored){}
+            }catch (Exception e){
+                // This may be a problem for incorrectly encoded configurations (displaying it may be a good idea)
+                System.err.println("Exception ignored in 'parseConnectedObjects': " + e.getMessage());
+            }
         }
         return list;
     }

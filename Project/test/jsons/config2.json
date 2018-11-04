@@ -1,13 +1,13 @@
 {
     "house": {
-        "rooms":[
+        "houseParts":[
             {
                 "name": "Entrance Hall",
-                "accessible-rooms": [],
+                "accessible-houseParts": [],
                 "sensors": [
                     {
                         "type": "motion",
-                        "actions": ["audio-alarm"]
+                        "actions": [{"housePart":"Entrance Hall", "actuator":"audio-alarm"}]
                     }
                 ],
                 "actuators": ["audio-alarm"]

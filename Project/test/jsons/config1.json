@@ -1,13 +1,13 @@
 {
     "house": {
-        "rooms":[
+        "houseParts":[
             {
                 "name": "Entrance Hall",
-                "accessible-rooms": ["Bedroom"],
+                "accessible-houseParts": ["Bedroom"],
             },
             {
                 "name": "Bedroom",
-                "accessible-rooms": ["Entrance Hall"],
+                "accessible-houseParts": ["Entrance Hall"],
             },
         ]
     }

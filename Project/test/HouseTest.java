@@ -49,10 +49,12 @@ class HouseTest {
 
         assertEquals(hall.accessibleHouseParts.length, 0);
         assertEquals(hall.sensors.length, 1);
+        assertNotNull(hall.sensors[0]);
         assertTrue(hall.sensors[0] instanceof SensorMotion);
 
         Actuator[] linkedActuators = hall.sensors[0].getActuatorList();
         assertEquals(linkedActuators.length, 1);
+        assertNotNull(linkedActuators[0]);
         assertTrue(linkedActuators[0] instanceof ActuatorAudioAlarm);
     }
 }
