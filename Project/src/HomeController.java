@@ -51,22 +51,18 @@ public class HomeController {
      */
     static void state_loop(){
         for (HousePart cHousePart : myHouse.housePartList){
-            if (cHousePart.actuators != null) {
-                // Display the states of the actuators, per sensor, per housePart
-                for (Sensor sensor : cHousePart.sensors) {
-                    for (Actuator actuator : sensor.getActuatorList()) {
-                        if (actuator.isTriggered()) {
-                            System.out.printf("[%s:%s]: %s\n", cHousePart.name, actuator.type, actuator.getStateAsString());
-                        }
+            // Display the states of the actuators, per sensor, per housePart
+            for (Sensor sensor : cHousePart.sensors) {
+                for (Actuator actuator : sensor.getActuatorList()) {
+                    if (actuator.isTriggered()) {
+                        System.out.printf("[%s:%s]: %s\n", cHousePart.name, actuator.type, actuator.getStateAsString());
                     }
                 }
-                // Display the states of the connected objects, per housePart
             }
-            if (cHousePart.connectedObjects != null){
-                for (ConnectedObject connectedObject : cHousePart.connectedObjects){
-                    if (connectedObject.isTriggered()){
-                        System.out.printf("[%s:%s]: %s\n", cHousePart.name, connectedObject.type, connectedObject.getStateAsString());
-                    }
+            // Display the states of the connected objects, per housePart
+            for (ConnectedObject connectedObject : cHousePart.connectedObjects) {
+                if (connectedObject.isTriggered()) {
+                    System.out.printf("[%s:%s]: %s\n", cHousePart.name, connectedObject.type, connectedObject.getStateAsString());
                 }
             }
         }
@@ -105,13 +101,12 @@ public class HomeController {
      * @param type the type of the object to turn on
      */
     static void toggleObject(HousePart housePart, String type){
-        if (housePart.connectedObjects != null)
-            for (ConnectedObject object : housePart.connectedObjects){
-                if(object.type.equals(type)){
-                    object.toggle();
-                    return;
-                }
+        for (ConnectedObject object : housePart.connectedObjects){
+            if(object.type.equals(type)){
+                object.toggle();
+                return;
             }
+        }
         System.err.format("No %s in %s\n", type, housePart.name);
     }
 }

@@ -13,5 +13,4 @@ public abstract class Actuator extends Controller {
     public static final String THERMOSTAT = "thermostat";
 
     public String linkHousePartName = null;
-    
 }

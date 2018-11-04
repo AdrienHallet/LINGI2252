@@ -4,6 +4,8 @@ import controllers.connectedObjects.ConnectedRadio;
 import controllers.sensors.*;
 import org.json.*;
 
+import java.security.InvalidParameterException;
+
 public class HousePart {
 
     public String name;
@@ -13,26 +15,32 @@ public class HousePart {
     public ConnectedObject[] connectedObjects;
 
     /**
-     * Create a room object from the config.json relevant part.
-     * Note that a room is not *required* to be a real room.
-     * You can decide that a room is split in two rooms to change the
+     * Create a housePart object from the config.json relevant part.
+     * Note that a housePart is not *required* to be a real housePart.
+     * You can decide that a housePart is split in two houseParts to change the
      * system's granularity
-     * @param room the room configuration
+     * @param housePart the housePart configuration
      */
-    HousePart(JSONObject room){
+    HousePart(JSONObject housePart){
         try{
-            this.name = room.getString("name");
-            this.accessibleHouseParts = stripArray(room.getJSONArray("accessible-houseParts").toString());
-            if (room.has("sensors"))
-                this.sensors = parseSensors(room.getJSONArray("sensors"));
+            if (housePart.has("name") && !housePart.getString("name").equalsIgnoreCase(""))
+                this.name = housePart.getString("name");
+            else
+                throw new InvalidParameterException("Invalid HousePart name");
+            if (housePart.has("accessible-houseParts"))
+                this.accessibleHouseParts = stripArray(housePart.getJSONArray("accessible-houseParts").toString());
+            else
+                this.accessibleHouseParts = new String[0];
+            if (housePart.has("sensors"))
+                this.sensors = parseSensors(housePart.getJSONArray("sensors"));
             else
                 this.sensors = new Sensor[0];
-            if (room.has("actuators"))
-                this.actuators = parseActuators(room.getJSONArray("actuators"));
+            if (housePart.has("actuators"))
+                this.actuators = parseActuators(housePart.getJSONArray("actuators"));
             else
                 this.actuators = new Actuator[0];
-            if (room.has("objects"))
-                this.connectedObjects = parseConnectedObjects(room.getJSONArray("objects"));
+            if (housePart.has("objects"))
+                this.connectedObjects = parseConnectedObjects(housePart.getJSONArray("objects"));
             else
                 this.connectedObjects = new ConnectedObject[0];
         }catch (Exception e){
@@ -41,7 +49,7 @@ public class HousePart {
     }
 
     /**
-     * Print the state of the room, consisting of all the actuators' states
+     * Print the state of the housePart, consisting of all the actuators' states
      */
     public void printState(){
         if (actuators != null)
@@ -68,7 +76,7 @@ public class HousePart {
      * @return the extracted elements
      */
     String[] stripArray(String array){
-        /* Parse the rooms in the JSON into usable objects */
+        /* Parse the houseParts in the JSON into usable objects */
         String stripped = array.replaceAll("\\[","").replaceAll("]","");
         stripped = stripped.replaceAll("\"","");
         String[] result = stripped.split(",");
@@ -78,13 +86,13 @@ public class HousePart {
     }
 
     /**
-     * Parse the sensors in a room and which actuators they are linked to
+     * Parse the sensors in a housePart and which actuators they are linked to
      * @param sList the sensors
      * @return the parsed list of sensors
      * Todo Extract Switch
      */
     Sensor[] parseSensors(JSONArray sList){
-        /* Parse the sensors in the room into usable objects */
+        /* Parse the sensors in the housePart into usable objects */
         Sensor[] list = new Sensor[sList.length()];
         for (int i = 0; i < sList.length(); i++){
             try {
@@ -111,37 +119,37 @@ public class HousePart {
 
                 list[i] = SensorFactory.create(type, broadcast);
                 list[i].setActuatorList(aList);
-            }catch (Exception ignored){
+            }catch (Exception e){
                 // This may be a problem for incorrectly encoded configurations (displaying it may be a good idea)
-                System.err.println("Exception ignored in 'parseSensors': "+ignored.getMessage());
+                System.err.println("Exception ignored in 'parseSensors': " + e.getMessage());
             }
         }
         return list;
     }
 
     /**
-     * Parse the actuators in a room
+     * Parse the actuators in a housePart
      * @param aList the actuators
      * @return the parsed list of actuators
      * ToDo extract switch
      */
     Actuator[] parseActuators(JSONArray aList){
-        /* Parse the actuators in the room into usable objects */
+        /* Parse the actuators in the housePart into usable objects */
         Actuator[] list = new Actuator[aList.length()];
         for (int i = 0; i < aList.length(); i++){
             try {
                 String type = aList.get(i).toString();
                 list[i] = ActuatorFactory.create(type);
-            }catch (Exception ignored){
+            }catch (Exception e){
                 // This may be a problem for incorrectly encoded configurations (displaying it may be a good idea)
-                System.err.println("Exception ignored in 'parseActuators': "+ignored.getMessage());
+                System.err.println("Exception ignored in 'parseActuators': " + e.getMessage());
             }
         }
         return list;
     }
 
     /**
-     * Parse the connected objects in the room
+     * Parse the connected objects in the housePart
      * @param coList the objects
      * @return the parsed list of objects
      */
@@ -159,9 +167,9 @@ public class HousePart {
                     default:
                         System.err.println("Error: Unsupported connected object type");
                 }
-            }catch (Exception ignored){
+            }catch (Exception e){
                 // This may be a problem for incorrectly encoded configurations (displaying it may be a good idea)
-                System.err.println("Exception ignored in 'parseConnectedObjects': "+ignored.getMessage());
+                System.err.println("Exception ignored in 'parseConnectedObjects': " + e.getMessage());
             }
         }
         return list;
