@@ -1,0 +1,18 @@
+{
+    "house": {
+        "rooms":[
+            {
+                "name": "Entrance Hall",
+                "accessible-rooms": [],
+                "sensors": [
+                    {
+                        "type": "motion",
+                        "actions": ["audio-alarm"]
+                    }
+                ],
+                "actuators": ["audio-alarm"]
+            }
+        ]
+    }
+}
+

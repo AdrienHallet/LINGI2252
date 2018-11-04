@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-class House{
+public class House{
 
     JSONObject config;
     ArrayList<HousePart> housePartList;
@@ -13,9 +13,9 @@ class House{
     /**
      * Instantiate a house from the config file
      */
-    public House() {
+    public House(String configFilename) {
         try {
-            config = new JSONObject(readFile("src/config.json"));
+            config = new JSONObject(readFile(configFilename));
             JSONArray houseParts = config.getJSONObject("house").getJSONArray("houseParts");
             parseHouseParts(houseParts);
         } catch (Exception e) {
@@ -70,5 +70,9 @@ class House{
             e.printStackTrace();
         }
         return result;
+    }
+
+    public ArrayList<HousePart> getRoomList() {
+        return housePartList;
     }
 }

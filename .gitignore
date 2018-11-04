@@ -21,3 +21,8 @@
 *.mtc1
 *.out
 *.synctex.gz
+
+Project/.idea/
+Project/out/
+Project/LINGI2252/
+*.iml
