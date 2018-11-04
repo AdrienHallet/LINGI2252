@@ -7,14 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class HouseTest {
     @org.junit.jupiter.api.Test
     void testEmptyHouse() {
-        House house = new House("test/jsons/config0.json");
+        House house = new House("test/jsons/config-empty.json");
 
         assertNull(house.getHousePartByName("Entrance Hall"));
     }
 
     @org.junit.jupiter.api.Test
     void testOnlyRooms() {
-        House house = new House("test/jsons/config1.json");
+        House house = new House("test/jsons/config-noSensors.json");
 
         String hallName = "Entrance Hall", bedroomName = "Bedroom";
 
@@ -40,7 +40,7 @@ class HouseTest {
 
     @org.junit.jupiter.api.Test
     void testSensorActuator() {
-        House house = new House("test/jsons/config2.json");
+        House house = new House("test/jsons/config-onlyHall.json");
 
         String hallName = "Entrance Hall";
 
@@ -56,5 +56,6 @@ class HouseTest {
         assertEquals(linkedActuators.length, 1);
         assertNotNull(linkedActuators[0]);
         assertTrue(linkedActuators[0] instanceof ActuatorAudioAlarm);
+        assertEquals(linkedActuators[0].linkHousePartName, hallName);
     }
 }
