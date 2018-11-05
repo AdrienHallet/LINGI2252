@@ -1,0 +1,50 @@
+Group G
+=======
+
+Submission appreciation: ++
+----------
+
++ Ok
+
+Report appreciation: ++
+------
+
++ Ok
+
+Lexicon appreciation: ++
+-------
+
++ Ok
+
+Scenarios appreciation: ++
+---------
+
++ Ok
+- First scenario: the anti-burglar is set in the ground floor or in the entire house? Because the baby is inside the house. :p
+
+Feature diagram appreciation: 0/+
+---------------
+
+- Layout: could be better -> too small.
++ OO approach
+- Ambiance must be rename
+- Phone notification must be a feature of the root
+- Spatial, Video, Security, Rooms should be have a clause 'OR' with these children to have a more realistic world.
+- Some constraints are missing => e.g. poolcleaner => swimming pool
+
+Class diagram appreciation: +
+-------------
+
++ Ok
+- Give an example of a sensor.
+- sensor has an actuator?
+
+Code appreciation: ++
+----
+
++ Run
+
+Discussion appreciation: ++
+----------
+
++ Ok
