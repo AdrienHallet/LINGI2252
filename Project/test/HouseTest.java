@@ -1,6 +1,9 @@
+import controllers.Link;
 import controllers.actuators.Actuator;
 import controllers.actuators.ActuatorAudioAlarm;
 import controllers.sensors.SensorMotion;
+import system.House;
+import system.HousePart;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,9 +55,9 @@ class HouseTest {
         assertNotNull(hall.sensors[0]);
         assertTrue(hall.sensors[0] instanceof SensorMotion);
 
-        Actuator[] linkedActuators = hall.sensors[0].getActuatorList();
+        Link[] linkedActuators = hall.sensors[0].getActuatorList();
         assertEquals(linkedActuators.length, 1);
         assertNotNull(linkedActuators[0]);
-        assertTrue(linkedActuators[0] instanceof ActuatorAudioAlarm);
+        assertTrue(linkedActuators[0].actuatorType.equalsIgnoreCase("audio-alarm"));
     }
 }

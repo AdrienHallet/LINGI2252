@@ -1,3 +1,5 @@
+package system;
+
 import controllers.sensors.Sensor;
 
 import java.io.BufferedReader;
@@ -116,12 +118,18 @@ public class Scenario {
                 } else if (action.toLowerCase().startsWith("walk ")){
                     String housePart = action.replace("walk ", "");
                     walk(housePart);
-                } else if (action.toLowerCase().startsWith("set ")){
+                } else if (action.toLowerCase().startsWith("set.")){
                     String[] params = action.replace("set ", "").split(" ");
                     currentHousePart.setActuatorTypeToValue(params[0], Double.parseDouble(params[1]));
-                } else if (action.toLowerCase().startsWith(("toggle "))){
-                    String object = action.replace("toggle ", "");
-                    HomeController.toggleObject(currentHousePart, object);
+                } else if (action.toLowerCase().startsWith(("toggle "))) {
+                    String[] params = action.replace("toggle ", "").split(" ");
+                    HomeController.toggleObject(params[0], params[1]);
+                } else if (action.toLowerCase().startsWith(("enable "))) {
+                    String[] params = action.replace("enable ", "").split(" ");
+                    HomeController.enableActuator(params[0], params[1]);
+                } else if (action.toLowerCase().startsWith(("disable "))) {
+                    String[] params = action.replace("disable ", "").split(" ");
+                    HomeController.disableActuator(params[0], params[1]);
                 } else if (action.toLowerCase().startsWith("fire ")){
                     String housePart = action.replace("fire ", "");
                     FakeEvent.startFire(house.getHousePartByName(housePart));

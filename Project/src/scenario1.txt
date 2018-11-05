@@ -1,15 +1,7 @@
 walk kitchen
-walk entrance hall
-observe kitchen
-observe entrance hall
+walk entrance
 room.temperature 18.0
-observe
 set lightbulb 10.0
-observe
 set motorCurtains 0.0
-observe
-toggle radio
-observe
+toggle entrance radio
 fire kitchen
-observe kitchen
-observe

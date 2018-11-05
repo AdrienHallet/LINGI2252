@@ -35,7 +35,10 @@ public abstract class Controller {
         this.value = 100.0;
     }
     public boolean isTriggered() {
-        return (this.value > 0.0);
+        if(enabled)
+            return (this.value > 0.0);
+        else
+            return false;
     }
 
     public void enable() {

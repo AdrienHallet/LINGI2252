@@ -1,8 +1,9 @@
+package system;
+
+import controllers.Link;
 import controllers.actuators.Actuator;
 import controllers.connectedObjects.ConnectedObject;
 import controllers.sensors.Sensor;
-
-import java.util.Scanner;
 
 public class HomeController {
 
@@ -36,6 +37,7 @@ public class HomeController {
             if(cHousePart.sensors != null) {
                 for (Sensor cSensor : cHousePart.sensors) {
                     if (cSensor.isTriggered()) {
+                        System.out.println("debug : trigger action "+cHousePart.name+" "+cSensor.type);
                         triggerActions(cSensor);
                     }
                 }
@@ -52,11 +54,9 @@ public class HomeController {
     static void state_loop(){
         for (HousePart cHousePart : myHouse.housePartList){
             // Display the states of the actuators, per sensor, per housePart
-            for (Sensor sensor : cHousePart.sensors) {
-                for (Actuator actuator : sensor.getActuatorList()) {
-                    if (actuator.isTriggered()) {
-                        System.out.printf("[%s:%s]: %s\n", cHousePart.name, actuator.type, actuator.getStateAsString());
-                    }
+            for (Actuator actuator : cHousePart.actuators){
+                if (actuator.isTriggered()){
+                    System.out.printf("[%s:%s]: %s\n", cHousePart.name, actuator.type, actuator.getStateAsString());
                 }
             }
             // Display the states of the connected objects, per housePart
@@ -77,18 +77,18 @@ public class HomeController {
      * @param sensor the sensor to launch the event from
      */
     static void triggerActions(Sensor sensor){
-        Actuator[] aList = sensor.getActuatorList();
-        for(Actuator cActuator : aList){
+        Link[] aList = sensor.getActuatorList();
+        for(Link cActuator : aList){
             if (sensor.shouldBroadcast()) { // Trigger all
                 for (HousePart cHousePart : myHouse.housePartList)
                     for (Actuator cSubActuator : cHousePart.actuators)
-                        if (cSubActuator.type.equals(cActuator.type))
+                        if (cSubActuator.type.equals(cActuator.actuatorType))
                             cSubActuator.trigger();
             }
             else { // Trigger one in given housePart
-                HousePart housePartToActivate = myHouse.getHousePartByName(cActuator.linkHousePartName);
+                HousePart housePartToActivate = myHouse.getHousePartByName(cActuator.housePart);
                 for (Actuator rActuator : housePartToActivate.actuators){
-                    if (rActuator.type.equalsIgnoreCase(cActuator.type))
+                    if (rActuator.type.equalsIgnoreCase(cActuator.actuatorType))
                         rActuator.trigger();
                 }
             }
@@ -100,13 +100,61 @@ public class HomeController {
      * @param housePart the housePart in which the object is supposed to be
      * @param type the type of the object to turn on
      */
-    static void toggleObject(HousePart housePart, String type){
-        for (ConnectedObject object : housePart.connectedObjects){
+    static void toggleObject(String housePart, String type){
+        HousePart location = myHouse.getHousePartByName(housePart);
+        if (location == null){
+            System.err.println("Unknown house part: " + housePart);
+            return;
+        }
+
+        for (ConnectedObject object : location.connectedObjects){
             if(object.type.equals(type)){
                 object.toggle();
                 return;
             }
         }
-        System.err.format("No %s in %s\n", type, housePart.name);
+        System.err.format("No %s in %s\n", type, housePart);
+    }
+
+    /**
+     * Turn an actuator on
+     * @param housePart the housePart in which the actuator is supposed to be
+     * @param type the type of the actuator to turn on
+     */
+    static void enableActuator(String housePart, String type){
+        HousePart location = myHouse.getHousePartByName(housePart);
+        if (location == null){
+            System.err.println("Unknown house part: " + housePart);
+            return;
+        }
+
+        for (Actuator cActuator : location.actuators){
+            if(cActuator.type.equals(type)){
+                cActuator.enable();
+                return;
+            }
+        }
+        System.err.format("No %s in %s\n", type, housePart);
+    }
+
+    /**
+     * Turn an actuator off
+     * @param housePart the housePart in which the actuator is supposed to be
+     * @param type the type of the actuator to turn off
+     */
+    static void disableActuator(String housePart, String type){
+        HousePart location = myHouse.getHousePartByName(housePart);
+        if (location == null){
+            System.err.println("Unknown house part: " + housePart);
+            return;
+        }
+
+        for (Actuator cActuator : location.actuators){
+            if(cActuator.type.equals(type)){
+                cActuator.disable();
+                return;
+            }
+        }
+        System.err.format("No %s in %s\n", type, housePart);
     }
 }

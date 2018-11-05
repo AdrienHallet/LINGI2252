@@ -2,8 +2,8 @@
     "house": {
         "houseParts":[
             {
-                "name": "Entrance Hall",
-                "accessible-houseParts": ["Kitchen", "BedhousePart"],
+                "name": "Entrance",
+                "accessible-houseParts": ["Kitchen"],
                 "sensors": [
                     {
                         "type": "motion",
@@ -12,15 +12,15 @@
                     {
                         "type": "smoke",
                         "broadcast": true,
-                        "actions": [{"housePart":"Entrance Hall", "actuator":"audio-alarm"}]
+                        "actions": [{"housePart":"Entrance", "actuator":"audio-alarm"}]
                     },
                     {
                         "type": "thermometer",
-                        "actions": [{"housePart":"Entrance Hall", "actuator":"thermostat"}]
+                        "actions": [{"housePart":"Entrance", "actuator":"thermostat"}]
                     },
                     {
                         "type": "light",
-                        "actions": [{"housePart":"Entrance Hall", "actuator":"lightbulb"}]
+                        "actions": [{"housePart":"Entrance", "actuator":"lightbulb"}]
                     }
                 ],
                 "actuators": ["audio-alarm", "thermostat", "lightbulb", "motorDoors"],
@@ -28,7 +28,7 @@
             },
             {
                 "name": "Kitchen",
-                "accessible-houseParts": ["Entrance Hall"],
+                "accessible-houseParts": ["Entrance"],
                 "sensors": [
                     {
                         "type": "smoke",

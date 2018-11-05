@@ -1,3 +1,5 @@
+package system;
+
 import controllers.sensors.Sensor;
 
 /**

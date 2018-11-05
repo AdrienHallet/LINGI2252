@@ -1,3 +1,6 @@
+package system;
+
+import controllers.Link;
 import controllers.actuators.*;
 import controllers.connectedObjects.ConnectedObject;
 import controllers.connectedObjects.ConnectedRadio;
@@ -89,7 +92,6 @@ public class HousePart {
      * Parse the sensors in a housePart and which actuators they are linked to
      * @param sList the sensors
      * @return the parsed list of sensors
-     * Todo Extract Switch
      */
     Sensor[] parseSensors(JSONArray sList){
         /* Parse the sensors in the housePart into usable objects */
@@ -106,15 +108,21 @@ public class HousePart {
 
                 //Create the actuators and link them to the sensors
                 JSONArray actions = sensor.getJSONArray("actions");
-                Actuator[] aList = new Actuator[actions.length()];
+                Link[] aList = new Link[actions.length()];
 
                 //Loop over each actuator and add it to the sensor's list
+//                for(int cAction = 0; cAction < actions.length(); cAction++) {
+//                    JSONObject cActuator = (JSONObject) actions.get(cAction);
+//                    String cType = cActuator.getString("actuator");
+//                    Actuator newActuator = ActuatorFactory.create(cType);
+//                    newActuator.linkHousePartName = cActuator.getString("housePart");
+//                    aList[cAction] = newActuator;
+//                }
                 for(int cAction = 0; cAction < actions.length(); cAction++) {
                     JSONObject cActuator = (JSONObject) actions.get(cAction);
                     String cType = cActuator.getString("actuator");
-                    Actuator newActuator = ActuatorFactory.create(cType);
-                    newActuator.linkHousePartName = cActuator.getString("housePart");
-                    aList[cAction] = newActuator;
+                    String housePart = cActuator.getString("housePart");
+                    aList[cAction] = new Link(housePart, cType);
                 }
 
                 list[i] = SensorFactory.create(type, broadcast);
@@ -131,7 +139,6 @@ public class HousePart {
      * Parse the actuators in a housePart
      * @param aList the actuators
      * @return the parsed list of actuators
-     * ToDo extract switch
      */
     Actuator[] parseActuators(JSONArray aList){
         /* Parse the actuators in the housePart into usable objects */
