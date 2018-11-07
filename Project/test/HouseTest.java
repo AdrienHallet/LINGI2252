@@ -3,6 +3,7 @@ import controllers.UnexistantControllerException;
 import controllers.actuators.*;
 import controllers.connectedObjects.ConnectedObject;
 import controllers.connectedObjects.ConnectedObjectFactory;
+import controllers.connectedObjects.ConnectedObjectNull;
 import controllers.connectedObjects.ConnectedRadio;
 import controllers.sensors.*;
 import org.junit.jupiter.api.Test;
@@ -137,7 +138,7 @@ class HouseTest {
         assertEquals(bedroom.accessibleHouseParts.length, 1);
         assertEquals(bedroom.sensors.length, 0);
 
-        assertEquals(bedroom.actuators.length, 1);
+        assertEquals(bedroom.actuators.length, 2);
         assertTrue(bedroom.actuators[0] instanceof ActuatorAudioAlarm);
     }
 
@@ -167,8 +168,8 @@ class HouseTest {
         }
 
         try {
-            SensorFactory.create("invalid", false);
-            fail("No UnexistantControllerException thrown (for 'invalid' sensor)");
+            assertTrue(SensorFactory.create("invalid", false) instanceof SensorNull);
+
         } catch (UnexistantControllerException ignored) {}
     }
 
@@ -187,8 +188,7 @@ class HouseTest {
         }
 
         try {
-            ActuatorFactory.create("invalid");
-            fail("No UnexistantControllerException thrown (for 'invalid' actuator)");
+            assertTrue(ActuatorFactory.create("invalid") instanceof ActuatorNull);
         } catch (UnexistantControllerException ignored) {}
     }
 
@@ -201,8 +201,7 @@ class HouseTest {
         }
 
         try {
-            ConnectedObjectFactory.create("invalid");
-            fail("No UnexistantControllerException thrown (for 'invalid' connected object)");
+            assertTrue(ConnectedObjectFactory.create("invalid") instanceof ConnectedObjectNull);
         } catch (UnexistantControllerException ignored) {}
     }
 }
