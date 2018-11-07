@@ -16,14 +16,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class HouseTest {
     @org.junit.jupiter.api.Test
     void testEmptyHouse() {
-        House house = new House("test/jsons/config-empty.json");
+        House house = House.getOrCreate("test/jsons/config-empty.json");
 
         assertNull(house.getHousePartByName("Entrance Hall"));
     }
 
     @org.junit.jupiter.api.Test
     void testOnlyRooms() {
-        House house = new House("test/jsons/config-noSensors.json");
+        House house = House.getOrCreate("test/jsons/config-noSensors.json");
+        System.out.println(house);
 
         String hallName = "Entrance Hall", bedroomName = "Bedroom";
 
@@ -49,7 +50,8 @@ class HouseTest {
 
     @org.junit.jupiter.api.Test
     void testSensorActuator() {
-        House house = new House("test/jsons/config-onlyHall.json");
+        House house = House.getOrCreate("test/jsons/config-onlyHall.json");
+        System.out.println(house);
 
         String hallName = "Entrance Hall";
 
@@ -78,7 +80,7 @@ class HouseTest {
 
     @Test
     void testFullHouse() {
-        House house = new House("test/jsons/config-fullHouse.json");
+        House house = House.getOrCreate("test/jsons/config-fullHouse.json");
 
         String hallName = "Entrance Hall", kitchenName = "Kitchen", bedroomName = "Bedroom";
 

@@ -8,14 +8,31 @@ import java.util.ArrayList;
 
 public class House{
 
+    private static House instance;
+    private static String filename;
+
     JSONObject config;
     ArrayList<HousePart> housePartList;
 
 
+    public static House getOrCreate(){
+        return instance;
+    }
+
+    public static House getOrCreate(String configFilename){
+        if (configFilename != null && configFilename.equals(filename)) {
+            return instance;
+        } else {
+            instance = new House(configFilename);
+            filename =configFilename;
+            return instance;
+        }
+    }
+
     /**
      * Instantiate a house from the config file
      */
-    public House(String configFilename) {
+    private House(String configFilename) {
         try {
             config = new JSONObject(readFile(configFilename));
             JSONArray houseParts = config.getJSONObject("house").getJSONArray("houseParts");
