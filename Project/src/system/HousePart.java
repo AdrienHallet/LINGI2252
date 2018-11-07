@@ -55,7 +55,8 @@ public class HousePart {
     }
 
     void linkSensors(){
-        this.sensors = parseSensors(this.sensorsJSON);
+        if(sensors == null)
+            this.sensors = parseSensors(this.sensorsJSON);
     }
 
     /**

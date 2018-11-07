@@ -20,11 +20,11 @@ public class House{
     }
 
     public static House getOrCreate(String configFilename){
-        if (configFilename != null && configFilename.equals(filename)) {
+        if (instance != null && configFilename != null && configFilename.equals(filename)) {
             return instance;
         } else {
             instance = new House(configFilename);
-            filename =configFilename;
+            filename = configFilename;
             return instance;
         }
     }
@@ -65,7 +65,9 @@ public class House{
             try {
                 JSONObject housePart = houseParts.getJSONObject(i);
                 housePartList.add(new HousePart(this, housePart));
-            } catch(Exception ignored) {}
+            } catch(Exception e) {
+                System.err.println(e);
+            }
         }
         linkHouseParts();
     }
