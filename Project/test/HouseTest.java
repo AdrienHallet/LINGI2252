@@ -1,12 +1,10 @@
 import controllers.Link;
-import controllers.actuators.Actuator;
-import controllers.actuators.ActuatorAudioAlarm;
-import controllers.actuators.ActuatorMotor;
-import controllers.actuators.ActuatorMotorDoor;
+import controllers.UnexistantControllerException;
+import controllers.actuators.*;
 import controllers.connectedObjects.ConnectedObject;
-import controllers.sensors.Sensor;
-import controllers.sensors.SensorMotion;
-import controllers.sensors.SensorSmokeDetector;
+import controllers.connectedObjects.ConnectedObjectFactory;
+import controllers.connectedObjects.ConnectedRadio;
+import controllers.sensors.*;
 import org.junit.jupiter.api.Test;
 import system.House;
 import system.HousePart;
@@ -14,14 +12,14 @@ import system.HousePart;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HouseTest {
-    @org.junit.jupiter.api.Test
+    @Test
     void testEmptyHouse() {
         House house = House.getOrCreate("test/jsons/config-empty.json");
 
         assertNull(house.getHousePartByName("Entrance Hall"));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testOnlyRooms() {
         House house = House.getOrCreate("test/jsons/config-noSensors.json");
 
@@ -47,7 +45,7 @@ class HouseTest {
         assertEquals(bedroom.connectedObjects.length, 0);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testSensorActuator() {
         House house = House.getOrCreate("test/jsons/config-onlyHall.json");
 
@@ -141,5 +139,70 @@ class HouseTest {
 
         assertEquals(bedroom.actuators.length, 1);
         assertTrue(bedroom.actuators[0] instanceof ActuatorAudioAlarm);
+    }
+
+    @Test
+    void testSensorFactory() {
+        try {
+            assertTrue(SensorFactory.create(Sensor.AUDIO, false) instanceof SensorAudio);
+            assertTrue(SensorFactory.create(Sensor.BADGE, false) instanceof SensorBadgeDetector);
+            assertTrue(SensorFactory.create(Sensor.CAMERA, false) instanceof SensorCamera);
+            assertTrue(SensorFactory.create(Sensor.CARBON_MONOXIDE, false) instanceof SensorCarbonMonoxide);
+            assertTrue(SensorFactory.create(Sensor.CLOCK, false) instanceof SensorClock);
+            assertTrue(SensorFactory.create(Sensor.CONSUMPTION, false) instanceof SensorConsumption);
+            assertTrue(SensorFactory.create(Sensor.HUMIDITY, false) instanceof SensorHumidity);
+            assertTrue(SensorFactory.create(Sensor.LIGHT, false) instanceof SensorLight);
+            assertTrue(SensorFactory.create(Sensor.MOTION, false) instanceof SensorMotion);
+            assertTrue(SensorFactory.create(Sensor.PROXIMITY, false) instanceof SensorProximity);
+            assertTrue(SensorFactory.create(Sensor.SMOKE, false) instanceof SensorSmokeDetector);
+            assertTrue(SensorFactory.create(Sensor.THERMOMETER, false) instanceof SensorThermometer);
+
+            Sensor sensorNoBroadcast = SensorFactory.create(Sensor.AUDIO, false);
+            assertFalse(sensorNoBroadcast.shouldBroadcast());
+            Sensor sensorBroadcast = SensorFactory.create(Sensor.AUDIO, true);
+            assertTrue(sensorBroadcast.shouldBroadcast());
+
+        } catch (UnexistantControllerException e) {
+            fail("UnexistantControllerException");
+        }
+
+        try {
+            SensorFactory.create("invalid", false);
+            fail("No UnexistantControllerException thrown (for 'invalid' sensor)");
+        } catch (UnexistantControllerException ignored) {}
+    }
+
+    @Test
+    void testActuatorFactory() {
+        try {
+            assertTrue(ActuatorFactory.create(Actuator.AUDIO) instanceof ActuatorAudioAlarm);
+            assertTrue(ActuatorFactory.create(Actuator.LIGHT) instanceof ActuatorLightbulb);
+            assertTrue(ActuatorFactory.create(Actuator.LOCK) instanceof ActuatorLock);
+            assertTrue(ActuatorFactory.create(Actuator.MOTOR) instanceof ActuatorMotor);
+            assertTrue(ActuatorFactory.create(Actuator.MOTOR_CURTAINS) instanceof ActuatorMotorCurtains);
+            assertTrue(ActuatorFactory.create(Actuator.MOTOR_DOOR) instanceof ActuatorMotorDoor);
+            assertTrue(ActuatorFactory.create(Actuator.THERMOSTAT) instanceof ActuatorThermostat);
+        } catch (UnexistantControllerException e) {
+            fail("UnexistantControllerException");
+        }
+
+        try {
+            ActuatorFactory.create("invalid");
+            fail("No UnexistantControllerException thrown (for 'invalid' actuator)");
+        } catch (UnexistantControllerException ignored) {}
+    }
+
+    @Test
+    void testConnectedObjectFactory() {
+        try {
+            assertTrue(ConnectedObjectFactory.create(ConnectedObject.RADIO) instanceof ConnectedRadio);
+        } catch (UnexistantControllerException e) {
+            fail("UnexistantControllerException");
+        }
+
+        try {
+            ConnectedObjectFactory.create("invalid");
+            fail("No UnexistantControllerException thrown (for 'invalid' connected object)");
+        } catch (UnexistantControllerException ignored) {}
     }
 }

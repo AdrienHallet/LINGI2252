@@ -1,5 +1,6 @@
 package controllers.sensors;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import controllers.Controller;
 import controllers.Link;
 import controllers.actuators.Actuator;
@@ -30,7 +31,7 @@ public abstract class Sensor extends Controller {
         this.broadcast = false;
     }
 
-    public Sensor(Boolean broadcast){
+    public Sensor(boolean broadcast){
         this.broadcast = broadcast;
     }
 
