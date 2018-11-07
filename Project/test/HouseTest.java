@@ -24,7 +24,6 @@ class HouseTest {
     @org.junit.jupiter.api.Test
     void testOnlyRooms() {
         House house = House.getOrCreate("test/jsons/config-noSensors.json");
-        System.out.println(house);
 
         String hallName = "Entrance Hall", bedroomName = "Bedroom";
 
@@ -51,7 +50,6 @@ class HouseTest {
     @org.junit.jupiter.api.Test
     void testSensorActuator() {
         House house = House.getOrCreate("test/jsons/config-onlyHall.json");
-        System.out.println(house);
 
         String hallName = "Entrance Hall";
 
