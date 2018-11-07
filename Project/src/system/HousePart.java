@@ -11,6 +11,8 @@ import java.security.InvalidParameterException;
 
 public class HousePart {
 
+    public House parentHouse;
+    private JSONArray sensorsJSON;
     public String name;
     public String[] accessibleHouseParts;
     public Sensor[] sensors;
@@ -24,7 +26,8 @@ public class HousePart {
      * system's granularity
      * @param housePart the housePart configuration
      */
-    HousePart(JSONObject housePart){
+    HousePart(House parent, JSONObject housePart){
+        parentHouse = parent;
         try{
             if (housePart.has("name") && !housePart.getString("name").equalsIgnoreCase(""))
                 this.name = housePart.getString("name");
@@ -34,10 +37,6 @@ public class HousePart {
                 this.accessibleHouseParts = stripArray(housePart.getJSONArray("accessible-houseParts").toString());
             else
                 this.accessibleHouseParts = new String[0];
-            if (housePart.has("sensors"))
-                this.sensors = parseSensors(housePart.getJSONArray("sensors"));
-            else
-                this.sensors = new Sensor[0];
             if (housePart.has("actuators"))
                 this.actuators = parseActuators(housePart.getJSONArray("actuators"));
             else
@@ -46,15 +45,23 @@ public class HousePart {
                 this.connectedObjects = parseConnectedObjects(housePart.getJSONArray("objects"));
             else
                 this.connectedObjects = new ConnectedObject[0];
+            if (housePart.has("sensors"))
+                this.sensorsJSON = housePart.getJSONArray("sensors");
+            else
+                this.sensors = new Sensor[0];
         }catch (Exception e){
             System.err.println(e.toString());
         }
     }
 
+    void linkSensors(){
+        this.sensors = parseSensors(this.sensorsJSON);
+    }
+
     /**
      * Print the state of the housePart, consisting of all the actuators' states
      */
-    public void printState(){
+    void printState(){
         if (actuators != null)
             for (Actuator cActuator : actuators)
                 System.out.format("[%s:%s]: %s\n", name, cActuator.type, cActuator.getStateAsString());
@@ -72,6 +79,15 @@ public class HousePart {
                 }
             }
         }
+    }
+
+    Actuator getActuatorType(String type){
+        for (Actuator actuator : actuators){
+            if (actuator.type.equalsIgnoreCase(type)) {
+                return actuator;
+            }
+        }
+        return null;
     }
     /**
      * Helper method to format a JSONArray
@@ -108,21 +124,13 @@ public class HousePart {
 
                 //Create the actuators and link them to the sensors
                 JSONArray actions = sensor.getJSONArray("actions");
-                Link[] aList = new Link[actions.length()];
+                Actuator[] aList = new Actuator[actions.length()];
 
-                //Loop over each actuator and add it to the sensor's list
-//                for(int cAction = 0; cAction < actions.length(); cAction++) {
-//                    JSONObject cActuator = (JSONObject) actions.get(cAction);
-//                    String cType = cActuator.getString("actuator");
-//                    Actuator newActuator = ActuatorFactory.create(cType);
-//                    newActuator.linkHousePartName = cActuator.getString("housePart");
-//                    aList[cAction] = newActuator;
-//                }
                 for(int cAction = 0; cAction < actions.length(); cAction++) {
                     JSONObject cActuator = (JSONObject) actions.get(cAction);
                     String cType = cActuator.getString("actuator");
                     String housePart = cActuator.getString("housePart");
-                    aList[cAction] = new Link(housePart, cType);
+                    aList[cAction] = parentHouse.getHousePartByName(housePart).getActuatorType(cType);
                 }
 
                 list[i] = SensorFactory.create(type, broadcast);

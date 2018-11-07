@@ -77,20 +77,16 @@ public class HomeController {
      * @param sensor the sensor to launch the event from
      */
     static void triggerActions(Sensor sensor){
-        Link[] aList = sensor.getActuatorList();
-        for(Link cActuator : aList){
+        Actuator[] aList = sensor.getActuatorList();
+        for(Actuator cActuator : aList){
             if (sensor.shouldBroadcast()) { // Trigger all
                 for (HousePart cHousePart : myHouse.housePartList)
                     for (Actuator cSubActuator : cHousePart.actuators)
-                        if (cSubActuator.type.equals(cActuator.actuatorType))
+                        if (cSubActuator.type.equals(cActuator.type))
                             cSubActuator.trigger();
             }
             else { // Trigger one in given housePart
-                HousePart housePartToActivate = myHouse.getHousePartByName(cActuator.housePart);
-                for (Actuator rActuator : housePartToActivate.actuators){
-                    if (rActuator.type.equalsIgnoreCase(cActuator.actuatorType))
-                        rActuator.trigger();
-                }
+                cActuator.trigger();
             }
         }
     }

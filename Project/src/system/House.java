@@ -64,9 +64,15 @@ public class House{
         for (int i = 0; i < houseParts.length(); i++){
             try {
                 JSONObject housePart = houseParts.getJSONObject(i);
-                housePartList.add(new HousePart(housePart));
+                housePartList.add(new HousePart(this, housePart));
             } catch(Exception ignored) {}
         }
+        linkHouseParts();
+    }
+
+    void linkHouseParts(){
+        for(HousePart housePart : housePartList)
+            housePart.linkSensors();
     }
 
     /**
