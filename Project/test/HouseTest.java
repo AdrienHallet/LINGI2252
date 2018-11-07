@@ -1,3 +1,4 @@
+import controllers.Link;
 import controllers.actuators.Actuator;
 import controllers.actuators.ActuatorAudioAlarm;
 import controllers.actuators.ActuatorMotor;
@@ -7,6 +8,8 @@ import controllers.sensors.Sensor;
 import controllers.sensors.SensorMotion;
 import controllers.sensors.SensorSmokeDetector;
 import org.junit.jupiter.api.Test;
+import system.House;
+import system.HousePart;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,17 +62,16 @@ class HouseTest {
         assertTrue(hall.sensors[0] instanceof SensorMotion);
         assertFalse(hall.sensors[0].shouldBroadcast());
 
-        Actuator[] linkedActuators = hall.sensors[0].getActuatorList();
+        Link[] linkedActuators = hall.sensors[0].getActuatorList();
         assertEquals(linkedActuators.length, 1);
         assertNotNull(linkedActuators[0]);
-        assertTrue(linkedActuators[0] instanceof ActuatorAudioAlarm);
-        assertEquals(linkedActuators[0].linkHousePartName, hallName);
+        assertEquals(linkedActuators[0].actuatorType, Actuator.AUDIO);
+        assertEquals(linkedActuators[0].housePart, hallName);
 
         Actuator[] actuators = hall.actuators;
         assertEquals(actuators.length, 1);
         assertNotNull(actuators[0]);
         assertTrue(actuators[0] instanceof ActuatorAudioAlarm);
-//        assertEquals(actuators[0].linkHousePartName, hallName); // Shouldn't we set this also for actuators (not only in sensors descriptions)?
 
         assertEquals(hall.connectedObjects.length, 1);
     }
@@ -91,19 +93,19 @@ class HouseTest {
 
         assertTrue(hall.sensors[0] instanceof SensorMotion);
         assertFalse(hall.sensors[0].shouldBroadcast());
-        Actuator[] linkedActuators = hall.sensors[0].getActuatorList();
+        Link[] linkedActuators = hall.sensors[0].getActuatorList();
         assertEquals(linkedActuators.length, 1);
         assertNotNull(linkedActuators[0]);
-        assertTrue(linkedActuators[0] instanceof ActuatorMotorDoor);
-        assertEquals(linkedActuators[0].linkHousePartName, bedroomName);
+        assertEquals(linkedActuators[0].actuatorType, Actuator.MOTOR_DOOR);
+        assertEquals(linkedActuators[0].housePart, bedroomName);
 
         assertTrue(hall.sensors[1] instanceof SensorSmokeDetector);
         assertTrue(hall.sensors[1].shouldBroadcast());
         linkedActuators = hall.sensors[1].getActuatorList();
         assertEquals(linkedActuators.length, 1);
         assertNotNull(linkedActuators[0]);
-        assertTrue(linkedActuators[0] instanceof ActuatorAudioAlarm);
-        assertEquals(linkedActuators[0].linkHousePartName, hallName);
+        assertEquals(linkedActuators[0].actuatorType, Actuator.AUDIO);
+        assertEquals(linkedActuators[0].housePart, hallName);
 
         assertEquals(hall.actuators.length, 2);
         for (Actuator actuator: hall.actuators)
@@ -124,8 +126,8 @@ class HouseTest {
         linkedActuators = kitchen.sensors[0].getActuatorList();
         assertEquals(linkedActuators.length, 1);
         assertNotNull(linkedActuators[0]);
-        assertTrue(linkedActuators[0] instanceof ActuatorAudioAlarm);
-        assertEquals(linkedActuators[0].linkHousePartName, kitchenName);
+        assertEquals(linkedActuators[0].actuatorType, Actuator.AUDIO);
+        assertEquals(linkedActuators[0].housePart, kitchenName);
 
         assertEquals(kitchen.actuators.length, 1);
         assertTrue(kitchen.actuators[0] instanceof ActuatorAudioAlarm);
