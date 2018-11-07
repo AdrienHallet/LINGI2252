@@ -9,7 +9,7 @@ public class ConnectedObjectFactory {
             case ConnectedObject.RADIO:
                 return new ConnectedRadio();
             default:
-                throw new UnexistantControllerException(type);
+                return new ConnectedObjectNull();
         }
     }
 }

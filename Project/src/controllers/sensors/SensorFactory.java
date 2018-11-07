@@ -31,7 +31,7 @@ public class SensorFactory {
             case Sensor.THERMOMETER:
                 return new SensorThermometer(broadcast, 24.0);
             default:
-                throw new UnexistantControllerException(type);
+                return new SensorNull();
 
         }
     }

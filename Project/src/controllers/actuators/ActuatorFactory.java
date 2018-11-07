@@ -21,7 +21,7 @@ public class ActuatorFactory {
             case Actuator.THERMOSTAT:
                 return new ActuatorThermostat();
             default:
-                throw new UnexistantControllerException(type);
+                return new ActuatorNull();
         }
     }
 }
