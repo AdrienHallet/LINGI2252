@@ -7,12 +7,6 @@ public abstract class Controller {
     public double value = 0.0;
     private boolean enabled = true;
 
-    // DEPRECATED
-    public void update(double newValue) {
-        System.out.println("Using Controller.update() is DEPRECATED!");
-        this.value = newValue;
-    }
-
     /*
      * Sets the value to the default functioning (non-alert) value,
      * override if default value is not 0
