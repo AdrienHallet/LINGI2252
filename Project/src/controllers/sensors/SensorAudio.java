@@ -3,7 +3,7 @@ package controllers.sensors;
 public class SensorAudio extends Sensor{
 
     public SensorAudio(Boolean broadcast){
-        super();
+        super(broadcast);
         this.type = AUDIO;
     }
 
