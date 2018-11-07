@@ -23,7 +23,7 @@ public abstract class Sensor extends Controller {
     public static final String THERMOMETER = "thermometer";
 
     boolean broadcast;
-    public Actuator[] actuatorList;
+    protected Actuator[] actuatorList;
 
     public Sensor(){
         this.broadcast = false;
