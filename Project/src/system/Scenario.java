@@ -95,10 +95,6 @@ public class Scenario {
                 // Walk to next housePart
                 walk();
                 break;
-            case "housePart.dark":
-                // Set the current housePart to darkness
-                FakeEvent.setLight(currentHousePart, 100.0); //ToDo change the light sensor to work on light amount (no inversion)
-                break;
             case "system.reset":
                 // Reset all the sensors to 0
                 for(HousePart cHousePart : house.housePartList){
@@ -150,9 +146,9 @@ public class Scenario {
      */
     static void printHelp(){
         System.out.println("Home Automation System Group G :\n" +
-                "walk : CLI menu to change room\n" +
-                "walk <house_part> : walk directly to <house_part>\n" +
+                "walk (<house_part>) : walk to another house_part (or directly to <house_part>)\n" +
                 "set <actuator> <value> : set an actuator in current house_part of type <actuator> to double <value>\n" +
+                "detect <sensor> <value> : set a sensor in current house_part of type <sensor> to double <sensor>\n" +
                 "toggle <connected_object> : toggle a connected object of type <connected_object> in the current room\n" +
                 "observe (<house_part>) : observe the current house_part or the specified one\n" +
                 "enable <house_part> <actuator> : enable <actuator> in <house_part>\n" +

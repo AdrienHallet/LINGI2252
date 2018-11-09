@@ -37,7 +37,6 @@ public class HomeController {
             if(cHousePart.sensors != null) {
                 for (Sensor cSensor : cHousePart.sensors) {
                     if (cSensor.isTriggered()) {
-                        System.out.println("debug : trigger action "+cHousePart.name+" "+cSensor.type);
                         triggerActions(cSensor);
                     }
                 }
