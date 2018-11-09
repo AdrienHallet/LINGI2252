@@ -69,7 +69,7 @@ public class HousePart {
     }
 
     /**
-     * Set the value of all actuators of given type
+     * Set the value of the actuator of given type
      * @param type the actuator type
      */
     public void setActuatorTypeToValue(String type, double value){
@@ -77,9 +77,28 @@ public class HousePart {
             for (Actuator cActuator : actuators){
                 if (cActuator.type.equals(type)){
                     cActuator.value = value;
+                    return;
                 }
             }
         }
+        System.out.println("This actuator does not exist.");
+    }
+
+    /**
+     * Set the value of the sensor of given type
+     * @param type the actuator type
+     */
+    public void setSensorTypeToValue(String type, double value){
+        if (sensors != null){
+            for (Sensor cSensor : sensors){
+                if (cSensor.type.equals(type)){
+                    cSensor.value = value;
+                    return;
+                }
+            }
+        }
+        System.out.println("This sensor does not exist");
+
     }
 
     Actuator getActuatorType(String type){
