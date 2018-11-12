@@ -1,0 +1,55 @@
+{
+    "house": {
+        "houseParts":[
+            {
+                "name": "Entrance",
+                "accessible-houseParts": ["Kitchen", "Garage"],
+                "sensors": [
+                    {
+                        "type": "motion",
+                        "broadcast": true,
+                        "actions": [{"housePart":"Kitchen", "actuator":"audio-alarm"}]
+                    },
+                    {
+                        "type": "smoke",
+                        "actions": [{"housePart":"Entrance", "actuator":"audio-alarm"}]
+                    },
+                    {
+                        "type": "thermometer",
+                        "actions": [{"housePart":"Entrance", "actuator":"thermostat"}]
+                    },
+                    {
+                        "type": "light",
+                        "actions": [{"housePart":"Entrance", "actuator":"lightbulb"}]
+                    }
+                ],
+                "actuators": ["audio-alarm", "thermostat", "lightbulb", "motorDoors"],
+                "objects": ["radio"]
+            },
+            {
+                "name": "Kitchen",
+                "accessible-houseParts": ["Entrance"],
+                "sensors": [
+                    {
+                        "type": "smoke",
+                        "broadcast": true,
+                        "actions": [{"housePart":"Kitchen", "actuator":"audio-alarm"}]
+                    }
+                ],
+                "actuators": ["audio-alarm"]
+            },
+            {
+                "name": "Garage",
+                "accessible-houseParts": ["Entrance"],
+                "sensors": [
+                    {
+                        "type": "humidity",
+                        "actions": [{"housePart":"Garage", "actuator":"motorDoors", "inverted": true}]
+                    }
+                ],
+                "actuators": ["motorDoors"]
+            }
+        ]
+    },
+    "preferred-temperature": 22.0
+}

@@ -5,6 +5,7 @@ public abstract class Controller {
     public String type;
     public double value = 0.0;
     private boolean enabled = true;
+    private boolean inverted = false;
 
     /*
      * Sets the value to the default functioning (non-alert) value,
@@ -12,6 +13,21 @@ public abstract class Controller {
      */
     public void reset() {
         this.value = 0.0;
+    }
+
+    /**
+     * Invert the sensor. So it returns 100-value.
+     */
+    public void invert(){
+        this.inverted = true;
+    }
+
+    /**
+     * Returns the inversion state
+     * @return inverted
+     */
+    public boolean isInverted(){
+        return this.inverted;
     }
 
     /*

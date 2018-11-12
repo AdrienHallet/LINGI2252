@@ -151,6 +151,9 @@ public class HousePart {
                     String cType = cActuator.getString("actuator");
                     String housePart = cActuator.getString("housePart");
                     aList[cAction] = parentHouse.getHousePartByName(housePart).getActuatorType(cType);
+                    if (cActuator.has("inverted")){
+                        aList[cAction].invert();
+                    }
                 }
 
                 list[i] = SensorFactory.create(type, broadcast);

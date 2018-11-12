@@ -16,7 +16,7 @@ public class HomeController {
      * @param args the optional file to read the scenario from
      */
     public static void main (String[] args){
-        myHouse = House.getOrCreate("src/config.json"); // Initialize the house from configuration
+        myHouse = House.getOrCreate("src/config_big.json"); // Initialize the house from configuration
 
         if (args.length == 0) {
             scenario = new Scenario(myHouse);
