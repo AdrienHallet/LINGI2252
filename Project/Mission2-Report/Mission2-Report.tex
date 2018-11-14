@@ -129,28 +129,28 @@
 
 	\section{Introduction}
 		For the course \textit{LINGI2252 -- Software Maintenance and Evolution}, we were asked to improve our first prototype of a house automation system. Specifically, we had to add a parametrization component which would allow us to specify the values and states of the variability points at execution time, a command line interpreter which would allow us to update the state of the house at run time and to use relevant pattern designs to make the code more maintainable. We will discuss each of these extensions.
-		
+
 	\section{Parametrization component}
 		The first extension we discuss is the parametrization component.
 		It allows us to easily change the configuration of a house on two different executions without changing the code.
 		It does this in a quite straightforward way: when the program executes, it starts by parsing a configuration file. It then creates a house that corresponds to the configuration described in this file.
-		
+
 		Notice that we didn't decide to implement the parser as a class of its own but rather to place the parsing logic inside the class \mintinline{java}{House}. As we use an external library to parse the configuration file, we figured out it wouldn't be very interesting to make a parser that would be only a couple of lines long. As can be expected the configuration of the house is then done from within this class itself on basis of the parsed representation of the file. However, if we needed to parse files in other formats, making a class to handle the parsing would be a very good idea.
-		
+
 		The configuration is indeed contained within an external file formatted in \textit{JSON}.
 		We chose this format for several reasons.
-		
+
 		First it is well-known and heavily used as a format for configuration files. This is due to the fact that it is perfectly capable of handling this kind of task. If we had decided to make our own "configuration language", we could have very easily ended up with a syntax that would not fit all possible configurations perfectly, or with a flawed parser that would not work in certain cases.
 
 		Secondly, the fact that it is a well-known format also means that parsers exist in most languages. We didn't have to implement a parser by ourselves or to use one that would be incomplete or buggy.
 
 		Lastly, we are used to this format, which means we can work quickly and efficiently with it. The likelihood of us making an error while using it was thus smaller. This being said, using \textit{YAML} or \textit{TOML} would be perfectly legitimate choices, but we weren't as used to them as we are of \textit{JSON}. Note that using the latter instead of one of those two formats prevents us from having comments in our configuration files, which can be considered a problem.
-	
+
 	\section{Command line interpreter}
 		We discuss now the second extension we implemented, i.e. the command line interpreter. As we already said, this extension can be used to update the state of the house by typing commands during the execution of the program.
-		
+
 		Each command is quite simple to interpret with the first word corresponding to the action to execute and the following words being the (optional) parameter(s) of the action. We designed them this way in order to simplify the implementation of the interpreter.
-		
+
 		The implementation is made in a class named \mintinline{java}{Scenario}. Commands can be received in two different ways: either sequentially from the standard input, or from an input file which contains one command per line. Interpreting a command calls a method that executes the corresponding action to change the state of the house. This makes our code reusable: if we change our interpreter, we can call the same methods when we need to execute the corresponding actions.
 
   \section{Variability Points}
@@ -218,11 +218,85 @@
 
   \section{Design Patterns}
     \subsection{Abstract Factory}
-      We have three factories to create the controllers. \texttt{SensorFactory}, \texttt{ActuatorFactory}, \texttt{ConnectedObjectFactory}. We do not have a higher-level factory because it would only reduce readability in the context.
+      We have three factories to create the controllers. \texttt{SensorFactory}, \texttt{ActuatorFactory} and \\ \texttt{ConnectedObjectFactory}. We do not have a higher-level factory because it would only reduce readability in the context. What motivated the use of this design pattern is that we had, by design, to parse the controllers from the parametrization component. This parsing was redundant in the code so we had to extract the method. Extracting the creation of multiple objects that inherit from the same parent was easier done with this factory pattern.
       \begin{figure}[!h]
         \includegraphics[width=\textwidth]{sensorfactory.png}
       \end{figure}
+      \begin{minted}[autogobble]{java}
+      public static Sensor create(String type, boolean broadcast){
+        switch (type){
+            case Sensor.AUDIO:
+                return new SensorAudio(broadcast);
+            ...
+            default:
+                return new SensorNull();
+        }
+      \end{minted}
 
+      \subsection{Null Object}
+        When parsing controllers, we don't null erroneous controllers. Instead, we assign them a default \texttt{SensorNull} type. This allows to lighten the code by not having to heavily charge the code with defensive measures against wrong configurations that could not be parsed. The Null Object will be an object of the same type as his parent, but will fail quietly (simply by doing nothing) instead of throwing a \texttt{NullPointerException}.
+        \begin{figure}[!h]
+          \includegraphics[scale=0.75]{nullsensor.png}
+        \end{figure}
+        \begin{minted}[autogobble]{java}
+        public static Sensor create(String type, boolean broadcast){
+          switch (type){
+              case Sensor.AUDIO:
+                  return new SensorAudio(broadcast);
+              case Sensor.BADGE:
+                  return new SensorBadgeDetector(broadcast);
+              ...
+              default:
+                  return new SensorNull();
+          }
+        }
+        \end{minted}
+      \subsection{Facade}
+        The \texttt{HomeController} is a facade to the system. It means that as a programmer you could interact and integrate the home automation system without caring about the concrete implementation of the houseparts, the parsers, the sensor communications, ... This pattern is very often used in large systems with many objects within a configuration and is almost always implicitly used with large polymorphed implementations. \emph{Note that we don't put the class diagram here as the relevant part of the diagram is the entire implementation. Refer to the updated complete class diagram and note how you can interact with a single class to create the whole system.}
+
+        \begin{minted}[autogobble]{java}
+        public static void main (String[] args){
+            myHouse = House.getOrCreate("src/config_big.json");
+            if (args.length == 0) {
+                scenario = new Scenario(myHouse);
+                scenario.userInput();
+            }
+            else if (args.length == 1) {
+                userInputScenario = false;
+                scenario = new Scenario(myHouse, args[0]);
+                scenario.fileInput();
+            }
+        }
+        \end{minted}
+      \subsection{Singleton}
+        The \texttt{House} object is a singleton as the automation system would only need one house. We used a singloton because the system is heavily hierarchized (house, house part, sensors, actuators) and the house is central to it all. If you need to access to another house part from the current one, you need to go back to the house object. Using a singloton ensures that we won't create a new object by mistake and we enforce the use of a single parent for the system hierarchy.
+
+        \begin{figure}[!h]
+          \includegraphics[scale=0.75]{singletonhouse.png}
+        \end{figure}
+
+        \begin{minted}[autogobble]{java}
+        public class House{
+          private House instance;
+          public static House getOrCreate(String configFilename){
+              ...
+          }
+          // Make constructor private to disable public/protected instanciation
+          private House(String configFilename) {
+            ...
+          }
+          ...
+        }
+        \end{minted}
+
+      \subsection{Lesser patterns}
+        Some patterns that are less relevant for this report were used. We can cite :
+        \begin{description}
+          \item [Builder] According to the documentation, the builder pattern is a way to create, step-by-step, large and complex objects composed of multiple smaller objects. That is essentially what the \texttt{House} and \texttt{HousePart} do with the parsing. But we did not use the structure the pattern describes so it is only a pseudo-builder.
+          \item [Iterator] Natively implemented in Java, we loop over our objects with the \texttt{for each} java structure, which uses iterators.
+          \item [Interpreter] Technically, the command line interpreter is an interpreter pattern as it translates human-readable commands to concrete system actions, but we feel the interpreter is not mature enough to be cited as a fully-implemented pattern.
+          \item [Front Controller] \texttt{Scenario} is a singleton (static) class which handles the requests from multiple sources (file and user input), translates them to system functions (\texttt{FakeEvent}) and logs the results to the system output. Once again, this was not proposed as a fully-implemented pattern, because the class is mainly a dispatcher and not a logger per se (the application is single-threaded and uses the standard output).
+        \end{description}
 	\section{Conclusion}
 
 \end{document}
