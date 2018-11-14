@@ -44,7 +44,7 @@
 \usepackage{booktabs}% http://ctan.org/pkg/booktabs
 
 \usepackage{fancyhdr}
-\usepackage[hscale=0.75,vscale=0.75]{geometry} % Margin sizes
+\usepackage[hscale=0.76,vscale=0.76]{geometry} % Margin sizes
 \usepackage{minted} % for this to work: `sudo apt install python-pygments` and use `-shell-escape` flag with `pdflatex`
 
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
@@ -128,11 +128,30 @@
     \newpage
 
 	\section{Introduction}
-		For the course \textit{LINGI2252 -- Software Maintenance and Evolution}, we were asked to improve our first prototype of a house automation system. Specifically, we had to add a parametrization component which would allow us to specify the values and states of the variability points at execution time, a command line interpreter which would allow us to update the state of the house at run time and to use relevant pattern designs to make the code more maintainable.
-
+		For the course \textit{LINGI2252 -- Software Maintenance and Evolution}, we were asked to improve our first prototype of a house automation system. Specifically, we had to add a parametrization component which would allow us to specify the values and states of the variability points at execution time, a command line interpreter which would allow us to update the state of the house at run time and to use relevant pattern designs to make the code more maintainable. We will discuss each of these extensions.
+		
 	\section{Parametrization component}
+		The first extension we discuss is the parametrization component.
+		It allows us to easily change the configuration of a house on two different executions without changing the code.
+		It does this in a quite straightforward way: when the program executes, it starts by parsing a configuration file. It then creates a house that corresponds to the configuration described in this file.
+		
+		Notice that we didn't decide to implement the parser as a class of its own but rather to place the parsing logic inside the class \mintinline{java}{House}. As we use an external library to parse the configuration file, we figured out it wouldn't be very interesting to make a parser that would be only a couple of lines long. As can be expected the configuration of the house is then done from within this class itself on basis of the parsed representation of the file. However, if we needed to parse files in other formats, making a class to handle the parsing would be a very good idea.
+		
+		The configuration is indeed contained within an external file formatted in \textit{JSON}.
+		We chose this format for several reasons.
+		
+		First it is well-known and heavily used as a format for configuration files. This is due to the fact that it is perfectly capable of handling this kind of task. If we had decided to make our own "configuration language", we could have very easily ended up with a syntax that would not fit all possible configurations perfectly, or with a flawed parser that would not work in certain cases.
 
+		Secondly, the fact that it is a well-known format also means that parsers exist in most languages. We didn't have to implement a parser by ourselves or to use one that would be incomplete or buggy.
+
+		Lastly, we are used to this format, which means we can work quickly and efficiently with it. The likelihood of us making an error while using it was thus smaller. This being said, using \textit{YAML} or \textit{TOML} would be perfectly legitimate choices, but we weren't as used to them as we are of \textit{JSON}. Note that using the latter instead of one of those two formats prevents us from having comments in our configuration files, which can be considered a problem.
+	
 	\section{Command line interpreter}
+		We discuss now the second extension we implemented, i.e. the command line interpreter. As we already said, this extension can be used to update the state of the house by typing commands during the execution of the program.
+		
+		Each command is quite simple to interpret with the first word corresponding to the action to execute and the following words being the (optional) parameter(s) of the action. We designed them this way in order to simplify the implementation of the interpreter.
+		
+		The implementation is made in a class named \mintinline{java}{Scenario}. Commands can be received in two different ways: either sequentially from the standard input, or from an input file which contains one command per line. Interpreting a command calls a method that executes the corresponding action to change the state of the house. This makes our code reusable: if we change our interpreter, we can call the same methods when we need to execute the corresponding actions.
 
   \section{Variability Points}
     \subsection{House Layout}
