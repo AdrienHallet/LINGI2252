@@ -36,7 +36,7 @@ public class HomeController {
         for (HousePart cHousePart : myHouse.housePartList){
             if(cHousePart.sensors != null) {
                 for (Sensor cSensor : cHousePart.sensors) {
-                    if (cSensor.isTriggered()) {
+                    if ((cSensor.isTriggered())) {
                         triggerActions(cSensor);
                     }
                 }
@@ -85,7 +85,10 @@ public class HomeController {
                             cSubActuator.trigger();
             }
             else { // Trigger one in given housePart
-                cActuator.trigger();
+                if (!sensor.isInverted())
+                    cActuator.trigger();
+                else
+                    cActuator.reset();
             }
         }
     }

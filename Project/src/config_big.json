@@ -44,7 +44,7 @@
                 "sensors": [
                     {
                         "type": "humidity",
-                        "actions": [{"housePart":"Garage", "actuator":"motorDoors", "inverted": true}]
+                        "actions": [{"inverted": true, "housePart":"Garage", "actuator":"motorDoors"}]
                     }
                 ],
                 "actuators": ["motorDoors"]
