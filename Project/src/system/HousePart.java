@@ -145,6 +145,7 @@ public class HousePart {
                 //Create the actuators and link them to the sensors
                 JSONArray actions = sensor.getJSONArray("actions");
                 Actuator[] aList = new Actuator[actions.length()];
+                boolean inverted = false;
 
                 for(int cAction = 0; cAction < actions.length(); cAction++) {
                     JSONObject cActuator = (JSONObject) actions.get(cAction);
@@ -152,11 +153,12 @@ public class HousePart {
                     String housePart = cActuator.getString("housePart");
                     aList[cAction] = parentHouse.getHousePartByName(housePart).getActuatorType(cType);
                     if (cActuator.has("inverted")){
-                        aList[cAction].invert();
+                        inverted = true;
                     }
                 }
 
                 list[i] = SensorFactory.create(type, broadcast);
+                list[i].invert();
                 list[i].setActuatorList(aList);
             }catch (Exception e){
                 // This may be a problem for incorrectly encoded configurations (displaying it may be a good idea)
