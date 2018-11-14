@@ -131,6 +131,19 @@
 		For the course \textit{LINGI2252 -- Software Maintenance and Evolution}, we were asked to improve our first prototype of a house automation system. Specifically, we had to add a parametrization component which would allow us to specify the values and states of the variability points at execution time, a command line interpreter which would allow us to update the state of the house at run time and to use relevant pattern designs to make the code more maintainable.
 		
 	\section{Parametrization component}
+		The parametrization component allows us to easily change the configuration of a house on two different executions without changing the code.
+		It does this in a quite straightforward way: when the program executes, it starts by parsing a configuration file. It then creates a house that corresponds to the configuration described in this file.
+		
+		Notice that we didn't decide to implement the parser as a class of its own but rather to place the parsing logic inside the class \mintinline{java}{House}. As we use an external library to parse the configuration file, we figured out it wouldn't be very interesting to make a parser that would be only a couple of lines long. As can be expected the configuration of the house is then done from within this class itself on basis of the parsed representation of the file. However, if we needed to parse files in other formats, making a class to handle the parsing would be a very good idea.
+		
+		The configuration is indeed contained within an external file formatted in \textit{JSON}.
+		We chose this format for several reasons.
+		
+		First it is well-known and heavily used as a format for configuration files. This is due to the fact that it is perfectly capable of handling this kind of task. If we had decided to make our own "configuration language", we could have very easily ended up with a syntax that would not fit all possible configurations perfectly, or with a flawed parser that would not work in certain cases.
+
+		Secondly, the fact that it is a well-known format also means that parsers exist in most languages. We didn't have to implement a parser by ourselves or to use one that would be incomplete or buggy.
+
+		Lastly, we are used to this format, which means we can work quickly and efficiently with it. The likelihood of us making an error while using it was thus smaller. This being said, using \textit{YAML} or \textit{TOML} would be perfectly legitimate choices, but we weren't as used to them as we are of \textit{JSON}. Note that using the latter instead of one of those two formats prevents us from having comments in our configuration files, which can be considered a problem.
 	
 	\section{Command line interpreter}
 
