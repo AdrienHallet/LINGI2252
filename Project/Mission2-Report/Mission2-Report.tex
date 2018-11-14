@@ -129,10 +129,80 @@
 
 	\section{Introduction}
 		For the course \textit{LINGI2252 -- Software Maintenance and Evolution}, we were asked to improve our first prototype of a house automation system. Specifically, we had to add a parametrization component which would allow us to specify the values and states of the variability points at execution time, a command line interpreter which would allow us to update the state of the house at run time and to use relevant pattern designs to make the code more maintainable.
-		
+
 	\section{Parametrization component}
-	
+
 	\section{Command line interpreter}
+
+  \section{Variability Points}
+    \subsection{House Layout}
+      The main variability point is the ability to adapt each possible house. Our application can modify the house layout via the parametrization component. Thanks to the \texttt{HousePart} component, we can split the \texttt{House} in as many subcomponents as we want (either one per floor, one per room, one per square meter, whatever fits the needs). The implementation is pretty straightforward as the \texttt{House} is nothing but a dynamic list of \texttt{HousePart}.
+      \begin{minted}[autogobble]{java}
+        public class House{
+          private static House instance;
+          private static String filename;
+
+          JSONObject config;
+          ArrayList<HousePart> housePartList;
+          ...
+        }
+      \end{minted}
+
+    \subsection{Controllers}
+      In the configuration file, you can also modify the controllers (sensors, actuators and connected objects). You can place them and link a sensor to one or multiple actuators and/or connected objects. With such an implementation, you can link any kind of supported event (\emph{e.g.: detecting motion, smoke, humidity, ...}) to any kind of supported action (\emph{e.g.: opening a door, turning a light on, ...}). As for the house layout, this has been done with a simple dynamic list of \texttt{Sensor} linking to a dynamic list of \texttt{Actuator} in a \texttt{HousePart}.
+      \begin{minted}[autogobble]{java}
+        HousePart(House parent, JSONObject housePart){
+          ...
+          if (housePart.has("actuators"))
+              this.actuators = parseActuators(housePart.getJSONArray("actuators"));
+          else
+              this.actuators = new Actuator[0];
+          if (housePart.has("objects"))
+              this.connectedObjects = parseConnectedObjects(housePart.getJSONArray("objects"));
+          else
+              this.connectedObjects = new ConnectedObject[0];
+          if (housePart.has("sensors"))
+              this.sensorsJSON = housePart.getJSONArray("sensors");
+          else
+              this.sensors = new Sensor[0];
+          ...
+      \end{minted}
+
+    \subsection{Disable controllers}
+      This one is self-explanatory. You can dynamically disable/enable controllers at runtime, effectively changing the observable behavior of the system. This is simply a clever use of boolean conditions modified by the running \texttt{Scenario} within the \texttt{HomeController}.
+      \begin{minted}[autogobble]{java}
+      public abstract class Controller {
+        public String type;
+        public double value = 0.0;
+        private boolean enabled = true;
+        private boolean inverted = false;
+        ...
+      }
+      \end{minted}
+
+    \subsection{Inverting controllers}
+      Maybe you don't want an action to execute when a sensor is triggered, but when it is not. In the parametrization component, you can define an inverted sensor. This effectively doubles the possibilities as each sensor can now have two different behaviors. For example, you could want your door to close when the humidity sensor detects rain. Once again, the implementation is simple with a boolean condition checking if the \texttt{Sensor} is inverted.
+      \begin{minted}[autogobble]{java}
+      static void triggerActions(Sensor sensor){
+          Actuator[] aList = sensor.getActuatorList();
+          for(Actuator cActuator : aList){
+              ...
+              else { // Trigger one in given housePart
+                  if (!sensor.isInverted())
+                      cActuator.trigger();
+                  else
+                      cActuator.reset();
+              }
+          }
+      }
+      \end{minted}
+
+  \section{Design Patterns}
+    \subsection{Abstract Factory}
+      We have three factories to create the controllers. \texttt{SensorFactory}, \texttt{ActuatorFactory}, \texttt{ConnectedObjectFactory}. We do not have a higher-level factory because it would only reduce readability in the context.
+      \begin{figure}[!h]
+        \includegraphics[width=\textwidth]{sensorfactory.png}
+      \end{figure}
 
 	\section{Conclusion}
 
