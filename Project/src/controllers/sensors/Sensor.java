@@ -36,10 +36,10 @@ public abstract class Sensor extends Controller {
     /**
      * When a sensor is reset, reset the linked actuators
      */
-    public void reset(House myHouse){
+    public void reset(){
         this.value = 0.0;
         for (Actuator actuator : actuatorList){
-            //Todo
+            actuator.reset();
         }
     }
 

@@ -16,7 +16,7 @@ public class HomeController {
      * @param args the optional file to read the scenario from
      */
     public static void main (String[] args){
-        myHouse = House.getOrCreate("src/config.json"); // Initialize the house from configuration
+        myHouse = House.getOrCreate("src/config_big.json"); // Initialize the house from configuration
 
         if (args.length == 0) {
             scenario = new Scenario(myHouse);
@@ -37,7 +37,6 @@ public class HomeController {
             if(cHousePart.sensors != null) {
                 for (Sensor cSensor : cHousePart.sensors) {
                     if (cSensor.isTriggered()) {
-                        System.out.println("debug : trigger action "+cHousePart.name+" "+cSensor.type);
                         triggerActions(cSensor);
                     }
                 }

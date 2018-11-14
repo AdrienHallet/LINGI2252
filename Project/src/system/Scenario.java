@@ -16,7 +16,6 @@ public class Scenario {
     //DEBUG
     private final boolean debug = false; // 1 second delay between actions in text scenario to read user output
 
-
     /**
      * Create a new user scenario
      * @param house the house configuration
@@ -80,8 +79,7 @@ public class Scenario {
             case "": // Pass the current tick
                 break;
             case "exit":
-                // Exit the program
-                return;
+                System.exit(0);
             case "help":
                 // Request for help
                 printHelp();
@@ -97,10 +95,6 @@ public class Scenario {
                 // Walk to next housePart
                 walk();
                 break;
-            case "housePart.dark":
-                // Set the current housePart to darkness
-                FakeEvent.setLight(currentHousePart, 100.0); //ToDo change the light sensor to work on light amount (no inversion)
-                break;
             case "system.reset":
                 // Reset all the sensors to 0
                 for(HousePart cHousePart : house.housePartList){
@@ -113,14 +107,17 @@ public class Scenario {
                 break;
             default:
                 if(action.toLowerCase().startsWith("housePart.temperature")){
-                    Double temperature = Double.parseDouble(action.replace("housePart.temperature ",""));
+                    double temperature = Double.parseDouble(action.replace("housePart.temperature ",""));
                     FakeEvent.setTemperature(house.getHousePartByName(currentHousePart.name), temperature);
                 } else if (action.toLowerCase().startsWith("walk ")){
                     String housePart = action.replace("walk ", "");
                     walk(housePart);
-                } else if (action.toLowerCase().startsWith("set.")){
+                } else if (action.toLowerCase().startsWith("set ")) {
                     String[] params = action.replace("set ", "").split(" ");
                     currentHousePart.setActuatorTypeToValue(params[0], Double.parseDouble(params[1]));
+                } else if (action.toLowerCase().startsWith("detect ")){
+                    String[] params = action.replace("detect ", "").split(" ");
+                    currentHousePart.setSensorTypeToValue(params[0], Double.parseDouble(params[1]));
                 } else if (action.toLowerCase().startsWith(("toggle "))) {
                     String[] params = action.replace("toggle ", "").split(" ");
                     HomeController.toggleObject(params[0], params[1]);
@@ -148,7 +145,15 @@ public class Scenario {
      * Print help
      */
     static void printHelp(){
-        System.out.println("rtfm");
+        System.out.println("Home Automation System Group G :\n" +
+                "walk (<house_part>) : walk to another house_part (or directly to <house_part>)\n" +
+                "set <actuator> <value> : set an actuator in current house_part of type <actuator> to double <value>\n" +
+                "detect <sensor> <value> : set a sensor in current house_part of type <sensor> to double <sensor>\n" +
+                "toggle <connected_object> : toggle a connected object of type <connected_object> in the current room\n" +
+                "observe (<house_part>) : observe the current house_part or the specified one\n" +
+                "enable <house_part> <actuator> : enable <actuator> in <house_part>\n" +
+                "disable <house_part> <actuator> : disable <actuator> in <house_part>\n" +
+                "");
     }
 
     /**

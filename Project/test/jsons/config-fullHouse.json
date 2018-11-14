@@ -33,7 +33,7 @@
             {
                "name": "Bedroom",
                "accessible-houseParts": ["Entrance Hall"],
-               "actuators": ["audio-alarm"]
+               "actuators": ["audio-alarm", "motorDoors"]
             }
         ]
     }
