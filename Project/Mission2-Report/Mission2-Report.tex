@@ -135,23 +135,25 @@
 		It allows us to easily change the configuration of a house on two different executions without changing the code.
 		It does this in a quite straightforward way: when the program executes, it starts by parsing a configuration file. It then creates a house that corresponds to the configuration described in this file.
 		
-		Notice that we didn't decide to implement the parser as a class of its own but rather to place the parsing logic inside the class \mintinline{java}{House}. As we use an external library to parse the configuration file, we figured out it wouldn't be very interesting to make a parser that would be only a couple of lines long. As can be expected the configuration of the house is then done from within this class itself on basis of the parsed representation of the file. However, if we needed to parse files in other formats, making a class to handle the parsing would be a very good idea.
+		As can be expected, the design of this file has the same kind of structure than a house with a given configuration, that is a hierarchical structure. This structure is due to the fact that an automated house can be seen as a group of rooms (in our code \mintinline{java}{HousePart}s), which contain sensors, actuators and connected objects. This hierarchy can actually be seen on our class diagram: a \mintinline{java}{House} is made of \mintinline{java}{HousePart}s which contain \mintinline{java}{Controller}s.
 		
-		The configuration is indeed contained within an external file formatted in \textit{JSON}.
-		We chose this format for several reasons.
+		The configuration is contained within an external file formatted in \textit{JSON}. We chose this format for several reasons.
+		First, it is well-known and heavily used as a format for configuration files. It is thus totally capable of handling this kind of task. If we had decided to make our own "configuration language", we could have very easily ended up with a syntax that would not fit all possible configurations perfectly, or with a flawed parser that would not work in certain cases.
+
+		Secondly, the fact that it is a well-known format also means that parsers exist in most languages. We didn't have to implement one by ourselves or to use an incomplete or buggy implementation.
+
+		Lastly, we are used to this format, which means we can work quickly and efficiently with it. The likelihood of us making an error while using it was thus smaller. This being said, using \textit{YAML} or \textit{TOML} would be perfectly legitimate choices, but we weren't as used to them as we are to \textit{JSON}. Note that using the latter instead of one of those two formats prevents us from having comments in our configuration files, which can be considered a problem.
 		
-		First it is well-known and heavily used as a format for configuration files. This is due to the fact that it is perfectly capable of handling this kind of task. If we had decided to make our own "configuration language", we could have very easily ended up with a syntax that would not fit all possible configurations perfectly, or with a flawed parser that would not work in certain cases.
-
-		Secondly, the fact that it is a well-known format also means that parsers exist in most languages. We didn't have to implement a parser by ourselves or to use one that would be incomplete or buggy.
-
-		Lastly, we are used to this format, which means we can work quickly and efficiently with it. The likelihood of us making an error while using it was thus smaller. This being said, using \textit{YAML} or \textit{TOML} would be perfectly legitimate choices, but we weren't as used to them as we are of \textit{JSON}. Note that using the latter instead of one of those two formats prevents us from having comments in our configuration files, which can be considered a problem.
+		Notice that we didn't decide to implement the parser as a class of its own but rather to place the parsing logic inside the class \mintinline{java}{House}. As we use an external library to parse the configuration file, we figured out it wouldn't be very interesting to make a parser that would be only a couple of lines long. The configuration of the house is then done from within this class itself on basis of the parsed representation of the file. However, if we needed to parse files in other formats, making a class to handle the parsing would be a very good idea.
 	
 	\section{Command line interpreter}
 		We discuss now the second extension we implemented, i.e. the command line interpreter. As we already said, this extension can be used to update the state of the house by typing commands during the execution of the program.
 		
-		Each command is quite simple to interpret with the first word corresponding to the action to execute and the following words being the (optional) parameter(s) of the action. We designed them this way in order to simplify the implementation of the interpreter.
+		Each command is quite simple to interpret with the first word corresponding to the action to execute and the following words being the (optional) parameter(s) of the action. We designed them this way in order to simplify the implementation of the interpreter: it simply test whether it recognizes the first word and calls a subsequent method accordingly, giving it the remaining words as arguments. This implementation is made in a class named \mintinline{java}{Scenario}. 
 		
-		The implementation is made in a class named \mintinline{java}{Scenario}. Commands can be received in two different ways: either sequentially from the standard input, or from an input file which contains one command per line. Interpreting a command calls a method that executes the corresponding action to change the state of the house. This makes our code reusable: if we change our interpreter, we can call the same methods when we need to execute the corresponding actions.
+		A specificity of our implementation is also that commands can be received in two different ways: either sequentially from the standard input, or from an input file which contains one command per line. The behavior is then similar in both cases, the program interpreting and executing one command at a time in the order they are given.
+		
+		To make the code more reusable, we separated the interpretation of commands and the actions performed afterwards. Indeed, when a command is interpreted, the code calls a method that represents the action associated with this particular command. This improves reusability since it allows us to change the interpreter logic (for example, to create a different interpreter that would support another language or to add commands that would map to the same actions) and still be execute the exact same code for similar cases. It also makes our code easier to improve as adding a new command would be very easy. Finally, making it this way makes our code more readable.
 
   \section{Variability Points}
     \subsection{House Layout}
