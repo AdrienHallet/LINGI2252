@@ -178,3 +178,66 @@ The goal is to get a more *habitable* code, which is a code in which you feel at
 4. **Too much or too little delegation**. If a client asks for something, and the "chain of asking" goes trough lots of other entities, we might want to move the object closer. Also, if some delegation is only about calling something else, it should be removed (secretary example).
 5. **Non Object-Oriented control or data structures**. Switch statements often cause duplication and can be avoided using *polymorphism*. Also, a reluctance to use classes instead of primitive types is bad, since the difference is hard to defined in OO.
 6. **Other : comments**. Comments are a good thing to have, but a bad smell when a long comment tries to explain bad code (they are used as a deodorant). When removing the bad smell in the code, the comment often become superfluous : the name of a method usually is enough "comment" on it. Good comments often explains **why** something was done a particular way, or when you don't know exactly what to do.
+
+## Software Patterns
+In the late 70's, Christopher Alexander proposed patterns as a way to **reuse** extensive **architectural experience**. Some people in software sciences read the book and found it ideal to build softwares.
+
+>Each pattern describes a problem which occurs over and over again in our environment, and then describes the core of the solution to that problem, in such a way that you can use this solution a million times over,  without ever doing it the same way twice.
+
+Design patterns are not the only ones to exist. Some other (anti patterns, analysis patterns, ...) also exist for different purposes. A pattern is not invented, but observed as a working solution that can be extracted applied to other problems.
+
+Don't confuse architectural style and architectural pattern. Style is about globality (layered, client-server, pipes and filters) while design is more local (MVC, templates, ...).
+
+### Anti Patterns
+Just like design patterns, they are common solutions, except this one is a bad example.
+> An anti pattern is a commonly used solution to a problem that generates decidedly negative consequences.
+
+The difference between anti patterns and bad smells is mainly the size. Bad smells are ususually smaller. You can also introduce the 7 deadly sins of software engineering !
+1. **Haste** : doing things too quickly
+2. **Apathy** : Not caring about solving known problems
+3. **Narrow-Mindedness** : refusal to practice solutions that are widely known to be effective
+4. **Sloth** : making poor decisions based upon easy answers (laziness)
+5. **Avarice** : The modeling of excessive details, resulting in over-complexity due to insufficient abstraction
+6. **Ignorance** : Failing to seek understanding
+7. **Pride** : reinventing design instead of reusing them
+
+We can identify multiple classes of anti patterns.
+* **Development**
+* **Architectural**
+* **Managerial**
+
+## Object-Oriented Design Heuristics
+
+> We want **low coupling**; different classes should not be too connected, and **high cohesion**; a class should be relatively sound to itself.
+
+We can once more identify multiple categories of OO heuristics. You have to remember that heuristics are not always compatible and there are trade-offs when choosing the design.
+
+#### Classes Heuristics
+* All data should be hidden within its class. This is the notion of public/private in java. If you data is private, it gives you power to change (for example the type) it later because encapsulation allows easier modification of data structures with getters/setters.
+* A class should not be dependent on its users. The class should not make any expectation about who is using it (= low coupling).
+* A class should capture one and only one key abstraction (= high cohesion). If your class does two separate things, you should have two classes.
+* Supporting polymorphism and communications, you should have a minimal interface that all classes understand. For example, the `Object.toString()` java function. If you have such standard protocols, use them.
+* Don't put implementation details or classes helper in the public state. Only offer useful public methods in a class interface.
+* Minimize classes dependencies. Low coupling is good. Classes should be independent units of computing behavior.
+* Ensure that you model abstractions and not useless classes. For example, in an accountability software, creating a "male" and "female" class is not really useful, you can abstract it with a "person" class.
+
+#### Procedural vs Object-Oriented
+* The god class, a class that is too big. You don't want that.
+* Proliferation of classes is the opposite where you have too many useless classes.
+* Beware of classes that have many accessors. This may be a god class.
+* Don't be afraid to remove code.
+* Eliminate classes that are outside the system. If you're doing a software in X, and you need to handle emails, do so with a separate project (e.g. library). Otherwise you end with a "god system" (it does too many different things).
+* Do not turn an operation into a class. If your class' name is a verb, it may be useful to just use a method (e.g. "Printing Invoice").
+
+* Most of the methods in a class should use most of this class' data.
+* Classes should not contain more objects than the programmer can fit in his short-term memory.
+* Inheritance hierarchies should be deep, but in practice a popular depth is 6.
+* Abstract classes should be base classes and base classes should be abstract classes
+
+* A superclass should not know its subclasses
+* Subclasss should not directly use the superclass'data
+* Don't override a base class method with a class that does nothing.
+
+* Avoid type checking
+* Avoid multiple inheritance. A good practice is to never use multiple inheritance except if you can prove it necessary.
+* Question inheritance.
