@@ -36,8 +36,11 @@ public class HomeController {
         for (HousePart cHousePart : myHouse.housePartList){
             if(cHousePart.sensors != null) {
                 for (Sensor cSensor : cHousePart.sensors) {
-                    if ((cSensor.isTriggered())) {
+                    if (cSensor.isTriggered()) {
                         triggerActions(cSensor);
+                    }
+                    else {
+                        resetActions(cSensor);
                     }
                 }
             }
@@ -89,6 +92,23 @@ public class HomeController {
                     cActuator.trigger();
                 else
                     cActuator.reset();
+            }
+        }
+    }
+    static void resetActions(Sensor sensor){
+        Actuator[] aList = sensor.getActuatorList();
+        for(Actuator cActuator : aList){
+            if (sensor.shouldBroadcast()) { // Trigger all
+                for (HousePart cHousePart : myHouse.housePartList)
+                    for (Actuator cSubActuator : cHousePart.actuators)
+                        if (cSubActuator.type.equals(cActuator.type))
+                            cSubActuator.reset();
+            }
+            else { // Trigger one in given housePart
+                if (!sensor.isInverted())
+                    cActuator.reset();
+                else
+                    cActuator.trigger();
             }
         }
     }

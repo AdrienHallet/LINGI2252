@@ -7,6 +7,8 @@ public class SensorLight extends Sensor {
         this.type = LIGHT;
     }
 
+
+
     public String getStateAsString() {
         return String.format("There is about %d percent(s) of light", value);
     }

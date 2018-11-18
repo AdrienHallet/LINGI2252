@@ -3,7 +3,7 @@
         "houseParts":[
             {
                 "name": "Entrance",
-                "accessible-houseParts": ["Kitchen", "Garage"],
+                "accessible-houseParts": ["Kitchen", "Garage", "Bedroom"],
                 "sensors": [
                     {
                         "type": "motion",
@@ -27,16 +27,36 @@
                 "objects": ["radio"]
             },
             {
+                "name": "Bedroom",
+                "accessible-houseParts": ["Entrance"],
+                "sensors": [
+                    {
+                        "type": "light",
+                        "actions": [
+                            {"housePart":"Bedroom", "actuator":"motorCurtains"},
+                            {"housePart":"Bedroom", "actuator":"lightbulb", "inverted": true}
+                        ]
+                    },
+                    {
+                        "type": "thermometer",
+                        "actions": [
+                            {"housePart":"Bedroom", "actuator":"thermostat"}
+                        ]
+                    }
+                ],
+                "actuators": ["motorCurtains", "lightbulb", "thermostat"]
+            },
+            {
                 "name": "Kitchen",
                 "accessible-houseParts": ["Entrance"],
                 "sensors": [
                     {
                         "type": "smoke",
                         "broadcast": true,
-                        "actions": [{"housePart":"Kitchen", "actuator":"audio-alarm"}]
+                        "actions": [{"housePart":"Kitchen", "actuator":"lock"}]
                     }
                 ],
-                "actuators": ["audio-alarm"]
+                "actuators": ["audio-alarm", "lock"]
             },
             {
                 "name": "Garage",

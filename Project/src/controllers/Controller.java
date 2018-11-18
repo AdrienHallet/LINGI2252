@@ -18,8 +18,8 @@ public abstract class Controller {
     /**
      * Invert the sensor. So it returns 100-value.
      */
-    public void invert(){
-        this.inverted = true;
+    public void setInverted(boolean inversion){
+        this.inverted = inversion;
     }
 
     /**

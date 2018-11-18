@@ -1,0 +1,12 @@
+observe
+walk garage
+detect humidity 100
+walk entrance
+detect motion 100
+disable kitchen audio-alarm
+walk bedroom
+detect light 0
+detect thermometer 16
+detect light 100
+detect thermometer 25
+observe

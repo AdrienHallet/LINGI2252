@@ -158,7 +158,7 @@ public class HousePart {
                 }
 
                 list[i] = SensorFactory.create(type, broadcast);
-                list[i].invert();
+                list[i].setInverted(inverted);
                 list[i].setActuatorList(aList);
             }catch (Exception e){
                 // This may be a problem for incorrectly encoded configurations (displaying it may be a good idea)
