@@ -1,0 +1,10 @@
+detect thermometer 10
+walk garage
+detect thermometer 10
+walk entrance
+walk bedroom
+detect thermometer 10
+observe entrance
+observe garage
+observe bedroom
+detect thermometer 24
