@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{House}\PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{private} \PYG{k+kd}{static} \PYG{n}{House} \PYG{n}{instance}\PYG{o}{;}
+  \PYG{k+kd}{private} \PYG{k+kd}{static} \PYG{n}{String} \PYG{n}{filename}\PYG{o}{;}
+
+  \PYG{n}{JSONObject} \PYG{n}{config}\PYG{o}{;}
+  \PYG{n}{ArrayList}\PYG{o}{\PYGZlt{}}\PYG{n}{HousePart}\PYG{o}{\PYGZgt{}} \PYG{n}{housePartList}\PYG{o}{;}
+  \PYG{o}{...}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}

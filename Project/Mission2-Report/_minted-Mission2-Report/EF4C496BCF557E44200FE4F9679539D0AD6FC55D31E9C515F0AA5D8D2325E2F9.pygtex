@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}\PYG{n+nt}{\PYGZdq{}sensors\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}
+              \PYG{p}{\PYGZob{}}
+                  \PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}motion\PYGZdq{}}\PYG{p}{,}
+                  \PYG{n+nt}{\PYGZdq{}actions\PYGZdq{}}\PYG{p}{:} \PYG{p}{[\PYGZob{}}\PYG{n+nt}{\PYGZdq{}housePart\PYGZdq{}}\PYG{p}{:}\PYG{l+s+s2}{\PYGZdq{}Kitchen\PYGZdq{}}\PYG{p}{,} \PYG{n+nt}{\PYGZdq{}actuator\PYGZdq{}}\PYG{p}{:}\PYG{l+s+s2}{\PYGZdq{}audio\PYGZhy{}alarm\PYGZdq{}}\PYG{p}{\PYGZcb{}]}
+              \PYG{p}{\PYGZcb{},}
+              \PYG{p}{\PYGZob{}}
+                  \PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}smoke\PYGZdq{}}\PYG{p}{,}
+                  \PYG{n+nt}{\PYGZdq{}broadcast\PYGZdq{}}\PYG{p}{:} \PYG{k+kc}{true}\PYG{p}{,}
+                  \PYG{n+nt}{\PYGZdq{}actions\PYGZdq{}}\PYG{p}{:} \PYG{p}{[\PYGZob{}}\PYG{n+nt}{\PYGZdq{}housePart\PYGZdq{}}\PYG{p}{:}\PYG{l+s+s2}{\PYGZdq{}Entrance\PYGZdq{}}\PYG{p}{,} \PYG{n+nt}{\PYGZdq{}actuator\PYGZdq{}}\PYG{p}{:}\PYG{l+s+s2}{\PYGZdq{}audio\PYGZhy{}alarm\PYGZdq{}}\PYG{p}{\PYGZcb{}]}
+              \PYG{p}{\PYGZcb{}}
+           \PYG{p}{]\PYGZcb{}}
+\end{Verbatim}

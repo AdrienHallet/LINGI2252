@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{HousePart}\PYG{o}{(}\PYG{n}{House} \PYG{n}{parent}\PYG{o}{,} \PYG{n}{JSONObject} \PYG{n}{housePart}\PYG{o}{)\PYGZob{}}
+  \PYG{o}{...}
+  \PYG{k}{if} \PYG{o}{(}\PYG{n}{housePart}\PYG{o}{.}\PYG{n+na}{has}\PYG{o}{(}\PYG{l+s}{\PYGZdq{}actuators\PYGZdq{}}\PYG{o}{))}
+      \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{actuators} \PYG{o}{=} \PYG{n}{parseActuators}\PYG{o}{(}\PYG{n}{housePart}\PYG{o}{.}\PYG{n+na}{getJSONArray}\PYG{o}{(}\PYG{l+s}{\PYGZdq{}actuators\PYGZdq{}}\PYG{o}{));}
+  \PYG{k}{else}
+      \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{actuators} \PYG{o}{=} \PYG{k}{new} \PYG{n}{Actuator}\PYG{o}{[}\PYG{l+m+mi}{0}\PYG{o}{];}
+  \PYG{k}{if} \PYG{o}{(}\PYG{n}{housePart}\PYG{o}{.}\PYG{n+na}{has}\PYG{o}{(}\PYG{l+s}{\PYGZdq{}objects\PYGZdq{}}\PYG{o}{))}
+      \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{connectedObjects} \PYG{o}{=} \PYG{n}{parseConnectedObjects}\PYG{o}{(}\PYG{n}{housePart}\PYG{o}{.}\PYG{n+na}{getJSONArray}\PYG{o}{(}\PYG{l+s}{\PYGZdq{}objects\PYGZdq{}}\PYG{o}{));}
+  \PYG{k}{else}
+      \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{connectedObjects} \PYG{o}{=} \PYG{k}{new} \PYG{n}{ConnectedObject}\PYG{o}{[}\PYG{l+m+mi}{0}\PYG{o}{];}
+  \PYG{k}{if} \PYG{o}{(}\PYG{n}{housePart}\PYG{o}{.}\PYG{n+na}{has}\PYG{o}{(}\PYG{l+s}{\PYGZdq{}sensors\PYGZdq{}}\PYG{o}{))}
+      \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{sensorsJSON} \PYG{o}{=} \PYG{n}{housePart}\PYG{o}{.}\PYG{n+na}{getJSONArray}\PYG{o}{(}\PYG{l+s}{\PYGZdq{}sensors\PYGZdq{}}\PYG{o}{);}
+  \PYG{k}{else}
+      \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{sensors} \PYG{o}{=} \PYG{k}{new} \PYG{n}{Sensor}\PYG{o}{[}\PYG{l+m+mi}{0}\PYG{o}{];}
+  \PYG{o}{...}
+\end{Verbatim}

@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{n}{Sensor} \PYG{n+nf}{create}\PYG{o}{(}\PYG{n}{String} \PYG{n}{type}\PYG{o}{,} \PYG{k+kt}{boolean} \PYG{n}{broadcast}\PYG{o}{)\PYGZob{}}
+  \PYG{k}{switch} \PYG{o}{(}\PYG{n}{type}\PYG{o}{)\PYGZob{}}
+      \PYG{k}{case} \PYG{n}{Sensor}\PYG{o}{.}\PYG{n+na}{AUDIO}\PYG{o}{:}
+          \PYG{k}{return} \PYG{k}{new} \PYG{n}{SensorAudio}\PYG{o}{(}\PYG{n}{broadcast}\PYG{o}{);}
+      \PYG{o}{...}
+      \PYG{k}{default}\PYG{o}{:}
+          \PYG{k}{return} \PYG{k}{new} \PYG{n}{SensorNull}\PYG{o}{();}
+  \PYG{o}{\PYGZcb{}}
+\end{Verbatim}

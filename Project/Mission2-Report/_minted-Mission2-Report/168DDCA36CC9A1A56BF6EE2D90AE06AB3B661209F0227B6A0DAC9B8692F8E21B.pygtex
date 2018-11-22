@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{triggerActions}\PYG{o}{(}\PYG{n}{Sensor} \PYG{n}{sensor}\PYG{o}{)\PYGZob{}}
+    \PYG{n}{Actuator}\PYG{o}{[]} \PYG{n}{aList} \PYG{o}{=} \PYG{n}{sensor}\PYG{o}{.}\PYG{n+na}{getActuatorList}\PYG{o}{();}
+    \PYG{k}{for}\PYG{o}{(}\PYG{n}{Actuator} \PYG{n}{cActuator} \PYG{o}{:} \PYG{n}{aList}\PYG{o}{)\PYGZob{}}
+        \PYG{o}{...}
+        \PYG{k}{else} \PYG{o}{\PYGZob{}} \PYG{c+c1}{// Trigger one in given housePart}
+            \PYG{k}{if} \PYG{o}{(!}\PYG{n}{sensor}\PYG{o}{.}\PYG{n+na}{isInverted}\PYG{o}{())}
+                \PYG{n}{cActuator}\PYG{o}{.}\PYG{n+na}{trigger}\PYG{o}{();}
+            \PYG{k}{else}
+                \PYG{n}{cActuator}\PYG{o}{.}\PYG{n+na}{reset}\PYG{o}{();}
+        \PYG{o}{\PYGZcb{}}
+    \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
