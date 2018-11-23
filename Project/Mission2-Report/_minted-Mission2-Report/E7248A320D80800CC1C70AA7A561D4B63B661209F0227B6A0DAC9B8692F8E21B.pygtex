@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public} \PYG{k+kd}{abstract} \PYG{k+kd}{class} \PYG{n+nc}{Controller} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{n}{String} \PYG{n}{type}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{k+kt}{double} \PYG{n}{value} \PYG{o}{=} \PYG{l+m+mf}{0.0}\PYG{o}{;}
+  \PYG{k+kd}{private} \PYG{k+kt}{boolean} \PYG{n}{enabled} \PYG{o}{=} \PYG{k+kc}{true}\PYG{o}{;}
+  \PYG{k+kd}{private} \PYG{k+kt}{boolean} \PYG{n}{inverted} \PYG{o}{=} \PYG{k+kc}{false}\PYG{o}{;}
+  \PYG{o}{...}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}

@@ -65,7 +65,6 @@ class HouseTest {
         assertEquals(linkedActuators.length, 1);
         assertNotNull(linkedActuators[0]);
         assertEquals(linkedActuators[0].type, Actuator.AUDIO);
-//        assertEquals(linkedActuators[0].housePart, hallName);
 
         Actuator[] actuators = hall.actuators;
         assertEquals(actuators.length, 1);
@@ -126,7 +125,6 @@ class HouseTest {
         assertEquals(linkedActuators.length, 1);
         assertNotNull(linkedActuators[0]);
         assertEquals(linkedActuators[0].type, Actuator.AUDIO);
-//        assertEquals(linkedActuators[0].housePart, kitchenName);
 
         assertEquals(kitchen.actuators.length, 1);
         assertTrue(kitchen.actuators[0] instanceof ActuatorAudioAlarm);
