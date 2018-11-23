@@ -8,20 +8,19 @@ import java.util.Scanner;
 
 public class Scenario {
 
+    private HomeController controller;
     private House house;
     private HousePart currentHousePart;
     private Scanner userInput = new Scanner(System.in); // Get ready to receive inputs
     private BufferedReader reader;
 
-    //DEBUG
-    private final boolean debug = false; // 1 second delay between actions in text scenario to read user output
-
     /**
      * Create a new user scenario
      * @param house the house configuration
      */
-    public Scenario(House house){
+    public Scenario(House house, HomeController controller){
         this.house = house;
+        this.controller = controller;
         currentHousePart = house.housePartList.get(0); // Start in the first configured housePart
     }
 
@@ -30,8 +29,9 @@ public class Scenario {
      * @param house the house configuration
      * @param filePath the scenario
      */
-    public Scenario(House house, String filePath){
+    public Scenario(House house, HomeController controller, String filePath){
         this.house = house;
+        this.controller = controller;
         currentHousePart = house.housePartList.get(0);
         try {
             reader = new BufferedReader(new FileReader(filePath));
@@ -43,20 +43,18 @@ public class Scenario {
     /**
      * Read a user command
      */
-    public void userInput(){
+    void userInput(){
         System.out.println("> What will you do now?");
         String action = userInput.nextLine();
         doSomething(action);
-        HomeController.controller_loop();
+        controller.controller_loop();
     }
 
     /**
      * Read a command from file
      */
-    public void fileInput(){
+    void fileInput(){
         try {
-            if(debug)
-                Thread.sleep(1000);
             System.out.println("*Tick*");
             String action = reader.readLine();
             if (action != null)
@@ -66,7 +64,7 @@ public class Scenario {
         }catch (Exception e){
             System.err.println("Error while reading scenario: " + e.toString());
         }
-        HomeController.controller_loop();
+        controller.controller_loop();
     }
 
     /**
@@ -120,13 +118,13 @@ public class Scenario {
                     currentHousePart.setSensorTypeToValue(params[0], Double.parseDouble(params[1]));
                 } else if (action.toLowerCase().startsWith(("toggle "))) {
                     String[] params = action.replace("toggle ", "").split(" ");
-                    HomeController.toggleObject(params[0], params[1]);
+                    controller.toggleObject(params[0], params[1]);
                 } else if (action.toLowerCase().startsWith(("enable "))) {
                     String[] params = action.replace("enable ", "").split(" ");
-                    HomeController.enableActuator(params[0], params[1]);
+                    controller.enableActuator(params[0], params[1]);
                 } else if (action.toLowerCase().startsWith(("disable "))) {
                     String[] params = action.replace("disable ", "").split(" ");
-                    HomeController.disableActuator(params[0], params[1]);
+                    controller.disableActuator(params[0], params[1]);
                 } else if (action.toLowerCase().startsWith("fire ")){
                     String housePart = action.replace("fire ", "");
                     FakeEvent.startFire(house.getHousePartByName(housePart));
@@ -144,7 +142,7 @@ public class Scenario {
     /**
      * Print help
      */
-    static void printHelp(){
+    private void printHelp(){
         System.out.println("Home Automation System Group G :\n" +
                 "walk (<house_part>) : walk to another house_part (or directly to <house_part>)\n" +
                 "set <actuator> <value> : set an actuator in current house_part of type <actuator> to double <value>\n" +
@@ -159,7 +157,7 @@ public class Scenario {
     /**
      * Let user choose a housePart from available houseParts
      */
-    void walk() {
+    private void walk() {
         System.out.println("From " + currentHousePart.name + " you can reach:");
         for (String housePart : currentHousePart.accessibleHouseParts) {
             System.out.println(housePart);
@@ -177,7 +175,7 @@ public class Scenario {
      * Walk straight into
      * @param housePart the housePart
      */
-    void walk(String housePart){
+    private void walk(String housePart){
         for (HousePart cHousePart : house.housePartList) {
             if (cHousePart.name.equalsIgnoreCase(housePart)) {
                 FakeEvent.resetMotion(currentHousePart);
