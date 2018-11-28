@@ -14,7 +14,7 @@ public class House{
 
     JSONObject config;
     public ArrayList<HousePart> housePartList;
-    Parametrization paramComponent;
+    public Parametrization paramComponent;
 
 
     public static House getOrCreate(){

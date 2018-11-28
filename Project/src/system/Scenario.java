@@ -1,6 +1,7 @@
 package system;
 
 import controllers.sensors.Sensor;
+import system.parametrization.BadConfigException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -43,10 +44,11 @@ public class Scenario {
     /**
      * Read a user command
      */
-    public void userInput(){
+    public void userInput() throws BadConfigException {
         System.out.println("> What will you do now?");
         String action = userInput.nextLine();
         doSomething(action);
+        house.paramComponent.enforceActivationConstraints();
         HomeController.controller_loop();
     }
 

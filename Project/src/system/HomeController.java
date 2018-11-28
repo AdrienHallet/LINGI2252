@@ -25,7 +25,11 @@ public class HomeController {
 
         if (args.length == 0) {
             scenario = new Scenario(myHouse);
-            scenario.userInput();
+            try {
+                scenario.userInput();
+            } catch (BadConfigException e) {
+                System.err.println("A constraint was violated: "+e.getMessage());
+            }
         }
         else if (args.length == 1) {
             userInputScenario = false;
@@ -73,8 +77,13 @@ public class HomeController {
                 }
             }
         }
-        if (userInputScenario)
-            scenario.userInput();
+        if (userInputScenario) {
+            try {
+                scenario.userInput();
+            } catch (BadConfigException e) {
+                System.err.println("A constraint was violated: "+e.getMessage());
+            }
+        }
         else
             scenario.fileInput();
     }
