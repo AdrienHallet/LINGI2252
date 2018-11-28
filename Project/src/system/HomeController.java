@@ -4,6 +4,7 @@ import controllers.Link;
 import controllers.actuators.Actuator;
 import controllers.connectedObjects.ConnectedObject;
 import controllers.sensors.Sensor;
+import system.parametrization.BadConfigException;
 
 public class HomeController {
 
@@ -16,7 +17,11 @@ public class HomeController {
      * @param args the optional file to read the scenario from
      */
     public static void main (String[] args){
-        myHouse = House.getOrCreate("src/config_big.json"); // Initialize the house from configuration
+        try {
+            myHouse = House.getOrCreate("src/config_big.json"); // Initialize the house from configuration
+        } catch (BadConfigException e) {
+            System.err.println("The house configuration doesn't implement all constraints: "+e.getMessage());
+        }
 
         if (args.length == 0) {
             scenario = new Scenario(myHouse);
