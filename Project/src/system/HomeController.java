@@ -8,40 +8,59 @@ import system.parametrization.BadConfigException;
 
 public class HomeController {
 
-    static House myHouse;
-    static Scenario scenario;
-    static boolean userInputScenario = true;
+    private HomeController instance;
+    private House myHouse;
+    private Scenario scenario;
+    private boolean userInputScenario = true;
 
-    /**
-     * Launch the system
-     * @param args the optional file to read the scenario from
-     */
-    public static void main (String[] args){
+    private HomeController(String pathToConfig, String pathToScenario){
+        instance = this;
         try {
-            myHouse = House.getOrCreate("src/config_big.json"); // Initialize the house from configuration
+            myHouse = House.getOrCreate(pathToConfig);
         } catch (BadConfigException e) {
-            System.err.println("The house configuration doesn't implement all constraints: "+e.getMessage());
+            System.err.println("The configuration of the house is not valid: "+e.getMessage());
         }
 
-        if (args.length == 0) {
-            scenario = new Scenario(myHouse);
+        if (pathToScenario == null) {
+            scenario = new Scenario(myHouse, this);
             try {
                 scenario.userInput();
             } catch (BadConfigException e) {
                 System.err.println("A constraint was violated: "+e.getMessage());
             }
         }
-        else if (args.length == 1) {
+        else {
             userInputScenario = false;
-            scenario = new Scenario(myHouse, args[0]);
+            scenario = new Scenario(myHouse, this, pathToScenario);
             scenario.fileInput();
         }
+
+    }
+
+    /**
+     * Launch the system
+     * @param args the optional file to read the scenario from
+     */
+    public static void main (String[] args){
+        String config = null;
+        String scenario = null;
+
+        if (args.length > 0){
+            config = args[0];
+        } else {
+            System.out.println("Invalid input");
+        }
+        if (args.length > 1){
+            scenario = args[1];
+        }
+
+        HomeController hc = new HomeController(config, scenario);
     }
 
     /**
      * Tell the sensors to dispatch their triggers to the assigned actuators
      */
-    static void controller_loop(){
+    void controller_loop(){
         for (HousePart cHousePart : myHouse.housePartList){
             if(cHousePart.sensors != null) {
                 for (Sensor cSensor : cHousePart.sensors) {
@@ -62,7 +81,7 @@ public class HomeController {
      * and display those actions to the user
      * ToDo : move the string creation elsewhere
      */
-    static void state_loop(){
+    void state_loop(){
         for (HousePart cHousePart : myHouse.housePartList){
             // Display the states of the actuators, per sensor, per housePart
             for (Actuator actuator : cHousePart.actuators){
@@ -92,7 +111,7 @@ public class HomeController {
      * Trigger all the actuators linked to a sensor
      * @param sensor the sensor to launch the event from
      */
-    static void triggerActions(Sensor sensor){
+    void triggerActions(Sensor sensor){
         Actuator[] aList = sensor.getActuatorList();
         for(Actuator cActuator : aList){
             if (sensor.shouldBroadcast()) { // Trigger all
@@ -109,7 +128,7 @@ public class HomeController {
             }
         }
     }
-    static void resetActions(Sensor sensor){
+    void resetActions(Sensor sensor){
         Actuator[] aList = sensor.getActuatorList();
         for(Actuator cActuator : aList){
             if (sensor.shouldBroadcast()) { // Trigger all
@@ -132,7 +151,7 @@ public class HomeController {
      * @param housePart the housePart in which the object is supposed to be
      * @param type the type of the object to turn on
      */
-    static void toggleObject(String housePart, String type){
+    void toggleObject(String housePart, String type){
         HousePart location = myHouse.getHousePartByName(housePart);
         if (location == null){
             System.err.println("Unknown house part: " + housePart);
@@ -153,7 +172,7 @@ public class HomeController {
      * @param housePart the housePart in which the actuator is supposed to be
      * @param type the type of the actuator to turn on
      */
-    static void enableActuator(String housePart, String type){
+    void enableActuator(String housePart, String type){
         HousePart location = myHouse.getHousePartByName(housePart);
         if (location == null){
             System.err.println("Unknown house part: " + housePart);
@@ -174,7 +193,7 @@ public class HomeController {
      * @param housePart the housePart in which the actuator is supposed to be
      * @param type the type of the actuator to turn off
      */
-    static void disableActuator(String housePart, String type){
+    void disableActuator(String housePart, String type){
         HousePart location = myHouse.getHousePartByName(housePart);
         if (location == null){
             System.err.println("Unknown house part: " + housePart);
