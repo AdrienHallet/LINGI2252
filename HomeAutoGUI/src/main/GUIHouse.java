@@ -18,23 +18,21 @@ public class GUIHouse {
     private static GUIHouse instance = null;
     BufferedWriter writer;
     TilePane tilePane;
-    BlockingQueue<String> outputQueue;
 
     private List<GUIHousePart> houseParts;
 
-    private GUIHouse(BufferedWriter writer, TilePane tilePane, BlockingQueue<String> outputQueue){
+    private GUIHouse(BufferedWriter writer, TilePane tilePane){
         this.writer = writer;
         this.tilePane = tilePane;
         this.houseParts = new ArrayList<>();
-        this.outputQueue = outputQueue;
         instance = this;
     }
 
-    public static GUIHouse getOrCreate(BufferedWriter writer, TilePane tilePane, BlockingQueue<String> outputQueue){
+    public static GUIHouse getOrCreate(BufferedWriter writer, TilePane tilePane){
         if(instance != null)
             return instance;
 
-        return new GUIHouse(writer, tilePane, outputQueue);
+        return new GUIHouse(writer, tilePane);
 
     }
 
@@ -42,20 +40,20 @@ public class GUIHouse {
         return instance;
     }
 
-    public void buildLayout(){
+    public void buildLayout(List<String> rooms){
         try{
-            writer.write(Command.layout);
-            writer.flush();
-            List<String> rooms = new ArrayList<>();
-            while(true){
-
-                String response = outputQueue.take();
-                System.out.println(response);
-                if (response.equals("")){break;}
-                if (!response.contains("House layout:")){
-                    rooms.add(response);
-                }
-            }
+//            writer.write(Command.layout);
+//            writer.flush();
+//            List<String> rooms = new ArrayList<>();
+//            while(true){
+//
+//                String response = outputQueue.take();
+//                System.out.println(response);
+//                if (response.equals("")){break;}
+//                if (!response.contains("House layout:")){
+//                    rooms.add(response);
+//                }
+//            }
             for (String room : rooms){
                 houseParts.add(new GUIHousePart(room));
             }

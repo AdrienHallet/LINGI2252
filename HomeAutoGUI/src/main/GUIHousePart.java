@@ -37,7 +37,7 @@ public class GUIHousePart {
         Helper.sendCommand(parent.writer, Command.walk + " " + name);
     }
 
-    void setPerson(){
+    synchronized void setPerson(){
         // First wipe other rooms, then enter in this one
         parent.clearPersonsInRoom();
         Label person = new Label("Person");

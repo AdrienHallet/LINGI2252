@@ -56,12 +56,13 @@ public class Controller {
             reader = new BufferedReader (new InputStreamReader(stdout));
             writer = new BufferedWriter(new OutputStreamWriter(stdin));
 
+            guiHouse = GUIHouse.getOrCreate(writer, tilePane);
 
-            UpdateThread updateThread = new UpdateThread(new Scanner(reader), ps, outputQueue);
+            UpdateThread updateThread = new UpdateThread(new Scanner(reader), ps, guiHouse);
             updateThread.start();
 
-            guiHouse = GUIHouse.getOrCreate(writer,tilePane, outputQueue);
-            guiHouse.buildLayout();
+            writer.write(Command.layout);
+            writer.flush();
 
             //Set focus on inputField at startup
             Platform.runLater(new Runnable() {
