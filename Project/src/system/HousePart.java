@@ -1,5 +1,6 @@
 package system;
 
+import controllers.Controller;
 import controllers.Link;
 import controllers.actuators.*;
 import controllers.connectedObjects.ConnectedObject;
@@ -26,7 +27,7 @@ public class HousePart {
      * system's granularity
      * @param housePart the housePart configuration
      */
-    HousePart(House parent, JSONObject housePart){
+    public HousePart(House parent, JSONObject housePart){
         parentHouse = parent;
         try{
             if (housePart.has("name") && !housePart.getString("name").equalsIgnoreCase(""))
@@ -98,7 +99,6 @@ public class HousePart {
             }
         }
         System.out.println("This sensor does not exist");
-
     }
 
     Actuator getActuatorType(String type){
@@ -109,6 +109,32 @@ public class HousePart {
         }
         return null;
     }
+
+
+    public boolean hasController(Controller controller) {
+        if (controller instanceof Sensor) {
+            for (Sensor sensor : sensors) {
+                if (sensor.type.equals(controller.type))
+                    return true;
+                return false;
+            }
+        } else if (controller instanceof Actuator) {
+            for (Actuator actuator : actuators) {
+                if (actuator.type.equals(controller.type))
+                    return true;
+                return false;
+            }
+        } else if (controller instanceof ConnectedObject) {
+            for (ConnectedObject obj : connectedObjects) {
+                if (obj.type.equals(controller.type))
+                    return true;
+                return false;
+            }
+        }
+        return false;
+    }
+
+
     /**
      * Helper method to format a JSONArray
      * @param array the JSONArray

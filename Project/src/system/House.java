@@ -1,9 +1,10 @@
 package system;
 
 import org.json.*;
+import system.parametrization.BadConfigException;
+import system.parametrization.ConcreteParametrization;
+import system.parametrization.Parametrization;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.ArrayList;
 
 public class House{
@@ -12,14 +13,15 @@ public class House{
     private static String filename;
 
     JSONObject config;
-    ArrayList<HousePart> housePartList;
+    public ArrayList<HousePart> housePartList;
+    public Parametrization paramComponent;
 
 
     public static House getOrCreate(){
         return instance;
     }
 
-    public static House getOrCreate(String configFilename){
+    public static House getOrCreate(String configFilename) throws BadConfigException {
         if (instance != null && configFilename != null && configFilename.equals(filename)) {
             return instance;
         } else {
@@ -29,17 +31,9 @@ public class House{
         }
     }
 
-    /**
-     * Instantiate a house from the config file
-     */
-    private House(String configFilename) {
-        try {
-            config = new JSONObject(readFile(configFilename));
-            JSONArray houseParts = config.getJSONObject("house").getJSONArray("houseParts");
-            parseHouseParts(houseParts);
-        } catch (Exception e) {
-            System.err.println(e.toString());
-        }
+    private House(String configFilename) throws BadConfigException {
+        paramComponent = new ConcreteParametrization(this); // enforces presence constraints
+        paramComponent.parseConfig(configFilename);
     }
 
     /**
@@ -55,48 +49,9 @@ public class House{
     }
 
 
-    /**
-     * Parse the houseParts in the config file into usable objects
-     * @param houseParts the house's houseParts
-     */
-    void parseHouseParts(JSONArray houseParts){
-        housePartList = new ArrayList<>();
-        for (int i = 0; i < houseParts.length(); i++){
-            try {
-                JSONObject housePart = houseParts.getJSONObject(i);
-                housePartList.add(new HousePart(this, housePart));
-            } catch(Exception e) {
-                System.err.println(e);
-            }
-        }
-        linkHouseParts();
-    }
-
-    void linkHouseParts(){
+    public void linkHouseParts(){
         for(HousePart housePart : housePartList)
             housePart.linkSensors();
-    }
-
-    /**
-     * Simple helper method to read from file.
-     * @param filename the file to read from
-     * @return the file as a String (no need for lines, it's JSON)
-     */
-    private String readFile(String filename) {
-        String result = "";
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(filename));
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-            while (line != null) {
-                sb.append(line);
-                line = br.readLine();
-            }
-            result = sb.toString();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return result;
     }
 
     public ArrayList<HousePart> getRoomList() {

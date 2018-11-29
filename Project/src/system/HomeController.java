@@ -4,6 +4,7 @@ import controllers.Link;
 import controllers.actuators.Actuator;
 import controllers.connectedObjects.ConnectedObject;
 import controllers.sensors.Sensor;
+import system.parametrization.BadConfigException;
 
 public class HomeController {
 
@@ -14,11 +15,19 @@ public class HomeController {
 
     private HomeController(String pathToConfig, String pathToScenario){
         instance = this;
-        myHouse = House.getOrCreate(pathToConfig);
+        try {
+            myHouse = House.getOrCreate(pathToConfig);
+        } catch (BadConfigException e) {
+            System.err.println("The configuration of the house is not valid: "+e.getMessage());
+        }
 
         if (pathToScenario == null) {
             scenario = new Scenario(myHouse, this);
-            scenario.userInput();
+            try {
+                scenario.userInput();
+            } catch (BadConfigException e) {
+                System.err.println("A constraint was violated: "+e.getMessage());
+            }
         }
         else {
             userInputScenario = false;
@@ -87,8 +96,13 @@ public class HomeController {
                 }
             }
         }
-        if (userInputScenario)
-            scenario.userInput();
+        if (userInputScenario) {
+            try {
+                scenario.userInput();
+            } catch (BadConfigException e) {
+                System.err.println("A constraint was violated: "+e.getMessage());
+            }
+        }
         else
             scenario.fileInput();
     }

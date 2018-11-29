@@ -9,135 +9,152 @@ import controllers.sensors.*;
 import org.junit.jupiter.api.Test;
 import system.House;
 import system.HousePart;
+import system.parametrization.BadConfigException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class HouseTest {
     @Test
     void testEmptyHouse() {
-        House house = House.getOrCreate("test/jsons/config-empty.json");
+        try {
+            House house = House.getOrCreate("test/jsons/config-empty.json");
 
-        assertNull(house.getHousePartByName("Entrance Hall"));
+            assertNull(house.getHousePartByName("Entrance Hall"));
+        } catch (BadConfigException e) {
+            System.err.println("Invelid configuration: "+e.getMessage());
+        }
     }
 
     @Test
     void testOnlyRooms() {
-        House house = House.getOrCreate("test/jsons/config-noSensors.json");
+        try {
+            House house = House.getOrCreate("test/jsons/config-noSensors.json");
 
-        String hallName = "Entrance Hall", bedroomName = "Bedroom";
+            String hallName = "Entrance Hall", bedroomName = "Bedroom";
 
-        HousePart hall = house.getHousePartByName(hallName);
-        assertNotNull(hall, "'Entrance hall' wasn't correctly parsed.");
-        HousePart bedroom = house.getHousePartByName(bedroomName);
-        assertNotNull(bedroom, "'Bedroom' wasn't correctly parsed.");
+            HousePart hall = house.getHousePartByName(hallName);
+            assertNotNull(hall, "'Entrance hall' wasn't correctly parsed.");
+            HousePart bedroom = house.getHousePartByName(bedroomName);
+            assertNotNull(bedroom, "'Bedroom' wasn't correctly parsed.");
 
-        assertEquals(hall.name, hallName);
-        assertEquals(hall.accessibleHouseParts.length, 1);
-        assertEquals(hall.accessibleHouseParts[0], bedroomName);
-        assertEquals(hall.sensors.length, 0);
-        assertEquals(hall.actuators.length, 0);
-        assertEquals(hall.connectedObjects.length, 0);
+            assertEquals(hall.name, hallName);
+            assertEquals(hall.accessibleHouseParts.length, 1);
+            assertEquals(hall.accessibleHouseParts[0], bedroomName);
+            assertEquals(hall.sensors.length, 0);
+            assertEquals(hall.actuators.length, 0);
+            assertEquals(hall.connectedObjects.length, 0);
 
-        assertEquals(bedroom.name, bedroomName);
-        assertEquals(bedroom.accessibleHouseParts.length, 1);
-        assertEquals(bedroom.accessibleHouseParts[0], hallName);
-        assertEquals(bedroom.sensors.length, 0);
-        assertEquals(bedroom.actuators.length, 0);
-        assertEquals(bedroom.connectedObjects.length, 0);
+            assertEquals(bedroom.name, bedroomName);
+            assertEquals(bedroom.accessibleHouseParts.length, 1);
+            assertEquals(bedroom.accessibleHouseParts[0], hallName);
+            assertEquals(bedroom.sensors.length, 0);
+            assertEquals(bedroom.actuators.length, 0);
+            assertEquals(bedroom.connectedObjects.length, 0);
+        } catch (BadConfigException e) {
+            System.err.println("Invelid configuration: "+e.getMessage());
+        }
     }
 
     @Test
     void testSensorActuator() {
-        House house = House.getOrCreate("test/jsons/config-onlyHall.json");
+        try {
+            House house = House.getOrCreate("test/jsons/config-onlyHall.json");
 
-        String hallName = "Entrance Hall";
+            String hallName = "Entrance Hall";
 
-        HousePart hall = house.getHousePartByName(hallName);
-        assertNotNull(hall, "'Entrance hall' wasn't correctly parsed.");
+            HousePart hall = house.getHousePartByName(hallName);
+            assertNotNull(hall, "'Entrance hall' wasn't correctly parsed.");
 
-        assertEquals(hall.accessibleHouseParts.length, 0);
-        assertEquals(hall.sensors.length, 1);
-        assertNotNull(hall.sensors[0]);
-        assertTrue(hall.sensors[0] instanceof SensorMotion);
-        assertFalse(hall.sensors[0].shouldBroadcast());
+            assertEquals(hall.accessibleHouseParts.length, 0);
+            assertEquals(hall.sensors.length, 1);
+            assertNotNull(hall.sensors[0]);
+            assertTrue(hall.sensors[0] instanceof SensorMotion);
+            assertFalse(hall.sensors[0].shouldBroadcast());
 
-        Actuator[] linkedActuators = hall.sensors[0].getActuatorList();
-        assertEquals(linkedActuators.length, 1);
-        assertNotNull(linkedActuators[0]);
-        assertEquals(linkedActuators[0].type, Actuator.AUDIO);
+            Actuator[] linkedActuators = hall.sensors[0].getActuatorList();
+            assertEquals(linkedActuators.length, 1);
+            assertNotNull(linkedActuators[0]);
+            assertEquals(linkedActuators[0].type, Actuator.AUDIO);
 
-        Actuator[] actuators = hall.actuators;
-        assertEquals(actuators.length, 1);
-        assertNotNull(actuators[0]);
-        assertTrue(actuators[0] instanceof ActuatorAudioAlarm);
+            Actuator[] actuators = hall.actuators;
+            assertEquals(actuators.length, 1);
+            assertNotNull(actuators[0]);
+            assertTrue(actuators[0] instanceof ActuatorAudioAlarm);
 
-        assertEquals(hall.connectedObjects.length, 1);
+            assertEquals(hall.connectedObjects.length, 1);
+        } catch (BadConfigException e) {
+            System.err.println("Invelid configuration: "+e.getMessage());
+        }
     }
 
     @Test
     void testFullHouse() {
-        House house = House.getOrCreate("test/jsons/config-fullHouse.json");
+        try {
+            House house = House.getOrCreate("test/jsons/config-fullHouse.json");
 
-        String hallName = "Entrance Hall", kitchenName = "Kitchen", bedroomName = "Bedroom";
+            String hallName = "Entrance Hall", kitchenName = "Kitchen", bedroomName = "Bedroom";
 
-        // Check "Entrance Hall"
-        HousePart hall = house.getHousePartByName(hallName);
-        assertNotNull(hall, "'Entrance hall' wasn't correctly parsed.");
+            // Check "Entrance Hall"
+            HousePart hall = house.getHousePartByName(hallName);
+            assertNotNull(hall, "'Entrance hall' wasn't correctly parsed.");
 
-        assertEquals(hall.accessibleHouseParts.length, 2);
-        assertEquals(hall.sensors.length, 2);
-        for (Sensor sensor: hall.sensors)
-            assertNotNull(sensor);
+            assertEquals(hall.accessibleHouseParts.length, 2);
+            assertEquals(hall.sensors.length, 2);
+            for (Sensor sensor: hall.sensors)
+                assertNotNull(sensor);
 
-        assertTrue(hall.sensors[0] instanceof SensorMotion);
-        assertFalse(hall.sensors[0].shouldBroadcast());
-        Actuator[] linkedActuators = hall.sensors[0].getActuatorList();
-        assertEquals(linkedActuators.length, 1);
-        assertNotNull(linkedActuators[0]);
-        assertEquals(linkedActuators[0].type, Actuator.MOTOR_DOOR);
-//        assertEquals(linkedActuators[0].housePart, bedroomName);
+            assertTrue(hall.sensors[0] instanceof SensorMotion);
+            assertFalse(hall.sensors[0].shouldBroadcast());
+            Actuator[] linkedActuators = hall.sensors[0].getActuatorList();
+            assertEquals(linkedActuators.length, 1);
+            assertNotNull(linkedActuators[0]);
+            assertEquals(linkedActuators[0].type, Actuator.MOTOR_DOOR);
+    //        assertEquals(linkedActuators[0].housePart, bedroomName);
 
-        assertTrue(hall.sensors[1] instanceof SensorSmokeDetector);
-        assertTrue(hall.sensors[1].shouldBroadcast());
-        linkedActuators = hall.sensors[1].getActuatorList();
-        assertEquals(linkedActuators.length, 1);
-        assertNotNull(linkedActuators[0]);
-        assertEquals(linkedActuators[0].type, Actuator.AUDIO);
-//        assertEquals(linkedActuators[0].housePart, hallName);
+            assertTrue(hall.sensors[1] instanceof SensorSmokeDetector);
+            assertTrue(hall.sensors[1].shouldBroadcast());
+            linkedActuators = hall.sensors[1].getActuatorList();
+            assertEquals(linkedActuators.length, 1);
+            assertNotNull(linkedActuators[0]);
+            assertEquals(linkedActuators[0].type, Actuator.AUDIO);
+    //        assertEquals(linkedActuators[0].housePart, hallName);
 
-        assertEquals(hall.actuators.length, 2);
-        for (Actuator actuator: hall.actuators)
-            assertNotNull(actuator);
-        assertTrue(hall.actuators[0] instanceof ActuatorAudioAlarm);
-        assertTrue(hall.actuators[1] instanceof ActuatorMotorDoor);
+            assertEquals(hall.actuators.length, 2);
+            for (Actuator actuator: hall.actuators)
+                assertNotNull(actuator);
+            assertTrue(hall.actuators[0] instanceof ActuatorAudioAlarm);
+            assertTrue(hall.actuators[1] instanceof ActuatorMotorDoor);
 
-        assertEquals(hall.connectedObjects.length, 1);
+            assertEquals(hall.connectedObjects.length, 1);
 
-        // Check "Kitchen"
-        HousePart kitchen = house.getHousePartByName(kitchenName);
-        assertNotNull(kitchen, "'Kitchen' wasn't correctly parsed");
+            // Check "Kitchen"
+            HousePart kitchen = house.getHousePartByName(kitchenName);
+            assertNotNull(kitchen, "'Kitchen' wasn't correctly parsed");
 
-        assertEquals(kitchen.accessibleHouseParts.length, 1);
-        assertEquals(kitchen.sensors.length, 1);
-        assertTrue(kitchen.sensors[0] instanceof SensorSmokeDetector);
-        assertTrue(kitchen.sensors[0].shouldBroadcast());
-        linkedActuators = kitchen.sensors[0].getActuatorList();
-        assertEquals(linkedActuators.length, 1);
-        assertNotNull(linkedActuators[0]);
-        assertEquals(linkedActuators[0].type, Actuator.AUDIO);
+            assertEquals(kitchen.accessibleHouseParts.length, 1);
+            assertEquals(kitchen.sensors.length, 1);
+            assertTrue(kitchen.sensors[0] instanceof SensorSmokeDetector);
+            assertTrue(kitchen.sensors[0].shouldBroadcast());
+            linkedActuators = kitchen.sensors[0].getActuatorList();
+            assertEquals(linkedActuators.length, 1);
+            assertNotNull(linkedActuators[0]);
+            assertEquals(linkedActuators[0].type, Actuator.AUDIO);
 
-        assertEquals(kitchen.actuators.length, 1);
-        assertTrue(kitchen.actuators[0] instanceof ActuatorAudioAlarm);
+            assertEquals(kitchen.actuators.length, 1);
+            assertTrue(kitchen.actuators[0] instanceof ActuatorAudioAlarm);
 
-        // Check "Bedroom"
-        HousePart bedroom = house.getHousePartByName(bedroomName);
-        assertNotNull(bedroom, "'Bedroom' wasn't correctly parsed");
+            // Check "Bedroom"
+            HousePart bedroom = house.getHousePartByName(bedroomName);
+            assertNotNull(bedroom, "'Bedroom' wasn't correctly parsed");
 
-        assertEquals(bedroom.accessibleHouseParts.length, 1);
-        assertEquals(bedroom.sensors.length, 0);
+            assertEquals(bedroom.accessibleHouseParts.length, 1);
+            assertEquals(bedroom.sensors.length, 0);
 
-        assertEquals(bedroom.actuators.length, 2);
-        assertTrue(bedroom.actuators[0] instanceof ActuatorAudioAlarm);
+            assertEquals(bedroom.actuators.length, 2);
+            assertTrue(bedroom.actuators[0] instanceof ActuatorAudioAlarm);
+        } catch (BadConfigException e) {
+            System.err.println("Invelid configuration: "+e.getMessage());
+        }
     }
 
     @Test
@@ -201,5 +218,13 @@ class HouseTest {
         try {
             assertTrue(ConnectedObjectFactory.create("invalid") instanceof ConnectedObjectNull);
         } catch (UnexistantControllerException ignored) {}
+    }
+
+    @Test
+    void testBadConfig() {
+        try {
+            House.getOrCreate("test/jsons/badconfig.json");
+            fail("Should have thrown 'BadConfigException'");
+        } catch (BadConfigException e) {}
     }
 }
