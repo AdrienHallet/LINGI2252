@@ -9,6 +9,7 @@ public class UpdateThread extends Thread {
     Scanner scanner;
     PrintStream ps;
     BlockingQueue<String> pending;
+    GUIHouse guiHouse;
 
     public UpdateThread(Scanner scanner, PrintStream ps, BlockingQueue<String> queue){
         this.scanner = scanner;
@@ -20,7 +21,7 @@ public class UpdateThread extends Thread {
         while(scanner.hasNextLine()){
             try {
                 String line = scanner.nextLine();
-                if (!line.equalsIgnoreCase("> What will you do now?"))
+                if (line.equalsIgnoreCase("> What will you do now?"))
                     pending.put(line);
                 ps.println(line);
             } catch (InterruptedException e) {
