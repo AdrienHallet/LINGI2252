@@ -8,6 +8,8 @@ public class Helper {
         try{
             writer.write(command + "\n");
             writer.flush();
+            writer.write("observe\n");
+            writer.flush();
         }catch (Exception e){
             System.err.println("Error while sending command");
             e.printStackTrace();

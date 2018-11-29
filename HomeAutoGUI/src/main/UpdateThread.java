@@ -6,6 +6,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UpdateThread extends Thread {
 
@@ -35,18 +37,29 @@ public class UpdateThread extends Thread {
             ArrayList<String> rooms = new ArrayList<>();
             while(flag){
                 String line = scanner.nextLine();
-                if(line.equals("")){
+                if(line.equals(""))
                     flag = false;
-                }
-                else {
+                else
                     rooms.add(line);
-                }
             }
             requestBuildLayout(rooms);
         }
         if(response.startsWith("Walking into")){
             requestWalk(response.replace("Walking into ", ""));
         }
+        if(response.contains("light")){
+            requestLightIntensity(response);
+        }
+    }
+
+    private String[] extractActuator(String state){
+        Matcher m = Pattern.compile("\\[([^)]+)\\]").matcher(state);
+        if (m.find()) {
+            String actuator = m.group(0);
+            actuator = actuator.replace("[", "").replace("]","");
+            return actuator.split(":");
+        }
+        return null;
     }
 
     private void requestWalk(String room){
@@ -54,7 +67,17 @@ public class UpdateThread extends Thread {
     }
 
     private void requestBuildLayout(ArrayList<String> rooms){
-        Platform.runLater(() ->guiHouse.buildLayout(rooms));
+        Platform.runLater(() -> guiHouse.buildLayout(rooms));
     }
 
+    private void requestLightIntensity(String response){
+        String[] actuator = extractActuator(response);
+        Matcher m = Pattern.compile("\\d+(\\%)").matcher(response);
+        double value = 0;
+        if (m.find()){
+            value = Double.parseDouble(m.group(0).replace("%",""));
+        }
+        double finalValue = value;
+        Platform.runLater(() -> guiHouse.getRoomByName(actuator[0]).setLightIntensity(finalValue));
+    }
 }

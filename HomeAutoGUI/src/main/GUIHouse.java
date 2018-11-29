@@ -13,11 +13,11 @@ import java.util.concurrent.BlockingQueue;
 /**
  * Singleton class handling the house layout visuals
  */
-public class GUIHouse {
+class GUIHouse {
 
     private static GUIHouse instance = null;
     BufferedWriter writer;
-    TilePane tilePane;
+    private TilePane tilePane;
 
     private List<GUIHousePart> houseParts;
 
@@ -28,7 +28,7 @@ public class GUIHouse {
         instance = this;
     }
 
-    public static GUIHouse getOrCreate(BufferedWriter writer, TilePane tilePane){
+    static GUIHouse getOrCreate(BufferedWriter writer, TilePane tilePane){
         if(instance != null)
             return instance;
 
@@ -36,11 +36,11 @@ public class GUIHouse {
 
     }
 
-    public static GUIHouse getInstance(){
+    static GUIHouse getInstance(){
         return instance;
     }
 
-    public void buildLayout(List<String> rooms){
+    void buildLayout(List<String> rooms){
         try{
 //            writer.write(Command.layout);
 //            writer.flush();
@@ -75,7 +75,7 @@ public class GUIHouse {
         return null;
     }
 
-    public void clearPersonsInRoom(){
-        houseParts.forEach(part -> part.emptyPerson());
+    void clearPersonsInRoom(){
+        houseParts.forEach(GUIHousePart::emptyPerson);
     }
 }

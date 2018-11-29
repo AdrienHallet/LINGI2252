@@ -45,7 +45,12 @@ public class GUIHousePart {
         pane.setAlignment(person, Pos.CENTER);
     }
 
-    void emptyPerson(){
+    synchronized void emptyPerson(){
         pane.setBottom(null);
+    }
+
+    synchronized void setLightIntensity(double value){
+        pane.setStyle("-fx-background-color: rgba(255,250,0,"+ value +"/100);" +
+                "-fx-border-color: black");
     }
 }
