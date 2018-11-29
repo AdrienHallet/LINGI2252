@@ -5,7 +5,6 @@ import javafx.application.Platform;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.BlockingQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,6 +49,9 @@ public class UpdateThread extends Thread {
         if(response.contains("light")){
             requestLightIntensity(response);
         }
+        if(response.contains("alarm")){
+                requestAlarm(response);
+        }
     }
 
     private String[] extractActuator(String state){
@@ -79,5 +81,14 @@ public class UpdateThread extends Thread {
         }
         double finalValue = value;
         Platform.runLater(() -> guiHouse.getRoomByName(actuator[0]).setLightIntensity(finalValue));
+    }
+
+    private void requestAlarm(String response){
+        String[] actuator = extractActuator(response);
+        if (response.contains("silence"))
+            Platform.runLater(() -> guiHouse.getRoomByName(actuator[0]).silenceAlarm());
+        else
+            Platform.runLater(() -> guiHouse.getRoomByName(actuator[0]).triggerAlarm());
+
     }
 }

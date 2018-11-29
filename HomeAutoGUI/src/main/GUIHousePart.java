@@ -53,4 +53,13 @@ public class GUIHousePart {
         pane.setStyle("-fx-background-color: rgba(255,250,0,"+ value +"/100);" +
                 "-fx-border-color: black");
     }
+
+    synchronized void triggerAlarm(){
+        Label alarm = new Label(Character.toString((char)0x269E));
+        pane.setRight(alarm);
+        pane.setAlignment(alarm, Pos.CENTER);
+    }
+    synchronized void silenceAlarm(){
+        pane.setRight(null);
+    }
 }

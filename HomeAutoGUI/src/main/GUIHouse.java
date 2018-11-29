@@ -19,7 +19,7 @@ class GUIHouse {
     BufferedWriter writer;
     private TilePane tilePane;
 
-    private List<GUIHousePart> houseParts;
+    List<GUIHousePart> houseParts;
 
     private GUIHouse(BufferedWriter writer, TilePane tilePane){
         this.writer = writer;
