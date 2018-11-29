@@ -31,6 +31,7 @@ public class GUIHousePart {
                 });
         Label labelName = new Label(this.name);
         pane.setTop(labelName);
+        pane.setAlignment(labelName, Pos.CENTER);
     }
 
     private void enter(){
@@ -61,5 +62,17 @@ public class GUIHousePart {
     }
     synchronized void silenceAlarm(){
         pane.setRight(null);
+    }
+
+    synchronized  void openDoor(){
+        Label openDoor = new Label("╗\n\n╝");
+        pane.setLeft(openDoor);
+        pane.setAlignment(openDoor, Pos.CENTER);
+    }
+
+    synchronized void closeDoor(){
+        Label closedDoor = new Label("╗\n║\n╝");
+        pane.setLeft(closedDoor);
+        pane.setAlignment(closedDoor, Pos.CENTER);
     }
 }

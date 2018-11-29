@@ -50,7 +50,10 @@ public class UpdateThread extends Thread {
             requestLightIntensity(response);
         }
         if(response.contains("alarm")){
-                requestAlarm(response);
+            requestAlarm(response);
+        }
+        if(response.contains("door")){
+            requestDoor(response);
         }
     }
 
@@ -90,5 +93,13 @@ public class UpdateThread extends Thread {
         else
             Platform.runLater(() -> guiHouse.getRoomByName(actuator[0]).triggerAlarm());
 
+    }
+
+    private void requestDoor(String response){
+        String[] actuator = extractActuator(response);
+        if(response.contains("open"))
+            Platform.runLater(() -> guiHouse.getRoomByName(actuator[0]).openDoor());
+        else
+            Platform.runLater(() -> guiHouse.getRoomByName(actuator[0]).closeDoor());
     }
 }
