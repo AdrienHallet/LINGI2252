@@ -89,6 +89,9 @@ public class Controller {
         }
 
         public void write(int b) throws IOException {
+            if(console.getLength() > 5000){
+                console.setText("");
+            }
             appendText(String.valueOf((char)b));
         }
     }
