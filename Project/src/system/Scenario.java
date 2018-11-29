@@ -48,6 +48,7 @@ public class Scenario {
         String action = userInput.nextLine();
         doSomething(action);
         controller.controller_loop();
+        System.out.flush();
     }
 
     /**
@@ -81,6 +82,11 @@ public class Scenario {
             case "help":
                 // Request for help
                 printHelp();
+                break;
+            case "layout":
+                System.out.println("House layout:");
+                house.housePartList.forEach(housePart -> System.out.println(housePart.name));
+                System.out.println();
                 break;
             case "position":
                 // Get current position
