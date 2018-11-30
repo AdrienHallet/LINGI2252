@@ -26,7 +26,7 @@ public class Controller {
     private TextField inputField;
 
     @FXML
-    private MenuButton walkInButton;
+    private VBox buttonBox;
 
     @FXML
     private TilePane tilePane;
@@ -43,14 +43,12 @@ public class Controller {
     public void initialize() {
         ps = new PrintStream(new Console(console));
         try {
-            Scanner scan = new Scanner(System.in);
             String[] commands = {"java", "-jar", "HomeController.jar", "config_big.json"};
             ProcessBuilder builder = new ProcessBuilder(commands);
             builder.redirectErrorStream(true);
             Process process = builder.start();
 
             OutputStream stdin = process.getOutputStream ();
-            InputStream stderr = process.getErrorStream ();
             InputStream stdout = process.getInputStream ();
 
             reader = new BufferedReader (new InputStreamReader(stdout));
@@ -65,12 +63,7 @@ public class Controller {
             writer.flush();
 
             //Set focus on inputField at startup
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    inputField.requestFocus();
-                }
-            });
+            Platform.runLater(() -> inputField.requestFocus());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -100,5 +93,23 @@ public class Controller {
     public void onEnter(ActionEvent ae){
         Helper.sendCommand(writer, inputField.getText());
         inputField.setText("");
+    }
+
+    @FXML
+    private Button toggleRain;
+    boolean rain = false;
+
+    @FXML
+    public void makeRain(ActionEvent ae){
+        if (rain) {
+            Helper.sendCommand(writer, "detect humidity 0");
+            toggleRain.setText("Start rain");
+            rain = false;
+        }
+        else {
+            Helper.sendCommand(writer, "detect humidity 100");
+            toggleRain.setText("Stop rain");
+            rain = true;
+        }
     }
 }
