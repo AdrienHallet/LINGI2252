@@ -1,0 +1,49 @@
+Group G
+=======
+
+Submission appreciation: ++
+----------
+
++ Ok
+
+Report appreciation: ++
+------
+
++ Ok
+
+Parametrization appreciation: 0/+
+---------------
+
++ Ok
+- The parametrization component is not generic. Probably you will have an abstract parametrization component (able to verify if the config file is valid based on the feature model, ...) and a specific one (to create the configuration of the feature model given in a config file).
+- The parametrization doesn't verify the config file depending on the constraints and the dependencies of the feature model designed in the previous mission. You will have a verification system to be sure that when you (de)activate a feature, your feature model stay in a valid configuration, either during the initiation of the application or when you (de)activate a feature at runtime with the command interpreter extension.
+- No code to illustrate the component
++ VP -> Ok
++ Inverting controllers! Nice idea smile
+
+Command interpreter appreciation: ++
+-------------------
+
++ Ok
+
+Design patterns appreciation: -/0
+---------------
+
++ Ok
+* Abstract Factory:
+- Not an abstract factory but a factory method
++ If factory method -> Ok
+* Null Object:
++ Ok
+* Facade:
++ Ok
+* Singleton:
++ Ok
+- Private constructor is not in the class diagram
+- What about the interpreter pattern for the verification of the constraints/dependencies of the feature model?
+- What about the observer pattern? You manage your stuff with an event loop but do you have livelock?
+
+Run
+---
+
++ Ok
