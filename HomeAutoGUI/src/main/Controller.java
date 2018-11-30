@@ -90,26 +90,29 @@ public class Controller {
     }
 
     @FXML
-    public void onEnter(ActionEvent ae){
+    public void onEnter(){
         Helper.sendCommand(writer, inputField.getText());
         inputField.setText("");
     }
 
     @FXML
-    private Button toggleRain;
-    boolean rain = false;
+    public void humidity(){
+        Helper.sendCommand(writer, "detect humidity 100");
+    }
 
     @FXML
-    public void makeRain(ActionEvent ae){
-        if (rain) {
-            Helper.sendCommand(writer, "detect humidity 0");
-            toggleRain.setText("Start rain");
-            rain = false;
-        }
-        else {
-            Helper.sendCommand(writer, "detect humidity 100");
-            toggleRain.setText("Stop rain");
-            rain = true;
-        }
+    public void nohumidity(){
+        Helper.sendCommand(writer, "detect humidity 0");
     }
+
+    @FXML
+    public void cold(){
+        Helper.sendCommand(writer, "detect thermometer 10");
+    }
+
+    @FXML
+    public void hot(){
+        Helper.sendCommand(writer, "detect thermometer 26");
+    }
+
 }

@@ -21,7 +21,15 @@
    </center>
    <right>
       <VBox fx:id="buttonBox">
-         <Button fx:id="toggleRain" text="Start rain" onAction="#makeRain"/>
+         <Label>Room Controls</Label>
+         <HBox>
+            <Button text="Wet" onAction="#humidity"/>
+            <Button text="Dry" onAction="#nohumidity"/>
+         </HBox>
+         <HBox>
+            <Button text="Cold" onAction="#cold"/>
+            <Button text="Hot" onAction="#hot"/>
+         </HBox>
       </VBox>
    </right>
 </BorderPane>
