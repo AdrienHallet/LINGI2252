@@ -21,7 +21,7 @@ class HouseTest {
 
             assertNull(house.getHousePartByName("Entrance Hall"));
         } catch (BadConfigException e) {
-            System.err.println("Invelid configuration: "+e.getMessage());
+            System.err.println("Invalid configuration: "+e.getMessage());
         }
     }
 
@@ -51,7 +51,7 @@ class HouseTest {
             assertEquals(bedroom.actuators.length, 0);
             assertEquals(bedroom.connectedObjects.length, 0);
         } catch (BadConfigException e) {
-            System.err.println("Invelid configuration: "+e.getMessage());
+            System.err.println("Invalid configuration: "+e.getMessage());
         }
     }
 
@@ -83,7 +83,7 @@ class HouseTest {
 
             assertEquals(hall.connectedObjects.length, 1);
         } catch (BadConfigException e) {
-            System.err.println("Invelid configuration: "+e.getMessage());
+            System.err.println("Invalid configuration: "+e.getMessage());
         }
     }
 
@@ -153,7 +153,7 @@ class HouseTest {
             assertEquals(bedroom.actuators.length, 2);
             assertTrue(bedroom.actuators[0] instanceof ActuatorAudioAlarm);
         } catch (BadConfigException e) {
-            System.err.println("Invelid configuration: "+e.getMessage());
+            System.err.println("Invalid configuration: "+e.getMessage());
         }
     }
 
@@ -224,6 +224,14 @@ class HouseTest {
     void testBadConfig() {
         try {
             House.getOrCreate("test/jsons/badconfig.json");
+            fail("Should have thrown 'BadConfigException'");
+        } catch (BadConfigException e) {}
+    }
+
+    @Test
+    void testMissingActuator() {
+        try {
+            House.getOrCreate("test/jsons/badconfig-missingActuator.json");
             fail("Should have thrown 'BadConfigException'");
         } catch (BadConfigException e) {}
     }

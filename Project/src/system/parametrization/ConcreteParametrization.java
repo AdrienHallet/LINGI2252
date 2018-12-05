@@ -46,7 +46,6 @@ public class ConcreteParametrization extends Parametrization {
 
     @Override
     public void enforcePresenceConstraints() throws BadConfigException {
-        System.out.println(this.presenceConstraints);
         for (PresenceConstraint c : presenceConstraints) {
             c.enforceConstraint(this.house);
         }

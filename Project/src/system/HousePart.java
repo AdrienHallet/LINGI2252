@@ -7,6 +7,7 @@ import controllers.connectedObjects.ConnectedObject;
 import controllers.connectedObjects.ConnectedRadio;
 import controllers.sensors.*;
 import org.json.*;
+import system.parametrization.BadConfigException;
 
 import java.security.InvalidParameterException;
 
@@ -55,7 +56,7 @@ public class HousePart {
         }
     }
 
-    void linkSensors(){
+    void linkSensors() throws BadConfigException {
         if(sensors == null)
             this.sensors = parseSensors(this.sensorsJSON);
     }
@@ -101,13 +102,13 @@ public class HousePart {
         System.out.println("This sensor does not exist");
     }
 
-    Actuator getActuatorType(String type){
+    Actuator getActuatorType(String type) throws BadConfigException {
         for (Actuator actuator : actuators){
             if (actuator.type.equalsIgnoreCase(type)) {
                 return actuator;
             }
         }
-        return null;
+        throw new BadConfigException("Actuator '"+type+"' does not exist in '"+name+"'");
     }
 
 
@@ -155,7 +156,7 @@ public class HousePart {
      * @param sList the sensors
      * @return the parsed list of sensors
      */
-    Sensor[] parseSensors(JSONArray sList){
+    Sensor[] parseSensors(JSONArray sList) throws BadConfigException {
         /* Parse the sensors in the housePart into usable objects */
         Sensor[] list = new Sensor[sList.length()];
         for (int i = 0; i < sList.length(); i++){
@@ -168,7 +169,7 @@ public class HousePart {
                     broadcast = sensor.getBoolean("broadcast");
                 }
 
-                //Create the actuators and link them to the sensors
+                // Create the actuators and link them to the sensors
                 JSONArray actions = sensor.getJSONArray("actions");
                 Actuator[] aList = new Actuator[actions.length()];
                 boolean inverted = false;
@@ -176,8 +177,8 @@ public class HousePart {
                 for(int cAction = 0; cAction < actions.length(); cAction++) {
                     JSONObject cActuator = (JSONObject) actions.get(cAction);
                     String cType = cActuator.getString("actuator");
-                    String housePart = cActuator.getString("housePart");
-                    aList[cAction] = parentHouse.getHousePartByName(housePart).getActuatorType(cType);
+                    String housePartName = cActuator.getString("housePart");
+                    aList[cAction] = parentHouse.getHousePartByName(housePartName).getActuatorType(cType);
                     if (cActuator.has("inverted")){
                         inverted = true;
                     }
@@ -186,7 +187,9 @@ public class HousePart {
                 list[i] = SensorFactory.create(type, broadcast);
                 list[i].setInverted(inverted);
                 list[i].setActuatorList(aList);
-            }catch (Exception e){
+            } catch (BadConfigException e) {
+                throw e;
+            } catch (Exception e){
                 // This may be a problem for incorrectly encoded configurations (displaying it may be a good idea)
                 System.err.println("Exception ignored in 'parseSensors': " + e.getMessage());
             }

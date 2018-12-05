@@ -49,7 +49,7 @@ public class House{
     }
 
 
-    public void linkHouseParts(){
+    public void linkHouseParts() throws BadConfigException {
         for(HousePart housePart : housePartList)
             housePart.linkSensors();
     }

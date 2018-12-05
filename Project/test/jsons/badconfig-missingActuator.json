@@ -1,0 +1,40 @@
+{
+    "house": {
+        "houseParts":[
+            {
+                "name": "Entrance Hall",
+                "accessible-houseParts": ["Kitchen", "Bedroom"],
+                "sensors": [
+                    {
+                        "type": "motion",
+                        "actions": [{"housePart":"Bedroom", "actuator":"motorDoors"}]
+                    },
+                    {
+                        "type": "smoke",
+                        "broadcast": true,
+                        "actions": [{"housePart":"Entrance Hall", "actuator":"audio-alarm"}]
+                    }
+                ],
+                "actuators": ["audio-alarm", "motorDoors"],
+                "objects": ["radio"]
+            },
+            {
+                "name": "Kitchen",
+                "accessible-houseParts": ["Entrance Hall"],
+                "sensors": [
+                    {
+                        "type": "smoke",
+                        "broadcast": true,
+                        "actions": [{"housePart":"Kitchen", "actuator":"audio-alarm"}]
+                    }
+                ],
+                "actuators": ["audio-alarm"]
+            },
+            {
+               "name": "Bedroom",
+               "accessible-houseParts": ["Entrance Hall"],
+               "actuators": ["audio-alarm"]
+            }
+        ]
+    }
+}

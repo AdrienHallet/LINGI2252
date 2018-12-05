@@ -24,6 +24,9 @@ public abstract class Parametrization { // implements the design pattern "strate
             JSONObject config = new JSONObject(readFile(configFilename));
             JSONArray houseParts = config.getJSONObject("house").getJSONArray("houseParts");
             parseHouseParts(houseParts);
+            parseHouseParts(houseParts);
+        } catch (BadConfigException e) {
+            throw e;
         } catch (Exception e) {
             System.err.println(e.toString());
         }
@@ -34,7 +37,7 @@ public abstract class Parametrization { // implements the design pattern "strate
      * Parse the houseParts in the config file into usable objects
      * @param houseParts the house's houseParts
      */
-    private void parseHouseParts(JSONArray houseParts){
+    private void parseHouseParts(JSONArray houseParts) throws BadConfigException {
         this.house.housePartList = new ArrayList<>();
         for (int i = 0; i < houseParts.length(); i++){
             try {
