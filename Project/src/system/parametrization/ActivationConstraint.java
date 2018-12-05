@@ -8,33 +8,33 @@ import system.House;
 import system.HousePart;
 
 public class ActivationConstraint extends FeatureModelConstraint {
-    Controller shouldBeActivatedController;
+    protected Controller mustBeTriggeredController;
 
     public ActivationConstraint(Controller shouldBeActivatedController) {
-        this.shouldBeActivatedController = shouldBeActivatedController;
+        this.mustBeTriggeredController = shouldBeActivatedController;
     }
 
     @Override
     public void enforceConstraint(House house) throws BadConfigException {
-        if (shouldBeActivatedController instanceof Sensor) {
+        if (mustBeTriggeredController instanceof Sensor) {
             for (HousePart housePart : house.housePartList) {
                 for (Sensor sensor : housePart.sensors) {
                     if (!sensor.isTriggered())
-                        throw new BadConfigException(shouldBeActivatedController.type+" is not activated");
+                        throw new BadConfigException(mustBeTriggeredController.type + " is not activated");
                 }
             }
-        } else if (shouldBeActivatedController instanceof Actuator) {
+        } else if (mustBeTriggeredController instanceof Actuator) {
             for (HousePart housePart : house.housePartList) {
                 for (Actuator actuator : housePart.actuators) {
                     if (!actuator.isTriggered())
-                        throw new BadConfigException(shouldBeActivatedController.type+" is not activated");
+                        throw new BadConfigException(mustBeTriggeredController.type + " is not activated");
                 }
             }
-        } else if (shouldBeActivatedController instanceof ConnectedObject) {
+        } else if (mustBeTriggeredController instanceof ConnectedObject) {
             for (HousePart housePart : house.housePartList) {
                 for (ConnectedObject connectedObject : housePart.connectedObjects) {
                     if (!connectedObject.isTriggered())
-                        throw new BadConfigException(shouldBeActivatedController.type+" is not activated");
+                        throw new BadConfigException(mustBeTriggeredController.type + " is not activated");
                 }
             }
         }

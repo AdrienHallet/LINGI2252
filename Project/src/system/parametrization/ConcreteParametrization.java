@@ -1,6 +1,8 @@
 package system.parametrization;
 
 import controllers.Controller;
+import controllers.actuators.ActuatorLock;
+import controllers.actuators.ActuatorMotorDoor;
 import controllers.sensors.SensorClock;
 import controllers.sensors.SensorConsumption;
 import controllers.sensors.SensorSmokeDetector;
@@ -19,12 +21,23 @@ public class ConcreteParametrization extends Parametrization {
 
     private void initializeConstraints() {
         // Hard-coded on basis of our feature model
+        // Presence constraints
         Controller[] lhs = {new SensorConsumption(false)};
         Controller[] rhs = {new SensorClock(false)};
         presenceConstraints.add(new PresenceConstraint(lhs, rhs));
 
+        // Activation constraints
         Controller alwaysActive = new SensorSmokeDetector(false);
         activationConstraints.add(new ActivationConstraint(alwaysActive));
+
+        Controller lock = new ActuatorLock();
+        ArrayList<Controller> ifNotTriggeredControllers = new ArrayList<>();
+        ifNotTriggeredControllers.add(lock);
+        Controller motorDoor = new ActuatorMotorDoor();
+        activationConstraints.add(new ConditionedActivationConstraint(
+           null, ifNotTriggeredControllers,
+           null, motorDoor
+        ));
     }
 
     @Override
