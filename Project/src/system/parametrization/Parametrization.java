@@ -71,4 +71,5 @@ public abstract class Parametrization { // implements the design pattern "strate
 
     public abstract void enforcePresenceConstraints() throws BadConfigException;
     public abstract void enforceActivationConstraints() throws BadConfigException;
+    public abstract void enforceLinkConstraints() throws BadConfigException;
 }

@@ -11,6 +11,7 @@ import system.House;
 import java.util.ArrayList;
 
 public class ConcreteParametrization extends Parametrization {
+    private LinkConstraint linkConstraint;
     private ArrayList<PresenceConstraint> presenceConstraints = new ArrayList<>();
     private ArrayList<ActivationConstraint> activationConstraints = new ArrayList<>();
 
@@ -21,6 +22,9 @@ public class ConcreteParametrization extends Parametrization {
 
     private void initializeConstraints() {
         // Hard-coded on basis of our feature model
+        // Link constraints
+        this.linkConstraint = new LinkConstraint();
+
         // Presence constraints
         Controller[] lhs = {new SensorConsumption(false)};
         Controller[] rhs = {new SensorClock(false)};
@@ -53,5 +57,10 @@ public class ConcreteParametrization extends Parametrization {
         for (ActivationConstraint c : activationConstraints) {
             c.enforceConstraint(this.house);
         }
+    }
+
+    @Override
+    public void enforceLinkConstraints() throws BadConfigException {
+        linkConstraint.enforceConstraint(this.house);
     }
 }
