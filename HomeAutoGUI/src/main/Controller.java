@@ -1,14 +1,9 @@
 package main;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
 
 import java.io.*;
 import java.util.Scanner;
@@ -17,8 +12,6 @@ import java.util.concurrent.BlockingQueue;
 
 public class Controller {
 
-    private BlockingQueue<String> outputQueue = new ArrayBlockingQueue<>(100);
-
     @FXML
     private TextArea console;
 
@@ -26,14 +19,9 @@ public class Controller {
     private TextField inputField;
 
     @FXML
-    private VBox buttonBox;
-
-    @FXML
     private TilePane tilePane;
 
     private PrintStream ps ;
-    private String line;
-    private InputStream in;
 
     BufferedWriter writer;
     BufferedReader reader;
@@ -81,7 +69,7 @@ public class Controller {
             Platform.runLater(() -> console.appendText(valueOf));
         }
 
-        public void write(int b) throws IOException {
+        public void write(int b) {
             if(console.getLength() > 5000){
                 console.setText("");
             }
@@ -113,6 +101,26 @@ public class Controller {
     @FXML
     public void hot(){
         Helper.sendCommand(writer, "detect thermometer 26");
+    }
+
+    @FXML
+    public void bright(){
+        Helper.sendCommand(writer, "detect light 100");
+    }
+
+    @FXML
+    public void dark(){
+        Helper.sendCommand(writer, "detect light 0");
+    }
+
+    @FXML
+    public void smoke(){
+        Helper.sendCommand(writer, "detect smoke 100");
+    }
+
+    @FXML
+    public void nosmoke(){
+        Helper.sendCommand(writer, "detect smoke 0");
     }
 
 }

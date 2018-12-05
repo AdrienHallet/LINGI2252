@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.Button?>
-<?import javafx.geometry.Insets?>
 
 <BorderPane prefHeight="536.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
-   <bottom>
-      <TextField fx:id="inputField" onAction="#onEnter" prefHeight="25.0" prefWidth="414.0" promptText="Enter a command ..." BorderPane.alignment="CENTER" />
-   </bottom>
    <top>
-        <TextArea fx:id="console" editable="false" BorderPane.alignment="CENTER" />
+      <VBox>
+          <TextArea fx:id="console" editable="false" BorderPane.alignment="CENTER" />
+          <TextField fx:id="inputField" onAction="#onEnter" prefHeight="25.0" prefWidth="414.0" promptText="Enter a command ..." BorderPane.alignment="CENTER" />
+      </VBox>
    </top>
    <center>
       <TilePane fx:id="tilePane" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" vgap="10.0" BorderPane.alignment="CENTER" />
@@ -23,12 +17,20 @@
       <VBox fx:id="buttonBox">
          <Label>Room Controls</Label>
          <HBox>
-            <Button text="Wet" onAction="#humidity"/>
-            <Button text="Dry" onAction="#nohumidity"/>
+            <Button text="Wet" onAction="#humidity" prefWidth="100"/>
+            <Button text="Dry" onAction="#nohumidity" prefWidth="100"/>
          </HBox>
          <HBox>
-            <Button text="Cold" onAction="#cold"/>
-            <Button text="Hot" onAction="#hot"/>
+            <Button text="Cold" onAction="#cold" prefWidth="100"/>
+            <Button text="Hot" onAction="#hot" prefWidth="100"/>
+         </HBox>
+         <HBox>
+            <Button text="Bright" onAction="#bright" prefWidth="100"/>
+            <Button text="Dark" onAction="#dark" prefWidth="100"/>
+         </HBox>
+         <HBox>
+            <Button text="Smoke" onAction="#smoke" prefWidth="100"/>
+            <Button text="!Smoke" onAction="#nosmoke" prefWidth="100"/>
          </HBox>
       </VBox>
    </right>

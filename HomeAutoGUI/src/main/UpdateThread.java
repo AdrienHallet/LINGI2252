@@ -31,6 +31,8 @@ public class UpdateThread extends Thread {
     }
 
     private void interpret(Scanner scanner, String response){
+        if(response.contains("No"))
+            return;
         if(response.equalsIgnoreCase("house layout:")){
             boolean flag = true;
             ArrayList<String> rooms = new ArrayList<>();
@@ -54,6 +56,12 @@ public class UpdateThread extends Thread {
         }
         if(response.contains("door")){
             requestDoor(response);
+        }
+        if(response.contains("Heating")){
+            requestHeating(response);
+        }
+        if(response.contains("lock")){
+            requestLock(response);
         }
     }
 
@@ -101,5 +109,21 @@ public class UpdateThread extends Thread {
             Platform.runLater(() -> guiHouse.getRoomByName(actuator[0]).openDoor());
         else
             Platform.runLater(() -> guiHouse.getRoomByName(actuator[0]).closeDoor());
+    }
+
+    private void requestHeating(String response){
+        String[] actuator = extractActuator(response);
+        if(response.contains("on"))
+            Platform.runLater(() -> guiHouse.getRoomByName(actuator[0]).heat());
+        else
+            Platform.runLater(() -> guiHouse.getRoomByName(actuator[0]).noHeat());
+    }
+
+    private void requestLock(String response){
+        String[] actuator = extractActuator(response);
+        if(response.contains("unlocked"))
+            Platform.runLater(() -> guiHouse.getRoomByName(actuator[0]).unlock());
+        else
+            Platform.runLater(() -> guiHouse.getRoomByName(actuator[0]).lock());
     }
 }

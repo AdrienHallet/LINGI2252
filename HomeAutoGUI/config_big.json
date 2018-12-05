@@ -20,7 +20,7 @@
                     },
                     {
                         "type": "light",
-                        "actions": [{"housePart":"Entrance", "actuator":"lightbulb"}]
+                        "actions": [{"housePart":"Entrance", "actuator":"lightbulb", "inverted":true}]
                     }
                 ],
                 "actuators": ["audio-alarm", "thermostat", "lightbulb", "motorDoors"],
@@ -54,9 +54,13 @@
                         "type": "smoke",
                         "broadcast": true,
                         "actions": [{"housePart":"Kitchen", "actuator":"lock"}]
+                    },
+                    {
+                        "type": "light",
+                        "actions":[{"housePart":"Kitchen", "actuator":"lightbulb", "inverted":true}]
                     }
                 ],
-                "actuators": ["audio-alarm", "lock"]
+                "actuators": ["audio-alarm", "lock", "motorDoors", "lightbulb"]
             },
             {
                 "name": "Garage",
@@ -67,7 +71,7 @@
                         "actions": [{"inverted": true, "housePart":"Garage", "actuator":"motorDoors"}]
                     }
                 ],
-                "actuators": ["motorDoors"]
+                "actuators": ["motorDoors", "lock"]
             }
         ]
     },
