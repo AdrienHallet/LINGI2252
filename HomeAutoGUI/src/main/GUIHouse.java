@@ -1,14 +1,9 @@
 package main;
 
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
-
 import java.io.BufferedWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
 
 /**
  * Singleton class handling the house layout visuals
@@ -42,18 +37,6 @@ class GUIHouse {
 
     void buildLayout(List<String> rooms){
         try{
-//            writer.write(Command.layout);
-//            writer.flush();
-//            List<String> rooms = new ArrayList<>();
-//            while(true){
-//
-//                String response = outputQueue.take();
-//                System.out.println(response);
-//                if (response.equals("")){break;}
-//                if (!response.contains("House layout:")){
-//                    rooms.add(response);
-//                }
-//            }
             for (String room : rooms){
                 houseParts.add(new GUIHousePart(room));
             }

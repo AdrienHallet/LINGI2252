@@ -4,23 +4,23 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.TilePane;
+import javafx.scene.text.Font;
 
-public class GUIHousePart {
+class GUIHousePart {
 
     String name;
     BorderPane pane;
 
     private GUIHouse parent;
 
-    public GUIHousePart(String name){
+    GUIHousePart(String name){
         this.name = name;
         this.parent = GUIHouse.getInstance();
 
         createPane();
     }
 
-    public void createPane(){
+    private void createPane(){
         pane = new BorderPane();
         pane.setMinSize(150, 150);
         pane.setStyle("-fx-background-color: #FFFFFF;");
@@ -30,8 +30,9 @@ public class GUIHousePart {
                     // Todo movePerson(room);
                 });
         Label labelName = new Label(this.name);
+        pane.setLeft(new BorderPane());
         pane.setTop(labelName);
-        pane.setAlignment(labelName, Pos.CENTER);
+        BorderPane.setAlignment(labelName, Pos.CENTER);
     }
 
     private void enter(){
@@ -43,7 +44,7 @@ public class GUIHousePart {
         parent.clearPersonsInRoom();
         Label person = new Label("Person");
         pane.setBottom(person);
-        pane.setAlignment(person, Pos.CENTER);
+        BorderPane.setAlignment(person, Pos.CENTER);
     }
 
     synchronized void emptyPerson(){
@@ -56,9 +57,10 @@ public class GUIHousePart {
     }
 
     synchronized void triggerAlarm(){
-        Label alarm = new Label(Character.toString((char)0x269E));
+        Label alarm = new Label("࿄");
+        alarm.setFont(new Font(40));
         pane.setRight(alarm);
-        pane.setAlignment(alarm, Pos.CENTER);
+        BorderPane.setAlignment(alarm, Pos.CENTER);
     }
     synchronized void silenceAlarm(){
         pane.setRight(null);
@@ -66,13 +68,35 @@ public class GUIHousePart {
 
     synchronized  void openDoor(){
         Label openDoor = new Label("╗\n\n╝");
-        pane.setLeft(openDoor);
-        pane.setAlignment(openDoor, Pos.CENTER);
+        ((BorderPane)pane.getLeft()).setTop(openDoor);
     }
 
     synchronized void closeDoor(){
-        Label closedDoor = new Label("╗\n║\n╝");
-        pane.setLeft(closedDoor);
-        pane.setAlignment(closedDoor, Pos.CENTER);
+        Label closeDoor = new Label("╗\n║\n╝");
+        ((BorderPane) pane.getLeft()).setTop(closeDoor);
+    }
+
+    synchronized void heat(){
+        Label heat = new Label("♨️");
+        heat.setFont(new Font("Arial",42));
+        pane.setCenter(heat);
+        BorderPane.setAlignment(heat, Pos.CENTER);
+    }
+
+    synchronized void noHeat(){
+        pane.setCenter(null);
+    }
+
+    synchronized void lock(){
+        lockHelper("L");
+    }
+
+    synchronized void unlock(){
+        lockHelper("U\n");
+    }
+
+    private void lockHelper(String u) {
+        Label lock = new Label(u);
+        ((BorderPane)pane.getLeft()).setCenter(lock);
     }
 }
