@@ -22,6 +22,8 @@ public class PresenceConstraint extends FeatureModelConstraint {
     }
 
     private boolean checkLhs(House house) {
+        if (this.lhsControllers == null)
+            return true;
         for (Controller controller : lhsControllers) {
             boolean currentControllerPresent = false;
             for (HousePart housePart : house.housePartList) {

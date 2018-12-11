@@ -6,6 +6,11 @@
                 "accessible-houseParts": [],
                 "sensors": [
                     {
+                        "type": "smoke",
+                        "broadcast": true,
+                        "actions": []
+                    },
+                    {
                         "type": "motion",
                         "actions": [{"housePart":"Entrance Hall", "actuator":"audio-alarm"}]
                     }

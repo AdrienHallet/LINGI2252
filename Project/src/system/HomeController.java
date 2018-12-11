@@ -49,6 +49,7 @@ public class HomeController {
             config = args[0];
         } else {
             System.out.println("Invalid input");
+            System.exit(-1);
         }
         if (args.length > 1){
             scenario = args[1];

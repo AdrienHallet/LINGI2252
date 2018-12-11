@@ -3,7 +3,14 @@
         "houseParts":[
             {
                 "name": "Entrance Hall",
-                "accessible-houseParts": ["Bedroom"]
+                "accessible-houseParts": ["Bedroom"],
+                "sensors": [
+                    {
+                        "type": "smoke",
+                        "broadcast": true,
+                        "actions": []
+                    }
+                ]
             },
             {
                 "name": "Bedroom",

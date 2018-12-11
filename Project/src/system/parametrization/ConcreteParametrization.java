@@ -30,9 +30,12 @@ public class ConcreteParametrization extends Parametrization {
         Controller[] rhs = {new SensorClock(false)};
         presenceConstraints.add(new PresenceConstraint(lhs, rhs));
 
+        Controller[] smokeDetector = {new SensorSmokeDetector(false)};
+        presenceConstraints.add(new PresenceConstraint(null, smokeDetector));
+
         // Activation constraints
-        Controller alwaysActive = new SensorSmokeDetector(false);
-        activationConstraints.add(new ActivationConstraint(alwaysActive));
+//        Controller alwaysActive = new SensorSmokeDetector(false);
+//        activationConstraints.add(new ActivationConstraint(alwaysActive));
 
         Controller lock = new ActuatorLock();
         ArrayList<Controller> ifNotTriggeredControllers = new ArrayList<>();

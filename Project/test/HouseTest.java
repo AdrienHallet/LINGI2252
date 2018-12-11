@@ -21,7 +21,8 @@ class HouseTest {
 
             assertNull(house.getHousePartByName("Entrance Hall"));
         } catch (BadConfigException e) {
-            System.err.println("Invalid configuration: "+e.getMessage());
+            // should miss the smoke detector
+            //System.err.println("Invalid configuration: "+e.getMessage());
         }
     }
 
@@ -37,19 +38,19 @@ class HouseTest {
             HousePart bedroom = house.getHousePartByName(bedroomName);
             assertNotNull(bedroom, "'Bedroom' wasn't correctly parsed.");
 
-            assertEquals(hall.name, hallName);
-            assertEquals(hall.accessibleHouseParts.length, 1);
-            assertEquals(hall.accessibleHouseParts[0], bedroomName);
-            assertEquals(hall.sensors.length, 0);
-            assertEquals(hall.actuators.length, 0);
-            assertEquals(hall.connectedObjects.length, 0);
+            assertEquals(hallName, hall.name);
+            assertEquals(1, hall.accessibleHouseParts.length);
+            assertEquals(bedroomName, hall.accessibleHouseParts[0]);
+            assertEquals(1, hall.sensors.length);
+            assertEquals(0, hall.actuators.length);
+            assertEquals(0, hall.connectedObjects.length);
 
-            assertEquals(bedroom.name, bedroomName);
-            assertEquals(bedroom.accessibleHouseParts.length, 1);
-            assertEquals(bedroom.accessibleHouseParts[0], hallName);
-            assertEquals(bedroom.sensors.length, 0);
-            assertEquals(bedroom.actuators.length, 0);
-            assertEquals(bedroom.connectedObjects.length, 0);
+            assertEquals(bedroomName, bedroom.name);
+            assertEquals(1, bedroom.accessibleHouseParts.length);
+            assertEquals(hallName, bedroom.accessibleHouseParts[0]);
+            assertEquals(0, bedroom.sensors.length);
+            assertEquals(0, bedroom.actuators.length);
+            assertEquals(0, bedroom.connectedObjects.length);
         } catch (BadConfigException e) {
             System.err.println("Invalid configuration: "+e.getMessage());
         }
@@ -65,23 +66,26 @@ class HouseTest {
             HousePart hall = house.getHousePartByName(hallName);
             assertNotNull(hall, "'Entrance hall' wasn't correctly parsed.");
 
-            assertEquals(hall.accessibleHouseParts.length, 0);
-            assertEquals(hall.sensors.length, 1);
+            assertEquals(0, hall.accessibleHouseParts.length);
+            assertEquals(2, hall.sensors.length);
             assertNotNull(hall.sensors[0]);
-            assertTrue(hall.sensors[0] instanceof SensorMotion);
-            assertFalse(hall.sensors[0].shouldBroadcast());
+            assertTrue(hall.sensors[0] instanceof SensorSmokeDetector);
+            assertTrue(hall.sensors[0].shouldBroadcast());
+            assertNotNull(hall.sensors[1]);
+            assertTrue(hall.sensors[1] instanceof SensorMotion);
+            assertFalse(hall.sensors[1].shouldBroadcast());
 
-            Actuator[] linkedActuators = hall.sensors[0].getActuatorList();
-            assertEquals(linkedActuators.length, 1);
+            Actuator[] linkedActuators = hall.sensors[1].getActuatorList();
+            assertEquals(1, linkedActuators.length);
             assertNotNull(linkedActuators[0]);
             assertEquals(linkedActuators[0].type, Actuator.AUDIO);
 
             Actuator[] actuators = hall.actuators;
-            assertEquals(actuators.length, 1);
+            assertEquals(1, actuators.length);
             assertNotNull(actuators[0]);
             assertTrue(actuators[0] instanceof ActuatorAudioAlarm);
 
-            assertEquals(hall.connectedObjects.length, 1);
+            assertEquals(1, hall.connectedObjects.length);
         } catch (BadConfigException e) {
             System.err.println("Invalid configuration: "+e.getMessage());
         }
@@ -98,15 +102,15 @@ class HouseTest {
             HousePart hall = house.getHousePartByName(hallName);
             assertNotNull(hall, "'Entrance hall' wasn't correctly parsed.");
 
-            assertEquals(hall.accessibleHouseParts.length, 2);
-            assertEquals(hall.sensors.length, 2);
+            assertEquals(2, hall.accessibleHouseParts.length);
+            assertEquals(2, hall.sensors.length);
             for (Sensor sensor: hall.sensors)
                 assertNotNull(sensor);
 
             assertTrue(hall.sensors[0] instanceof SensorMotion);
             assertFalse(hall.sensors[0].shouldBroadcast());
             Actuator[] linkedActuators = hall.sensors[0].getActuatorList();
-            assertEquals(linkedActuators.length, 1);
+            assertEquals(1, linkedActuators.length);
             assertNotNull(linkedActuators[0]);
             assertEquals(linkedActuators[0].type, Actuator.MOTOR_DOOR);
     //        assertEquals(linkedActuators[0].housePart, bedroomName);
@@ -114,43 +118,43 @@ class HouseTest {
             assertTrue(hall.sensors[1] instanceof SensorSmokeDetector);
             assertTrue(hall.sensors[1].shouldBroadcast());
             linkedActuators = hall.sensors[1].getActuatorList();
-            assertEquals(linkedActuators.length, 1);
+            assertEquals(1, linkedActuators.length);
             assertNotNull(linkedActuators[0]);
             assertEquals(linkedActuators[0].type, Actuator.AUDIO);
     //        assertEquals(linkedActuators[0].housePart, hallName);
 
-            assertEquals(hall.actuators.length, 2);
+            assertEquals(2, hall.actuators.length);
             for (Actuator actuator: hall.actuators)
                 assertNotNull(actuator);
             assertTrue(hall.actuators[0] instanceof ActuatorAudioAlarm);
             assertTrue(hall.actuators[1] instanceof ActuatorMotorDoor);
 
-            assertEquals(hall.connectedObjects.length, 1);
+            assertEquals(1, hall.connectedObjects.length);
 
             // Check "Kitchen"
             HousePart kitchen = house.getHousePartByName(kitchenName);
             assertNotNull(kitchen, "'Kitchen' wasn't correctly parsed");
 
-            assertEquals(kitchen.accessibleHouseParts.length, 1);
-            assertEquals(kitchen.sensors.length, 1);
+            assertEquals(1, kitchen.accessibleHouseParts.length);
+            assertEquals(1, kitchen.sensors.length);
             assertTrue(kitchen.sensors[0] instanceof SensorSmokeDetector);
             assertTrue(kitchen.sensors[0].shouldBroadcast());
             linkedActuators = kitchen.sensors[0].getActuatorList();
-            assertEquals(linkedActuators.length, 1);
+            assertEquals(1, linkedActuators.length);
             assertNotNull(linkedActuators[0]);
             assertEquals(linkedActuators[0].type, Actuator.AUDIO);
 
-            assertEquals(kitchen.actuators.length, 1);
+            assertEquals(1, kitchen.actuators.length);
             assertTrue(kitchen.actuators[0] instanceof ActuatorAudioAlarm);
 
             // Check "Bedroom"
             HousePart bedroom = house.getHousePartByName(bedroomName);
             assertNotNull(bedroom, "'Bedroom' wasn't correctly parsed");
 
-            assertEquals(bedroom.accessibleHouseParts.length, 1);
-            assertEquals(bedroom.sensors.length, 0);
+            assertEquals(1, bedroom.accessibleHouseParts.length);
+            assertEquals(0, bedroom.sensors.length);
 
-            assertEquals(bedroom.actuators.length, 2);
+            assertEquals(2, bedroom.actuators.length);
             assertTrue(bedroom.actuators[0] instanceof ActuatorAudioAlarm);
         } catch (BadConfigException e) {
             System.err.println("Invalid configuration: "+e.getMessage());
