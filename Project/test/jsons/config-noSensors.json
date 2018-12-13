@@ -10,7 +10,8 @@
                         "broadcast": true,
                         "actions": []
                     }
-                ]
+                ],
+                "actuators": ["audio-alarm"]
             },
             {
                 "name": "Bedroom",

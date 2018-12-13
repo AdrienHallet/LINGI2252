@@ -42,7 +42,7 @@ class HouseTest {
             assertEquals(1, hall.accessibleHouseParts.length);
             assertEquals(bedroomName, hall.accessibleHouseParts[0]);
             assertEquals(1, hall.sensors.length);
-            assertEquals(0, hall.actuators.length);
+            assertEquals(1, hall.actuators.length);
             assertEquals(0, hall.connectedObjects.length);
 
             assertEquals(bedroomName, bedroom.name);
@@ -52,7 +52,7 @@ class HouseTest {
             assertEquals(0, bedroom.actuators.length);
             assertEquals(0, bedroom.connectedObjects.length);
         } catch (BadConfigException e) {
-            System.err.println("Invalid configuration: "+e.getMessage());
+            fail("Invalid configuration: "+e.getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ class HouseTest {
 
             assertEquals(1, hall.connectedObjects.length);
         } catch (BadConfigException e) {
-            System.err.println("Invalid configuration: "+e.getMessage());
+            fail("Invalid configuration: "+e.getMessage());
         }
     }
 
@@ -157,7 +157,7 @@ class HouseTest {
             assertEquals(2, bedroom.actuators.length);
             assertTrue(bedroom.actuators[0] instanceof ActuatorAudioAlarm);
         } catch (BadConfigException e) {
-            System.err.println("Invalid configuration: "+e.getMessage());
+            fail("Invalid configuration: "+e.getMessage());
         }
     }
 

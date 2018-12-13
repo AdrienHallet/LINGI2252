@@ -1,6 +1,7 @@
 package system.parametrization;
 
 import controllers.Controller;
+import controllers.actuators.ActuatorAudioAlarm;
 import controllers.actuators.ActuatorLock;
 import controllers.actuators.ActuatorMotorDoor;
 import controllers.sensors.SensorClock;
@@ -32,6 +33,9 @@ public class ConcreteParametrization extends Parametrization {
 
         Controller[] smokeDetector = {new SensorSmokeDetector(false)};
         presenceConstraints.add(new PresenceConstraint(null, smokeDetector));
+
+        Controller[] alarm = {new ActuatorAudioAlarm()};
+        presenceConstraints.add(new PresenceConstraint(null, alarm));
 
         // Activation constraints
 //        Controller alwaysActive = new SensorSmokeDetector(false);
