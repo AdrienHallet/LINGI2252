@@ -23,9 +23,7 @@ public class ConditionedActivationConstraint extends ActivationConstraint {
 
     @Override
     public void enforceConstraint(House house) throws BadConfigException {
-        System.out.println("enforcing constraint");
         if (mustBeTriggeredController != null) {
-            System.out.println("1");
             if (mustBeTriggeredController instanceof Sensor) {
                 for (HousePart housePart : house.housePartList) {
                     if (this.checkCondition(housePart)) {
@@ -38,14 +36,10 @@ public class ConditionedActivationConstraint extends ActivationConstraint {
             } else if (mustBeTriggeredController instanceof Actuator) {
                 for (HousePart housePart : house.housePartList) {
                     if (this.checkCondition(housePart)) {
-                        System.out.println("condition checked for "+housePart.name);
                         for (Actuator actuator : housePart.actuators) {
                             if (!actuator.isTriggered())
                                 throw new BadConfigException(mustBeTriggeredController.type + " is not activated");
                         }
-                    }
-                    else {
-                        System.out.println("condition NOT checked for "+housePart.name);
                     }
                 }
             } else if (mustBeTriggeredController instanceof ConnectedObject) {
@@ -60,7 +54,6 @@ public class ConditionedActivationConstraint extends ActivationConstraint {
             }
         }
         else if (mustBeNotTriggeredController != null) {
-            System.out.println("2");
             if (mustBeNotTriggeredController instanceof Sensor) {
                 for (HousePart housePart : house.housePartList) {
                     if (this.checkCondition(housePart)) {
