@@ -11,19 +11,21 @@ import java.util.ArrayList;
 
 public class ConditionedActivationConstraint extends ActivationConstraint {
     ArrayList<Controller> ifTriggeredControllers;
-    ArrayList<Controller> ifNotTriggeredControllers;
+    boolean inverted = false;
     Controller mustBeNotTriggeredController;
 
-    public ConditionedActivationConstraint(ArrayList<Controller> ifTriggeredControllers, ArrayList<Controller> ifNotTriggeredControllers, Controller mustBeTriggeredController, Controller mustBeNotTriggeredController) {
+    public ConditionedActivationConstraint(ArrayList<Controller> ifTriggeredControllers, boolean invertLHSController, Controller mustBeTriggeredController, Controller mustBeNotTriggeredController) {
         super(mustBeTriggeredController);
         this.ifTriggeredControllers = ifTriggeredControllers;
-        this.ifNotTriggeredControllers = ifNotTriggeredControllers;
+        this.inverted = invertLHSController;
         this.mustBeNotTriggeredController = mustBeNotTriggeredController;
     }
 
     @Override
     public void enforceConstraint(House house) throws BadConfigException {
+        System.out.println("enforcing constraint");
         if (mustBeTriggeredController != null) {
+            System.out.println("1");
             if (mustBeTriggeredController instanceof Sensor) {
                 for (HousePart housePart : house.housePartList) {
                     if (this.checkCondition(housePart)) {
@@ -36,10 +38,14 @@ public class ConditionedActivationConstraint extends ActivationConstraint {
             } else if (mustBeTriggeredController instanceof Actuator) {
                 for (HousePart housePart : house.housePartList) {
                     if (this.checkCondition(housePart)) {
+                        System.out.println("condition checked for "+housePart.name);
                         for (Actuator actuator : housePart.actuators) {
                             if (!actuator.isTriggered())
                                 throw new BadConfigException(mustBeTriggeredController.type + " is not activated");
                         }
+                    }
+                    else {
+                        System.out.println("condition NOT checked for "+housePart.name);
                     }
                 }
             } else if (mustBeTriggeredController instanceof ConnectedObject) {
@@ -54,6 +60,7 @@ public class ConditionedActivationConstraint extends ActivationConstraint {
             }
         }
         else if (mustBeNotTriggeredController != null) {
+            System.out.println("2");
             if (mustBeNotTriggeredController instanceof Sensor) {
                 for (HousePart housePart : house.housePartList) {
                     if (this.checkCondition(housePart)) {
@@ -86,68 +93,34 @@ public class ConditionedActivationConstraint extends ActivationConstraint {
     }
 
     protected boolean checkCondition(HousePart housePart) {
-        return (this.checkPosCondition(housePart) && this.checkNegCondition(housePart));
-    }
-    protected boolean checkPosCondition(HousePart housePart) {
         if (this.ifTriggeredControllers == null || this.ifTriggeredControllers.size() <= 0)
-            return true;
+            return false;
         for (Controller c : this.ifTriggeredControllers) {
             if (c instanceof Sensor) {
                 for (Sensor sensor : housePart.sensors) {
                     if (sensor.type.equals(c.type)) {
-                        if (!sensor.isTriggered())
-                            return false;
+                        if (sensor.isTriggered() != this.inverted) // if it is triggered (with condition not inverted) or not triggered (with condition inverted)
+                            return true;
                     }
                 }
             }
             else if (c instanceof Actuator) {
                 for (Actuator actuator : housePart.actuators) {
                     if (actuator.type.equals(c.type)) {
-                        if (!actuator.isTriggered())
-                            return false;
+                        if (actuator.isTriggered() != this.inverted) // id.
+                            return true;
                     }
                 }
             }
             else if (c instanceof ConnectedObject) {
                 for (ConnectedObject connectedObject : housePart.connectedObjects) {
                     if (connectedObject.type.equals(c.type)) {
-                        if (!connectedObject.isTriggered())
-                            return false;
+                        if (connectedObject.isTriggered() != this.inverted) // id.
+                            return true;
                     }
                 }
             }
         }
-        return true;
-    }
-    protected boolean checkNegCondition(HousePart housePart) {
-        if (this.ifNotTriggeredControllers == null || this.ifNotTriggeredControllers.size() <= 0)
-            return true;
-        for (Controller c : this.ifNotTriggeredControllers) {
-            if (c instanceof Sensor) {
-                for (Sensor sensor : housePart.sensors) {
-                    if (sensor.type.equals(c.type)) {
-                        if (sensor.isTriggered())
-                            return false;
-                    }
-                }
-            }
-            else if (c instanceof Actuator) {
-                for (Actuator actuator : housePart.actuators) {
-                    if (actuator.type.equals(c.type)) {
-                        if (actuator.isTriggered())
-                            return false;
-                    }
-                }
-            }
-            else if (c instanceof ConnectedObject) {
-                for (ConnectedObject connectedObject : housePart.connectedObjects) {
-                    if (connectedObject.type.equals(c.type)) {
-                        if (connectedObject.isTriggered())
-                            return false;
-                    }
-                }
-            }
-        }
-        return true;
+        return false;
     }
 }

@@ -41,13 +41,14 @@ public class ConcreteParametrization extends Parametrization {
 //        Controller alwaysActive = new SensorSmokeDetector(false);
 //        activationConstraints.add(new ActivationConstraint(alwaysActive));
 
-        Controller lock = new ActuatorLock();
-        ArrayList<Controller> ifNotTriggeredControllers = new ArrayList<>();
-        ifNotTriggeredControllers.add(lock);
+        // When a motor of a door is opening the door, the locks should always be open
         Controller motorDoor = new ActuatorMotorDoor();
+        ArrayList<Controller> ifTriggeredControllers = new ArrayList<>();
+        ifTriggeredControllers.add(motorDoor);
+        Controller lock = new ActuatorLock();
         activationConstraints.add(new ConditionedActivationConstraint(
-           null, ifNotTriggeredControllers,
-           null, motorDoor
+           ifTriggeredControllers, false,
+           lock, null
         ));
     }
 
