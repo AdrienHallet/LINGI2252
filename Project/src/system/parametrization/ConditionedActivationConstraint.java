@@ -10,9 +10,9 @@ import system.HousePart;
 import java.util.ArrayList;
 
 public class ConditionedActivationConstraint extends ActivationConstraint {
-    ArrayList<Controller> ifTriggeredControllers;
-    boolean inverted = false;
-    Controller mustBeNotTriggeredController;
+    protected ArrayList<Controller> ifTriggeredControllers;
+    protected boolean inverted = false;
+    protected Controller mustBeNotTriggeredController;
 
     public ConditionedActivationConstraint(ArrayList<Controller> ifTriggeredControllers, boolean invertLHSController, Controller mustBeTriggeredController, Controller mustBeNotTriggeredController) {
         super(mustBeTriggeredController);
@@ -30,7 +30,7 @@ public class ConditionedActivationConstraint extends ActivationConstraint {
                     if (this.checkCondition(housePart)) {
                         for (Sensor sensor : housePart.sensors) {
                             if (sensor.type.equals(controllerType) && !sensor.isTriggered())
-                                throw new BadConfigException(mustBeTriggeredController.type + " is not activated");
+                                throw new BadConfigException(mustBeTriggeredController.type + " is not activated in " + housePart.name);
                         }
                     }
                 }
@@ -39,7 +39,7 @@ public class ConditionedActivationConstraint extends ActivationConstraint {
                     if (this.checkCondition(housePart)) {
                         for (Actuator actuator : housePart.actuators) {
                             if (actuator.type.equals(controllerType) && !actuator.isTriggered())
-                                throw new BadConfigException(mustBeTriggeredController.type + " is not activated");
+                                throw new BadConfigException(mustBeTriggeredController.type + " is not activated in " + housePart.name);
                         }
                     }
                 }
@@ -48,7 +48,7 @@ public class ConditionedActivationConstraint extends ActivationConstraint {
                     if (this.checkCondition(housePart)) {
                         for (ConnectedObject connectedObject : housePart.connectedObjects) {
                             if (connectedObject.type.equals(controllerType) && !connectedObject.isTriggered())
-                                throw new BadConfigException(mustBeTriggeredController.type + " is not activated");
+                                throw new BadConfigException(mustBeTriggeredController.type + " is not activated in " + housePart.name);
                         }
                     }
                 }
@@ -61,7 +61,7 @@ public class ConditionedActivationConstraint extends ActivationConstraint {
                     if (this.checkCondition(housePart)) {
                         for (Sensor sensor : housePart.sensors) {
                             if (sensor.type.equals(controllerType) && sensor.isTriggered())
-                                throw new BadConfigException(mustBeNotTriggeredController.type + " is not activated");
+                                throw new BadConfigException(mustBeNotTriggeredController.type + " is not activated in " + housePart.name);
                         }
                     }
                 }
@@ -70,7 +70,7 @@ public class ConditionedActivationConstraint extends ActivationConstraint {
                     if (this.checkCondition(housePart)) {
                         for (Actuator actuator : housePart.actuators) {
                             if (actuator.type.equals(controllerType) && actuator.isTriggered())
-                                throw new BadConfigException(mustBeNotTriggeredController.type + " is not activated");
+                                throw new BadConfigException(mustBeNotTriggeredController.type + " is not activated in " + housePart.name);
                         }
                     }
                 }
@@ -79,7 +79,7 @@ public class ConditionedActivationConstraint extends ActivationConstraint {
                     if (this.checkCondition(housePart)) {
                         for (ConnectedObject connectedObject : housePart.connectedObjects) {
                             if (connectedObject.type.equals(controllerType) && connectedObject.isTriggered())
-                                throw new BadConfigException(mustBeNotTriggeredController.type + " is not activated");
+                                throw new BadConfigException(mustBeNotTriggeredController.type + " is not activated in " + housePart.name);
                         }
                     }
                 }
