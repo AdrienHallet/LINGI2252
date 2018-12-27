@@ -105,7 +105,7 @@ There are three main phases :
 * **Common features** are the mandatory (plain 'o') leaves in the tree. They appear in every configuration (see below)
 * **Variabilities** are the optional features (empty 'o'). They appear in some configurations (see below)
 
-> A **configuration** is the selected variables, an instance, of the model. It is deemed **valid** iif it respects the semantics imposed by the relationships and constraints. The model is **inconsistend** if it has no valid configuration. Two models are **equivalent** if they have the same set of configurations.
+> A **configuration** is the selected variables, an instance, of the model. It is deemed **valid** if it respects the semantics imposed by the relationships and constraints. The model is **inconsistent** if it has no valid configuration. Two models are **equivalent** if they have the same set of configurations.
 
 **Anomalies** in the diagram are things that should not be there :
 * Redundancy if semantic information is modelled in multiple ways
@@ -162,7 +162,7 @@ And the overall satisfaction to work on a clean code. You **should refactor when
 1. **Extract method:** When a fragment of code can be grouped (e.g.: a big conditional statement), turn it into a method.
 2. **Inline method:** When a method body is as clear as its signature, remove the method and use the body instead. (e.g.: a one-liner that is understandable)
 3. **Inline temp:** Instead of using a temporary variable, it may sometimes be useful to just use it as a one-liner. But it depends on who will read the code and how easy the code is to read in general.
-4. **Temp to Query:** A temporary variable (e.g.: a dispatch of prices) can be replaced with a method call to ease readabilit and remove redundancy in a method.
+4. **Temp to Query:** A temporary variable (e.g.: a dispatch of prices) can be replaced with a method call to ease readability and remove redundancy in a method.
 5. **Explaining variables:** When you have a complex code, it can be useful to add temporary variables with meaningful names to help understand the code.
 6. **Method to Method Object:** It's like extract method but with a variable. So you create an object that can use a method call replacing the method extraction.
 
@@ -174,7 +174,7 @@ The goal is to get a more *habitable* code, which is a code in which you feel at
 ### Classifications of bad smells
 1. **Code duplication** is the top crime, the worst problem. It should be eliminated using various techniques when possible.
 2. **Large Piece of code** : class, methode, parameter list,... Should be extracted and arranged toegether in logical ways. For long parameters lists, it is normal with functional programming, but should be avoided by creating objects in POO.
-3. **Lack of loose coupling or cohesion**. Coupling is the degree to which the component depend on each other, and cohésion is the degree to which the element is a module belong together. Tight coupling and low cohesions are bad smells. Pair of classes that know too much about each other's private details should be separated and *data clumps* (data items in lots of places) should be made into their own objects.
+3. **Lack of loose coupling or cohesion**. Coupling is the degree to which the component depend on each other, and cohesion is the degree to which the elements in a module belong together. Tight coupling and low cohesions are bad smells. Pair of classes that know too much about each other's private details should be separated and *data clumps* (data items in lots of places) should be made into their own objects.
 4. **Too much or too little delegation**. If a client asks for something, and the "chain of asking" goes trough lots of other entities, we might want to move the object closer. Also, if some delegation is only about calling something else, it should be removed (secretary example).
 5. **Non Object-Oriented control or data structures**. Switch statements often cause duplication and can be avoided using *polymorphism*. Also, a reluctance to use classes instead of primitive types is bad, since the difference is hard to defined in OO.
 6. **Other : comments**. Comments are a good thing to have, but a bad smell when a long comment tries to explain bad code (they are used as a deodorant). When removing the bad smell in the code, the comment often become superfluous : the name of a method usually is enough "comment" on it. Good comments often explains **why** something was done a particular way, or when you don't know exactly what to do.
@@ -187,6 +187,24 @@ In the late 70's, Christopher Alexander proposed patterns as a way to **reuse** 
 Design patterns are not the only ones to exist. Some other (anti patterns, analysis patterns, ...) also exist for different purposes. A pattern is not invented, but observed as a working solution that can be extracted applied to other problems.
 
 Don't confuse architectural style and architectural pattern. Style is about globality (layered, client-server, pipes and filters) while design is more local (MVC, templates, ...).
+
+### Design Patterns
+List of important design patterns in this course :
+* Factory Method
+* Template Method
+* Abstract Factory
+* Observer
+* Strategy
+* Decorator
+* Visitor
+* Singleton
+* Composite
+* Builder
+* Iterator
+
+They can be classified based on two criterias : **purpose** (what it does) and **scope** (whether it applies to classes or objects).
+
+For the purpose, it exists **creational** design patterns that are concerned with the process of object creation (like the factory); **structural** design patterns that are concerned with how to compose classes and objects in larger structures (like the composite); and the **dehavioural** desing patters, that are concerned with algorithms and separation of responsabilites (like the observer).
 
 ### Anti Patterns
 Just like design patterns, they are common solutions, except this one is a bad example.
@@ -202,7 +220,7 @@ The difference between anti patterns and bad smells is mainly the size. Bad smel
 7. **Pride** : reinventing design instead of reusing them
 
 We can identify multiple classes of anti patterns.
-* **Development**
+* **Development**, technical problems encountered by programmers, like "The Blob", the (too) big piece of code that does everything.
 * **Architectural**
 * **Managerial**
 
@@ -241,3 +259,37 @@ We can once more identify multiple categories of OO heuristics. You have to reme
 * Avoid type checking
 * Avoid multiple inheritance. A good practice is to never use multiple inheritance except if you can prove it necessary.
 * Question inheritance.
+
+## Frameworks
+
+A **software framework** is a particular implementation technique for building families of software applications. It represents a common design and partial implementation for it, it's meant to be reused (they are the best bets on software reuse).
+
+The variations are specified by means of so-called **hot spots**.
+
+Designing a framework is not easy, it should be flexible and easy to use, with the right combinaisons of hot spots. This is best achieved via an iterative development process.
+
+There is **object-oriented frameworks** that are an OO class hierarchy plus a built-in model of interactions.
+
+Examples of frameworks : JHotDraw, WHATS'On (television),...
+
+Again, there is **domain frameworks** that capture expertise for one particular problem domain like financial engineering; and **application frameworks** that capture expertise common to a wide variety of problems (GUI, web application,...)
+
+Frameworks apply the principle of inversion of control : "don't call us, we'll call you". When using a framework, the code written by the programmer gets called by the framework (rather that calling the code when using a library).
+
+**White-box frameworks**, which allows customization via inheritance, requireing insight in (and access to) the implementation. It's easier to design and more flexible, but more difficult to learn.
+
+**Black-box frameworks**, which allows customization via composition, requireing insight in the components. It's harder to design and easier to learn, but less flexible.
+
+**Grey-box frameworks** are actually the most common, trying to realise the benefits of both white and black box.
+
+## Context-oriented programming
+Traditionnaly, we program input/output software. But know, with IoT and "smart" objects, the operations may deped on time, place,..., which are grouped under the term **context**.
+
+Context-oriented programming (COP) focusses on the programming angle, enabling context-aware software trough a programming language engineering approach.
+
+The first idea to implement such a context-aware program would be conditional statements. Those are adaptable, but quickly will become tangled, complex, and are not reuseable.
+
+Another approach would be to use the strategy design pattern, which is modular and open, but an infrastructural burden, where adaptation will become a challenge.
+
+The hypothesis is that the current programming tools are not fit for such adaptative systems, we need to reengineer them. We invent the principle of **method dispatch** (whenever a message is send, reorder all active methods and invoke the first one) and **method pre-dispatch** (whenever a context is (de)activated, reorder the active methods that are related to this context)
+
